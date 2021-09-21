@@ -1,2 +1,2 @@
 # ITP4506-Project
-HCI GUi
+HCI GUI
