@@ -1,76 +1,21 @@
 const LINE_DURATION = 2;
-const LINE_WIDTH_START = 18;
+const LINE_WIDTH_START = 4;
 
-$(document).ready(function() {
-  enableDrawingCanvas();
+$(window).on("resize", function () {
   resizeCanvas(window.innerWidth, window.innerHeight);
-
-  $(document).keypress(function(event) {
-
-    if (event.key == "g") {
-      if (canvas === undefined)
-        enableDrawingCanvas();
-
-      var poopx = new Array();
-      var poopy = new Array();
-
-      function spawn() {
-        var gap = 10;
-        var rows = 10;
-        var cols = 3;
-
-        var canvas = $('#background');
-        var width = canvas.width();
-        var height = canvas.height();
-        var count = 0;
-
-        for (var i = (width / 2) - (gap * rows); i < (width / 2) + (gap * rows); i = i + gap) {
-
-          if (i % (gap * 2) === 0) {
-            for (var j = (height / 2) - (gap * cols); j < (height / 2) + (gap * cols); j = j + gap) {
-
-              poopx.push(i);
-              poopy.push(j);
-
-            }
-          } else {
-            for (var j = (height / 2) + (gap * cols) - gap; j > (height / 2) - (gap * cols) - gap; j = j - gap) {
-
-              poopx.push(i);
-              poopy.push(j);
-            }
-          }
-        }
-      }
-      asd();
-
-      function asd() {
-        if (poopx.length <= 0) {
-          spawn();
-        }
-
-        var x = poopx.pop();
-        var y = poopy.pop();
-
-        addPoint(x, y);
-
-        setTimeout(function() {
-          asd()
-        }, 10);
-      }
-    }
-  });
 });
 
-//////////////////////////
-// Variable definitions //
-//////////////////////////
+$(document).ready(function () {
+  enableDrawingCanvas();
+  resizeCanvas(window.innerWidth, window.innerHeight);
+});
+
 var active = true;
 
 var canvas;
 var context;
 
-var lineColor = 'rgb(0, 255, 180)';
+var lineColor = "rgb(0, 220, 180)";
 var lineDuration = LINE_DURATION;
 var lineFadeLinger = 1;
 var lineWidthStart = LINE_WIDTH_START;
@@ -91,8 +36,8 @@ var points = new Array();
 // Find canvas reference & enable listeners
 function enableDrawingCanvas() {
   if (canvas === undefined) {
-    canvas = document.getElementById('background');
-    context = canvas.getContext('2d');
+    canvas = document.getElementById("background");
+    context = canvas.getContext("2d");
     enableListeners();
     init();
   }
@@ -115,10 +60,8 @@ function draw() {
 function animatePoints() {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-  var duration = lineDuration * 1000 / 60;
+  var duration = (lineDuration * 1000) / 60;
   var point, lastPoint;
-
-
 
   for (var i = 0; i < points.length; i++) {
     point = points[i];
@@ -137,44 +80,32 @@ function animatePoints() {
     }
 
     // Begin drawing stuff!
-    var inc = (point.lifetime / duration); // 0 to 1 over lineDuration
+    var inc = point.lifetime / duration; // 0 to 1 over lineDuration
     var dec = 1 - inc;
 
     var spreadRate;
 
-
-      spreadRate = lineWidthStart * (1 - inc);
-
+    spreadRate = lineWidthStart * (1 - inc);
 
     var fadeRate = dec;
 
     //context.strokeStyle = lineColor;
     context.lineJoin = "round";
     context.lineWidth = spreadRate;
-    context.strokeStyle = 'rgb(' + 0 + ',' +
-      Math.floor(255 * dec) + ',' +
-      Math.floor((180 * inc)-200) + ')';
+    context.strokeStyle = "rgb(" + 0 + "," + 220+i*10 + "," + 180+i*10 + ")";
 
     var distance = Point.distance(lastPoint, point);
     var midpoint = Point.midPoint(lastPoint, point);
     var angle = Point.angle(lastPoint, point);
 
+    context.beginPath();
 
-      context.beginPath();
-    
+    context.moveTo(lastPoint.x, lastPoint.y);
+    context.lineTo(point.x, point.y);
 
-
-      context.moveTo(lastPoint.x, lastPoint.y);
-      context.lineTo(point.x, point.y);
-    
-
- 
-      context.stroke();
-      context.closePath();
-    
+    context.stroke();
+    context.closePath();
   }
-
-
 
   //if (points.length > 0) { console.log(spreadRate + "|" + points.length + " points alive."); }
 }
@@ -190,11 +121,17 @@ function addPoint(x, y) {
 //////////////////////////////
 
 // RequestAnimFrame definition
-window.requestAnimFrame = (function(callback) {
-  return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-    function(callback) {
+window.requestAnimFrame = (function (callback) {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
       window.setTimeout(callback, 1000 / 60);
-    };
+    }
+  );
 })();
 
 // Update canvas dimensions based on input
@@ -207,9 +144,8 @@ function resizeCanvas(w, h) {
 
 // Listeners for mouse and touch events
 function enableListeners() {
-
   //********* Mouse Listeners *********//
-  $('#background').on('mousemove', function(e) {
+  $("#background").on("mousemove", function (e) {
     if (frame === drawEveryFrame) {
       addPoint(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
       frame = 0;
@@ -217,26 +153,24 @@ function enableListeners() {
     frame++;
   });
 
-  $('#background').on('mouseover', function(e) {});
-  $('#background').on('mouseleave', function(e) {});
+  $("#background").on("mouseover", function (e) {});
+  $("#background").on("mouseleave", function (e) {});
 
   //********* Touch Listeners *********//
-  $('#background').on('touchstart', function(e) {
+  $("#background").on("touchstart", function (e) {
     var touch = e.touches[0];
   });
-  $('#background').on('touchmove', function(e) {
+  $("#background").on("touchmove", function (e) {
     var touch = e.touches[0];
   });
-  $('#background').on('touchend', function(e) {});
+  $("#background").on("touchend", function (e) {});
 }
-
 
 // POINT CLASS
 // Cartersian location of where mouse location
-// was previously at. 
+// was previously at.
 // Used to draw arcs between Points.
 var Point = class Point {
-
   // Define class constructor
   constructor(x, y, lifetime, flip) {
     this.x = x;
@@ -273,4 +207,4 @@ var Point = class Point {
   get pos() {
     return this.x + "," + this.y;
   }
-}
+};
