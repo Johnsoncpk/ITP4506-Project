@@ -8,6 +8,15 @@ hr {
   background-color: rgb(177, 255, 250);
 }
 
+input{
+  color: rgb(30, 37, 70);
+  background-color: rgb(210, 222, 238);
+  border-radius: 6px;
+}
+
+.card{
+  background-color: #1e2229;
+}
 #background {
   background-color: #1e2229;
   position: absolute;
@@ -57,7 +66,7 @@ hr {
 }
 body {
   font-size: 0.9rem;
-  background-color: #1e2229;
+  background-color: #27292e;
 }
 .page-wrapper .sidebar-wrapper,
 .sidebar-wrapper .sidebar-brand > a,

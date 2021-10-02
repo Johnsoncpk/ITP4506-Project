@@ -1,0 +1,103 @@
+<main class="page-content">
+  <div class="container-fluid">
+    <!-- /Breadcrumb -->
+    <h2>Profile</h2>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-4 my-4 py-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                src="../img/student-icon.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              <div class="mt-3">
+                <h4 id="name">Johnson Chong</h4>
+                <p class="text-secondary mb-1" id="role">Student</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 my-4 py-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0 text-secondary">Student ID</h6>
+              </div>
+              <div class="col-sm-9" id="userId">200373237</div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0 text-secondary">Email</h6>
+              </div>
+              <div class="col-sm-9" id="email">200373237@stu.vtc.edu.hk</div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0 text-secondary">Mobile</h6>
+              </div>
+              <div class="col-sm-9 data" id="mobile">+852 65867246</div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0 text-secondary">Address</h6>
+              </div>
+              <div class="col-sm-9 data" id="address">
+                Bay Area, San Francisco, CA
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-12">
+                <a class="btn btn-info" href="#" id="edit">Edit</a>
+                <button class="btn btn-secondary" id="cancel">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+<script>
+  $("#edit").click(function () {
+    $(this).text("Save");
+    $("#cancel").show();
+    $(".data").each(function () {
+      $(this).replaceWith(
+        `<input class="col-sm-6 iData" type="text" color="black" value='${$(
+          this
+        )
+          .text()
+          .trim()}'/>`
+      );
+    });
+  });
+  $("#cancel").click(function () {
+    $(this).hide();
+    $("#edit").text("Edit");
+  });
+</script>
