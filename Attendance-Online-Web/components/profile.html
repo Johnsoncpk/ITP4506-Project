@@ -23,46 +23,71 @@
         </div>
       </div>
       <div class="col-md-8 my-4 py-4">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0 text-secondary">Student ID</h6>
+        <form>
+          <div class="form-group mb-3 card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Student ID</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="userId"
+                    value="200373237"
+                    disabled
+                  />
+                </div>
               </div>
-              <div class="col-sm-9" id="userId">200373237</div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0 text-secondary">Email</h6>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Email</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="email"
+                    value="200373237@stu.vtc.edu.hk"
+                    disabled
+                  />
+                </div>
               </div>
-              <div class="col-sm-9" id="email">200373237@stu.vtc.edu.hk</div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0 text-secondary">Mobile</h6>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Mobile</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="mobile"
+                    value="+852 65867246"
+                    disabled
+                  />
+                </div>
               </div>
-              <div class="col-sm-9 data" id="mobile">+852 65867246</div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0 text-secondary">Address</h6>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Address</h6>
+                </div>
+                <div class="col-sm-6">
+                  <textarea class="form-control" id="address" disabled>
+Bay Area, San Francisco, CA</textarea
+                  >
+                </div>
               </div>
-              <div class="col-sm-9 data" id="address">
-                Bay Area, San Francisco, CA
-              </div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-12">
-                <a class="btn btn-info" href="#" id="edit">Edit</a>
-                <button class="btn btn-secondary" id="cancel">Cancel</button>
+              <hr />
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-info" href="#" id="edit">Edit</a>
+                  <button class="btn btn-secondary" id="cancel" type="reset">Cancel</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <hr />
@@ -83,21 +108,26 @@
   </div>
 </main>
 <script>
+  $(document).ready(function () {
+    $("#cancel").hide();
+  });
   $("#edit").click(function () {
-    $(this).text("Save");
-    $("#cancel").show();
-    $(".data").each(function () {
-      $(this).replaceWith(
-        `<input class="col-sm-6 iData" type="text" color="black" value='${$(
-          this
-        )
-          .text()
-          .trim()}'/>`
-      );
+    if ($(this).text() == "Save") {
+      $("#edit").text("Edit");
+      $("#cancel").hide();
+    } else {
+      $(this).text("Save");
+      $("#cancel").show();
+    }
+    $(".form-control").each(function () {
+      $(this).prop("disabled", !$(this).prop("disabled"));
     });
   });
   $("#cancel").click(function () {
     $(this).hide();
     $("#edit").text("Edit");
+    $(".form-control").each(function () {
+      $(this).prop("disabled", !$(this).prop("disabled"));
+    });
   });
 </script>
