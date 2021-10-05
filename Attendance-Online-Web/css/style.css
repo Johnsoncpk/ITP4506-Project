@@ -8,6 +8,9 @@ hr {
   background-color: rgb(177, 255, 250);
 }
 
+.select{
+  width: 80%;
+}
 input{
   color: rgb(30, 37, 70);
   background-color: rgb(210, 222, 238);
