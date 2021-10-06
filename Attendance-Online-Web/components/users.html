@@ -1,0 +1,99 @@
+<div class="page-content">
+  <div class="container-fluid">
+    <h2>Users</h2>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-12 my-3 pb-4">
+        <div class="row justify-content-end">
+          <input
+            class="col-3 form-control mb-4 mr-3"
+            id="query"
+            type="text"
+            placeholder="Search here"
+          />
+        </div>
+        <div class="card p-0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fiirst Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Availability</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $.ajax(
+      `http://127.0.0.1/itp4506/-ITP4506_backend/admin/viewInformation.php`,
+      {
+        dataType: "json",
+        timeout: 500,
+        success: function (data, status, xhr) {
+          var result = "";
+          $(data).each(function (index) {
+            result += `
+            <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${this.firstName}</td>
+          <td>${this.lastName}</td>
+          <td>${this.role}</td>
+          <td>
+            <form id="${
+              this.id
+            }" action="http://127.0.0.1/itp4506/-ITP4506_backend/admin/accountStatus.php" method="post">
+              <input type="email" name="userID" value="${this.id}" hidden>
+              <select class="form-control bg-info text-light select" title="availability">
+                <option ${this.suspended ? "selected" : ""}>Enable</option>
+                <option ${!this.suspended ? "selected" : ""}>Disabled</option>
+              </select>
+          </form>
+          </td>
+          <td>
+            <a class="btn btn-info" href="./user-detail.html?userId=${this.id}">
+              <i class="far fa-address-card"></i>
+            </a>
+          </td>
+          </tr>
+            `;
+          });
+          $("#table").append(result);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          $("body").replace("Error: " + errorMessage);
+        },
+      }
+    );
+    $("#query").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#table tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+  });
+</script>

@@ -1,49 +1,30 @@
 <main class="page-content">
-    <div class="container-fluid">
-      <h2>User-Detail</h2>
-      <hr />
-      <div class="row gutters-sm">
-        
-      </div>
-      <hr />
-      <footer class="text-center">
-        <div class="mb-2">
-          <small>
-            © 2021 made by -
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.ive.edu.hk/ivesite/html/tc/"
-            >
-              Ive Jai
-            </a>
-          </small>
-        </div>
-      </footer>
+  <div class="container-fluid">
+    <h2>User-Detail</h2>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-12 my-3 pb-4"></div>
     </div>
-  </main>
-  <script>
-    $(document).ready(function () {
-      $("#cancel").hide();
-    });
-    $("#edit").click(function () {
-      if ($(this).text() == "Save") {
-        $("#edit").text("Edit");
-        $("#cancel").hide();
-      } else {
-        $(this).text("Save");
-        $("#cancel").show();
-      }
-      $(".form-control").each(function () {
-        $(this).prop("disabled", !$(this).prop("disabled"));
-      });
-    });
-    $("#cancel").click(function () {
-      $(this).hide();
-      $("#edit").text("Edit");
-      $(".form-control").each(function () {
-        $(this).prop("disabled", !$(this).prop("disabled"));
-      });
-    });
-  </script>
-  
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a href="https://www.ive.edu.hk/ivesite/html/tc/"> Ive Jai </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+<script>
+  $(document).ready(function () {
+    let searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has("userId")) {
+      var userId = searchParams.get('userId');
+    } else {
+      window.location.replace(
+        "http://127.0.0.1/itp4506/ITP4506-Project/Attendance-Online-Web/admin/users.html"
+      );
+    }
+  });
+</script>

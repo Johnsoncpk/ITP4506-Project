@@ -1,27 +1,29 @@
 * {
   margin: 0;
   padding: 0;
-  color: rgb(126, 216, 214);
+  color: rgb(150, 218, 216);
 }
 
 hr {
-  background-color: rgb(177, 255, 250);
+  background-color: rgb(176, 255, 250);
 }
 
-.select{
+.select {
   width: 80%;
+  border-color: #21272e;
 }
-input{
-  color: rgb(30, 37, 70);
-  background-color: rgb(210, 222, 238);
+
+input {
+  color: #21272e;
+  background-color: rgb(176, 255, 250);
   border-radius: 6px;
 }
 
-.card{
-  background-color: #1e2229;
+.card {
+  background-color: #21272e;
 }
 #background {
-  background-color: #1e2229;
+  background-color: #21272e;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -69,7 +71,7 @@ input{
 }
 body {
   font-size: 0.9rem;
-  background-color: #27292e;
+  background-color: #303544;
 }
 .page-wrapper .sidebar-wrapper,
 .sidebar-wrapper .sidebar-brand > a,
