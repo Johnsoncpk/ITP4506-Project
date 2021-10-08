@@ -1,0 +1,229 @@
+<main class="page-content">
+  <div class="container-fluid">
+    <h2>Profile</h2>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-4 my-2 py-2 auto-fit">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                src="../img/student-icon.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              <div class="mt-3">
+                <h4 id="name">Johnson Chong</h4>
+                <p class="text-secondary mb-1" id="class">2B</p>
+                <p class="text-secondary mb-1" id="role">Student</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row py-2 d-flex justify-content-end">
+          <div class="col">
+            <a class="btn btn-info mx-1" href="#" id="edit">Edit Profile</a>
+            <a class="pl-1 btn btn-info mx-1" href="#" id="updatePwd"
+              >Update Password</a
+            >
+            <button class="btn btn-secondary" id="cancel" type="reset">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 my-2 py-2">
+        <form id="editProfileForm">
+          <div class="form-group mb-3 card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Student ID</h6>
+                </div>
+                <div class="col-sm-6">
+                  <p id="userId" class="form-text">200373237</p>
+                  <input
+                    class="form-control"
+                    name="userId"
+                    value="200373237"
+                    disabled
+                    hidden
+                  />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Email</h6>
+                </div>
+                <div class="col-sm-6">
+                  <p id="email" class="form-text">200373237@stu.vtc.edu.hk</p>
+                  <input
+                    class="form-control"
+                    name="email"
+                    value="200373237@stu.vtc.edu.hk"
+                    disabled
+                    hidden
+                  />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Mobile</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="mobile"
+                    name="mobile"
+                    value="+852 65867246"
+                    disabled
+                  />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Address</h6>
+                </div>
+                <div class="col-sm-6">
+                  <textarea class="form-control" id="address" disabled>
+Bay Area, San Francisco, CA</textarea
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form id="updatePwdForm">
+          <div class="form-group mb-3 card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">New Password</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input class="form-control" id="mobile" name="mobile" />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Comfirm Password</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="confirmPwd"
+                    name="confirmPwd"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <h3>Class Record</h3>
+    <div class="card p-0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Academic Year</th>
+            <th scope="col">Class</th>
+            <th scope="col">Class Teacher</th>
+          </tr>
+        </thead>
+        <tbody id="table">
+          <tr>
+            <td scope="col">1</td>
+            <td scope="col">2021</td>
+            <td scope="col">2B</td>
+            <td scope="col">Alan Po</td>
+          </tr>
+          <tr>
+            <td scope="col">2</td>
+            <td scope="col">2020</td>
+            <td scope="col">1C</td>
+            <td scope="col">Kenneth Tsang</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+<script>
+  $(document).ready(function () {
+    $("#cancel").hide();
+    $("#updatePwdForm").hide();
+  });
+  $("#edit").click(function () {
+    if ($(this).text() == "Save") {
+      $(this).text("Edit Profile");
+      $("#cancel").hide();
+      $("#updatePwd").show();
+    } else {
+      $(this).text("Save");
+      $("#cancel").show();
+      $("#updatePwd").hide();
+    }
+    form_control();
+  });
+  $("#updatePwd").click(function () {
+    $("#editProfileForm").fadeOut(function () {
+      $("#updatePwdForm").fadeIn();
+    });
+
+    // $("#editProfileForm").hide();
+    if ($(this).text() == "Save") {
+      $(this).text("Update Password");
+      $("#cancel").hide();
+      $("#edit").show();
+      $("#updatePwdForm").fadeOut(function () {
+        $("#editProfileForm").show();
+      });
+    } else {
+      $(this).text("Save");
+      $("#cancel").show();
+      $("#edit").hide();
+    }
+    form_control();
+  });
+
+  $("#cancel").click(function () {
+    $(this).hide();
+    $("#edit").text("Edit Profile");
+    $("#edit").show();
+    $("#updatePwd").text("Update Password");
+    $("#updatePwd").show();
+    $("#updatePwdForm").animate({ right: "250px" });
+    $("#updatePwdForm").fadeOut(function () {
+        $("#editProfileForm").show();
+      });
+    form_control(this);
+  });
+
+  function form_control() {
+    $("#editProfileForm .form-control").each(function () {
+      $(this).prop("disabled", !$(this).prop("disabled"));
+    });
+  }
+</script>
