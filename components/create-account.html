@@ -1,0 +1,80 @@
+<main class="page-content">
+  <div class="container-fluid">
+    <h2>Select type of creation</h2>
+    <hr />
+    <div class="row d-flex justify-content-around">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5" id="single">
+        <div class="card p-0 shadow-sm">
+          <img src="../img/single-user.jpg" class="card-img-top" />
+          <div class="card-body text-center">
+            <h6 class="card-title" id="single-title">
+              For creating single account. <br />
+              <p class="text-secondary">e.g. Transfer student</p>
+            </h6>
+            <a
+            href="./create-user.html"
+              class="btn btn-info"
+              >Single Account</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5" id="multiple">
+        <div class="card p-0 shadow-sm">
+          <img src="../img/list-of-studens.jpg" class="card-img-top" />
+          <div class="card-body text-center">
+            <h6 class="card-title" id="multiple-title">
+              For creating multiple account. <br />
+              <p class="text-secondary">e.g. New Academic Year</p>
+            </h6>
+            <a
+              href="./create-user-list.html"
+              class="btn btn-info"
+              >Multiple Accounts</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<script>
+  $(document).ready(function () {
+    $("#single-title").hide();
+    $("#multiple-title").hide();
+    $("#single").hover(function () {
+      $("#single-title").show();
+      $(this).toggleClass("col-lg-5 col-lg-6");
+      $("#multiple").toggleClass("col-lg-5 col-lg-4");
+    });
+    $("#single").mouseleave(function () {
+      $("#single-title").hide();
+    });
+
+    $("#multiple").hover(function () {
+      $("#multiple-title").show();
+      $(this).toggleClass("col-lg-5 col-lg-6");
+      $("#single").toggleClass("col-lg-5 col-lg-4");
+    });
+    $("#multiple").mouseleave(function () {
+      $("#multiple-title").hide();
+    });
+  });
+</script>

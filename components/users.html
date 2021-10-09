@@ -50,7 +50,7 @@
 <script>
   $(document).ready(function () {
     $.ajax(
-      `http://127.0.0.1/itp4506/-ITP4506_backend/admin/viewInformation.php`,
+      `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php`,
       {
         dataType: "json",
         timeout: 500,
@@ -66,7 +66,7 @@
           <td>
             <form id="${
               this.id
-            }" action="http://127.0.0.1/itp4506/-ITP4506_backend/admin/accountStatus.php" method="post">
+            }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
               <input type="email" name="userID" value="${this.id}" hidden>
               <select class="form-control bg-info text-light select" title="availability">
                 <option ${this.suspended ? "selected" : ""}>Enable</option>

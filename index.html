@@ -31,6 +31,7 @@
                 <div class="form-outline form-white mb-2">
                   <label class="form-label" for="userId">User ID</label>
                   <input
+                  required
                     type="text"
                     id="userId"
                     maxlength="9"
@@ -40,6 +41,7 @@
                 <label class="form-label" for="password">Password</label>
                 <div class="form-outline form-white mb-2">
                   <input
+                  required
                     type="password"
                     id="password"
                     class="form-control form-control-lg"
@@ -48,12 +50,10 @@
                 <div class="my-2">
                   <a href="#">Forget password?</a>
                 </div>
-                <a
+                <button
+                id="login"
                   class="btn btn-outline-light btn-lg px-5"
-                  id="login"
-                  href="./user/profile.html"
-                  >Login</a
-                >
+                >Login</button>
               </form>
             </div>
           </div>
@@ -70,10 +70,26 @@
   <script type="text/javascript" src="./api/user.js"></script>
   <script>
     $(document).ready(function () {
-      // $('#navbar').load('./components/navbar.html')
-      // $('#footer').load('./components/footer.html')
+      $("#password").keydown(function (event) {
+        if (event.keyCode == 13) {
+          $("#login").click();
+        }
+      });
       $("#login").click(function () {
-        login();
+        $("#loginForm").submit(function () {
+          $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            dataType: "json",
+            success: function (json) {
+              window.location.href = "./user/profile.html";
+            },
+            error: function(){
+              window.location.href = "./user/profile.html";
+            }
+          });
+          return false;
+        });
       });
     });
   </script>
