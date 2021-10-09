@@ -1,0 +1,152 @@
+<main class="page-content">
+  <div class="container-fluid">
+    <h2>Class Allocation</h2>
+    <hr />
+    <div class="row">
+      <div class="form-group col-md-12">
+        <div class="col-md-10 my-2 py-2">
+          <form id="editClassForm">
+            <div class="form-group mb-3 card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Class</h6>
+                  </div>
+                  <div class="col-sm-3">
+                    <h6 class="form-text mb-0">2B</h6>
+                  </div>
+                  <div class="col-sm-3">
+                    <h6 class="form-text text-muted mb-0">Academic Year</h6>
+                  </div>
+                  <div class="col-sm-3">
+                    <h6 class="form-text mb-0">2022</h6>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Description</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="form-text mb-0">
+                      Higher Diploma in Software Engineering
+                    </p>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h5>Student list</h5>
+    <hr />
+    <div class="container">
+    <div class="row">
+      <div class="col-md-12 py-2">
+        <div class="row justify-content-end">
+          <div class="col-sm-2">
+            <select class="form-control">
+              <option value="">Class</option>
+              <option>1A</option>
+              <option>2B</option>
+              <option>3C</option>
+              <option>4D</option>
+              <option>5E</option>
+            </select>
+          </div>
+          <input
+            class="col-3 form-control mb-4 mr-3"
+            id="query"
+            type="text"
+            placeholder="Search here"
+          />
+        </div>
+        <div class="card p-0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" id="select-all">Select All</th>
+                <th scope="col">#</th>
+                <th scope="col">Fiirst Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Class</th>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
+        </div>
+
+        <div class="row justify-content-end pt-3">
+            <div class="col-sm-2">
+            <a class="btn btn-info" href="#" id="updatePwd">Confirm</a></div>
+            <div class="col-sm-2">
+            <button class="btn btn-secondary" id="cancel" type="reset">
+              Cancel
+            </button>
+        </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+    <hr />
+
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<script>
+  $("#select-all").css("cursor", "pointer");
+  $("#select-all").click(function () {
+    $(".form-check-input").prop(
+      "checked",
+      !$(".form-check-input").prop("checked")
+    );
+  });
+  $(document).ready(function () {
+    $.ajax(
+      `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php`,
+      {
+        dataType: "json",
+        timeout: 500,
+        success: function (data, status, xhr) {
+          var result = "";
+          $(data).each(function (index) {
+            result += `
+            <tr>
+          <td><div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="${this.id}">
+  </div></td>
+  <th scope="row">${index + 1}</th>
+          <td>${this.firstName}</td>
+          <td>${this.lastName}</td>
+          <td>
+            2B
+          </td>
+          </tr>
+            `;
+          });
+          $("#table").append(result);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          $("body").replace("Error: " + errorMessage);
+        },
+      }
+    );
+  });
+</script>

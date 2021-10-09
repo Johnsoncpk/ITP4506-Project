@@ -1,0 +1,117 @@
+<main class="page-content">
+  <div class="container-fluid">
+    <h2>Class Info</h2>
+    <hr />
+    <div class="row">
+      <div class="form col-md-12">
+        <div class="col-md-10 my-2 py-2">
+          <form id="editClassForm">
+            <div class="form-group mb-3 card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Class</h6>
+                  </div>
+                  <div class="col-sm-4">
+                    <input
+                      title="text"
+                      id="className"
+                      class="form-control"
+                      value="2B"
+                    />
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Academic Year</h6>
+                  </div>
+                  <div class="col-sm-4">
+                    <input
+                      id="academicYear"
+                      type="number"
+                      class="form-control"
+                      name="academicYear"
+                      value="2022"
+                      placeholder="e.g. 2021"
+                    />
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Description</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      name="description"
+                      rows="3"
+                      placeholder="Description of Class.."
+                    >Higher Diploma in Software Engineering</textarea
+                    >
+                  </div>
+                </div>
+                <hr />
+                <a class="btn btn-info mr-1" href="#" id="edit"
+                  >Edit Class Info</a
+                >
+                <button class="btn btn-secondary" id="cancel" type="reset">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<script>
+  $(document).ready(function () {
+    $("#cancel").hide();
+    form_control();
+    $("#academicYear").val(new Date().getFullYear() + 1);
+    $("#edit").click(function () {
+      if ($(this).text() == "Save") {
+        $(this).text("Edit Class Info");
+        $("#cancel").hide();
+        form_control();
+      } else {
+        $(this).text("Save");
+        $("#cancel").show();
+        form_control();
+      }
+    });
+    $("#cancel").click(function () {
+      $(this).hide();
+      $("#edit").text("Edit Class Info");
+      $("#edit").show();
+      form_control();
+    });
+  });
+
+  function form_control() {
+    $("#editClassForm .form-control").each(function () {
+      $(this).prop("disabled", !$(this).prop("disabled"));
+    });
+  }
+</script>

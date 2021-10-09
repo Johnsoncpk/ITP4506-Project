@@ -3,7 +3,7 @@
     <h2>Users</h2>
     <hr />
     <div class="row gutters-sm">
-      <div class="col-md-12 my-3 py-4">
+      <div class="col-md-12 py-3">
         <div class="row justify-content-end">
           <input
             class="col-3 form-control mb-4 mr-3"
@@ -13,7 +13,7 @@
           />
         </div>
         <div class="card p-0">
-          <table class="table">
+          <table class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -68,7 +68,7 @@
               this.id
             }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
               <input type="email" name="userID" value="${this.id}" hidden>
-              <select class="form-control bg-info text-light select" title="availability">
+              <select class="form-control bg-secondary text-light select" title="availability">
                 <option ${this.suspended ? "selected" : ""}>Enable</option>
                 <option ${!this.suspended ? "selected" : ""}>Disabled</option>
               </select>

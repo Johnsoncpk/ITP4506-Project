@@ -21,9 +21,12 @@
             </div>
           </div>
         </div>
-        <div class="row py-2 d-flex justify-content-end">
+        <div class="row py-2">
           <div class="col">
-            <a class="btn btn-info mx-1" href="#" id="edit">Edit Profile</a>
+            <a class="btn btn-info mr-1" href="#" id="edit">Edit Profile</a>
+            <a class="pl-1 btn btn-info mx-1" href="#" id="updatePwd"
+              >Update Password</a
+            >
             <button class="btn btn-secondary" id="cancel" type="reset">
               Cancel
             </button>
@@ -94,6 +97,33 @@ Bay Area, San Francisco, CA</textarea
             </div>
           </div>
         </form>
+        <form id="updatePwdForm">
+          <div class="form-group mb-3 card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">New Password</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input class="form-control" id="mobile" name="mobile" />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="form-text text-muted mb-0">Comfirm Password</h6>
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    class="form-control"
+                    id="confirmPwd"
+                    name="confirmPwd"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <h3>Class Record</h3>
@@ -143,14 +173,37 @@ Bay Area, San Francisco, CA</textarea
 <script>
   $(document).ready(function () {
     $("#cancel").hide();
+    $("#updatePwdForm").hide();
   });
   $("#edit").click(function () {
     if ($(this).text() == "Save") {
       $(this).text("Edit Profile");
       $("#cancel").hide();
+      $("#updatePwd").show();
     } else {
       $(this).text("Save");
       $("#cancel").show();
+      $("#updatePwd").hide();
+    }
+    form_control();
+  });
+  $("#updatePwd").click(function () {
+    $("#editProfileForm").fadeOut(function () {
+      $("#updatePwdForm").fadeIn();
+    });
+
+    // $("#editProfileForm").hide();
+    if ($(this).text() == "Save") {
+      $(this).text("Update Password");
+      $("#cancel").hide();
+      $("#edit").show();
+      $("#updatePwdForm").fadeOut(function () {
+        $("#editProfileForm").show();
+      });
+    } else {
+      $(this).text("Save");
+      $("#cancel").show();
+      $("#edit").hide();
     }
     form_control();
   });
@@ -159,7 +212,13 @@ Bay Area, San Francisco, CA</textarea
     $(this).hide();
     $("#edit").text("Edit Profile");
     $("#edit").show();
-    form_control(this);
+    $("#updatePwd").text("Update Password");
+    $("#updatePwd").show();
+    $("#updatePwdForm").animate({ right: "250px" });
+    $("#updatePwdForm").fadeOut(function () {
+        $("#editProfileForm").show();
+      });
+    form_control();
   });
 
   function form_control() {

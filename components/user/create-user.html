@@ -3,29 +3,34 @@
     <h2>User Creation</h2>
     <hr />
     <div class="row">
-      <div class="form col-md-12  ">
+      <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
           <form id="editProfileForm">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="form-text text-muted mb-0">Account Type</h6>
-                    </div>
-                    <div class="col-sm-6">
-                        <select class="form-control bg-info text-light select" title="availability">
-                            <option>Teacher</option>
-                            <option>Student</option>
-                          </select>
-                    </div>
+                  <div class="col-sm-3">
+                    <h6 class="form-text text-muted mb-0">Account Type</h6>
                   </div>
-                  <hr>
+                  <div class="col-sm-6">
+                    <select
+                      class="form-control bg-info text-light select"
+                      title="availability"
+                    >
+                      <option>Teacher</option>
+                      <option>Student</option>
+                    </select>
+                  </div>
+                </div>
+                <hr />
                 <div class="row">
                   <div class="col-sm-3">
                     <h6 class="form-text text-muted mb-0">User ID</h6>
                   </div>
                   <div class="col-sm-6">
-                    <p id="userId" class="form-text">*Will Be Genrate By System</p>
+                    <p id="userId" class="form-text">
+                      *Will Be Genrate By System
+                    </p>
                   </div>
                 </div>
                 <hr />
@@ -34,13 +39,23 @@
                     <h6 class="form-text text-muted mb-0">Firstname</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input type="text" class="form-control" name="firstName" placeholder='e.g. Alan'/>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="firstName"
+                      placeholder="e.g. Alan"
+                    />
                   </div>
                   <div class="col-sm-2">
                     <h6 class="form-text text-muted mb-0">Lastname</h6>
                   </div>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" name="lastName" placeholder="e.g. Po"/>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="lastName"
+                      placeholder="e.g. Po"
+                    />
                   </div>
                 </div>
                 <hr />
@@ -49,16 +64,20 @@
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-3">
-                    <input type="number" class="form-control" name="academicYear" placeholder="e.g. 2021"/>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="academicYear"
+                      placeholder="e.g. 2021"
+                    />
                   </div>
                 </div>
                 <hr />
                 <a class="btn btn-info mr-1" href="#" id="edit">Create</a>
-            <button class="btn btn-secondary" id="cancel" type="reset">
-              Reset
-            </button>
+                <button class="btn btn-secondary" id="cancel" type="reset">
+                  Reset
+                </button>
               </div>
-              
             </div>
           </form>
         </div>
