@@ -35,9 +35,10 @@
     crossorigin="anonymous"
   ></script>
   <script type="text/javascript" src="../api/user.js"></script>
+  <script src="../js/common.js"></script>
   <script>
     $(document).ready(function () {
-      $("#main-sidebar").load("../components/main-layout/sidebar.html");
+      loadNavBar();
       $("#main-app").load("../components/user/users.html");
     });
   </script>
