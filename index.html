@@ -75,7 +75,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="./js/background.js"></script>
-    
+
     <script>
       $(document).ready(function () {
         $("#password").keydown(function (event) {
@@ -90,23 +90,23 @@
             type: "post",
             url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
             data: {
-              userID: $('#userId').val(),
-              password: $('#password').val(),
+              userID: $("#userId").val(),
+              password: $("#password").val(),
             },
             success: function (data, status, xhr) {
-              console.log(data);
-              localStorage.setItem("userId", data.userId);
-              localStorage.setItem("role", data.role);
-              // $.toast({
-              //   heading: "Success",
-              //   text: "Login Success! Wellcom!",
-              //   icon: "success",
-              //   loader: true, // Change it to false to disable loader
-              //   loaderBg: "#9EC600", // To change the background
-              // });
+              data = JSON.parse(data);
+              localStorage.setItem("id", data[0].id);
+              localStorage.setItem("role", data[0].role);
+              console.log(localStorage.getItem("id"));
+              $.toast({
+                heading: "Success",
+                text: "Login Success! Wellcom!",
+                icon: "success",
+                loader: true, // Change it to false to disable loader
+                loaderBg: "#9EC600", // To change the background
+              });
               window.location.href =
                 "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
-              
             },
             error: function (jqXhr, textStatus, errorMessage) {
               // $.toast({
