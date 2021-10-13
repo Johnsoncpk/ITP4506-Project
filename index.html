@@ -94,6 +94,7 @@
               password: $('#password').val(),
             },
             success: function (data, status, xhr) {
+              console.log(data);
               localStorage.setItem("userId", data.userId);
               localStorage.setItem("role", data.role);
               // $.toast({
