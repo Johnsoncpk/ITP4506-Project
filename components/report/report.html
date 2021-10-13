@@ -1,0 +1,213 @@
+<div class="page-content">
+    <div class="container-fluid">
+        <h2 id="title">Report</h2>
+        <hr />
+        <div class="row gutters-sm">
+            <div class="col-md-12 py-3">
+                <div class="row">
+                    <div class="col-md-12 py-3">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Period
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Year</a>
+                                <a class="dropdown-item" href="#">Month</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr id="data">
+                                <th scope="col" id="name">Name</th>
+                                <th scope="col" id="className">Class</th>
+                                <th scope="col">Present</th>
+                                <th scope="col">Late</th>
+                                <th scope="col">Early Leave</th>
+                                <th scope="col">Sick Leave</th>
+                                <th scope="col">Personal leave</th>
+                                <th scope="col">Absent Without Reason</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table"></tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 py-3" style="height: 300px;">
+                        <div id="container" style="width: 100%; height: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer class="text-center">
+            <div class="mb-2">
+                <small>
+                    © 2021 made by -
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+                        Ive Jai
+                    </a>
+                </small>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+<script>
+    function drawChart(barData) {
+        anychart.onDocumentReady(function () {
+            // set the data
+            var data = {
+                header: ["Name", "Percentage"],
+                rows: barData
+            };
+            // create the chart
+            chart = anychart.column();
+
+            // add the data
+            chart.data(data);
+
+            // set the chart title
+            chart.title("Attendance Record");
+
+            // draw
+            chart.container("container");
+            chart.draw();
+        });
+    }
+
+    $(document).ready(function () {
+        let searchParams = new URLSearchParams(window.location.search)
+        //alert(searchParams.get('type'));
+        var type = searchParams.get('type');
+        if (type == "class") {
+            $("#title").text("Class Report");
+            $("#name").remove();
+            $(".dropdown").remove();
+            loadData();
+        }else if(type == "school"){
+            $("#title").text("School Report");
+            $("#name").remove();
+            $("#className").remove();
+            $(".dropdown").remove();
+            loadData();
+        }else{
+            $("#title").text("Student Report");
+        }
+
+        $.ajax(
+            `../php/-ITP4506_backend/student/searchAttendance.php`,
+            {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    var result = "";
+                    /* $(data).each(function (index) {
+                         result += `
+               <tr>
+             <td>${this.date}</td>
+             <td>${this.time}</td>
+             <td>${this.status}</td>
+             </tr>
+               `;
+                     });*/
+                    $("#table").append(result);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    $("body").replace("Error: " + errorMessage);
+                },
+            }
+        );
+
+        function loadData(){
+
+            var result = "";
+            var rows = [];
+            $("#container").empty();
+            $(".rowData").empty();
+
+            if (type == "student") {
+                if ($("#dropdownMenuButton").text() == "Year") {
+                    rows = [
+                        ["Present", 88],
+                        ["Late", 6],
+                        ["Early Leave", 2],
+                        ["Sick Leave", 2],
+                        ["Personal leave", 1],
+                        ["Absent Without Reason", 1]
+                    ];
+
+                } else {
+                    rows = [
+                        ["Present", 90],
+                        ["Late", 5],
+                        ["Early Leave", 0],
+                        ["Sick Leave", 5],
+                        ["Personal leave", 0],
+                        ["Absent Without Reason", 0]
+                    ];
+                }
+            } else if (type == "class" || type == "school"){
+                rows = [
+                    ["Present", 75],
+                    ["Late", 15],
+                    ["Early Leave", 4],
+                    ["Sick Leave", 1],
+                    ["Personal leave", 4],
+                    ["Absent Without Reason", 1]
+                ];
+            } 
+
+            if (type == "student") {
+                result += `<tr class="rowData">
+                <td>Johnson Chong</td>
+                <td>2B</td>`
+            } else if (type == "class") {
+                result += `<tr class="rowData">
+                    <td>2B</td>`
+            } else{
+                result += `<tr class="rowData">`
+            }
+            result +=
+                `
+                <td>`+ rows[0][1] + `%</td>
+                <td>`+ rows[1][1] + `%</td>
+                <td>`+ rows[2][1] + `%</td>
+                <td>`+ rows[3][1] + `%</td>
+                <td>`+ rows[4][1] + `%</td>
+                <td>`+ rows[5][1] + `%</td>`
+
+
+            if (type == "student") {
+                result += `<td>
+                    <a class="btn btn-info mr-1" href="./attendance.html"
+                    id="edit">Detail</a>
+                </td>
+             </tr>`
+            } else if (type == "class") {
+                result += `</tr>`
+            }
+            $("#data").after(result);
+            drawChart(rows);
+        }
+
+        $(".dropdown-item").click(function (event) {
+            $("#dropdownMenuButton").text($(this).text());
+            loadData();
+        });
+
+
+        $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>

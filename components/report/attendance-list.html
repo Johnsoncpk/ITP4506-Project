@@ -1,0 +1,201 @@
+<div class="page-content">
+    <div class="container-fluid">
+        <h2>Attendance Record</h2>
+        <hr />
+        <div class="row gutters-sm">
+            <div class="col-md-12 py-3">
+                <div class="row">
+                    <div class="col-md-12 py-3">
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item item1" href="#">1</a>
+                                <a class="dropdown-item item1" href="#">2</a>
+                            </div>
+                        </div>
+                        <div class="dropdown py-2">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Class
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item item2" href="#">A</a>
+                                <a class="dropdown-item item2" href="#">B</a>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+
+                            <a class="btn btn-info mr-1" href="report.html?type=class" id="edit">Get Class
+                                Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr id="data">
+                                <th scope="col">Name</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">Present</th>
+                                <th scope="col">Late</th>
+                                <th scope="col">Early Leave</th>
+                                <th scope="col">Sick Leave</th>
+                                <th scope="col">Personal leave</th>
+                                <th scope="col">Absent Without Reason</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer class="text-center">
+            <div class="mb-2">
+                <small>
+                    © 2021 made by -
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+                        Ive Jai
+                    </a>
+                </small>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax(
+            `../php/-ITP4506_backend/student/searchAttendance.php`,
+            {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    var result = "";
+                    /* $(data).each(function (index) {
+                         result += `
+               <tr>
+             <td>${this.date}</td>
+             <td>${this.time}</td>
+             <td>${this.status}</td>
+             </tr>
+               `;
+                     });
+                     $("#table").append(result);*/
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    $("body").replace("Error: " + errorMessage);
+                },
+            }
+        );
+
+        let searchParams = new URLSearchParams(window.location.search)
+        //alert(searchParams.get('type'));
+        var type = searchParams.get('type');
+        if (type == "class") {
+            $(".dropdown").remove();
+            getData();
+        }
+
+        function getData() {
+            var className = "";
+            var name = [];
+            $(".rowData").empty();
+
+            if (type == "class") {
+                rows = [[
+                    ["Present", 88],
+                    ["Late", 6],
+                    ["Early Leave", 2],
+                    ["Sick Leave", 2],
+                    ["Personal leave", 1],
+                    ["Absent Without Reason", 1]
+                ], [
+                    ["Present", 99],
+                    ["Late", 0],
+                    ["Early Leave", 0],
+                    ["Sick Leave", 1],
+                    ["Personal leave", 0],
+                    ["Absent Without Reason", 0]]];
+                name = ["Johnson Chong", "Alvin Cheung"];
+                className = "2B";
+            } else if (type == "school") {
+                className = $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text();
+                if ($("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text() == "2B") {
+                    rows = [[
+                        ["Present", 88],
+                        ["Late", 6],
+                        ["Early Leave", 2],
+                        ["Sick Leave", 2],
+                        ["Personal leave", 1],
+                        ["Absent Without Reason", 1]
+                    ], [
+                        ["Present", 99],
+                        ["Late", 0],
+                        ["Early Leave", 0],
+                        ["Sick Leave", 1],
+                        ["Personal leave", 0],
+                        ["Absent Without Reason", 0]]];
+                    name = ["Johnson Chong", "Alvin Cheung"];
+
+                } else if ($("#dropdownMenuButton2").text() == "A" || $("#dropdownMenuButton2").text() == "B") {
+                    rows = [[
+                        ["Present", 95],
+                        ["Late", 5],
+                        ["Early Leave", 0],
+                        ["Sick Leave", 0],
+                        ["Personal leave", 0],
+                        ["Absent Without Reason", 0]
+                    ], [
+                        ["Present", 100],
+                        ["Late", 0],
+                        ["Early Leave", 0],
+                        ["Sick Leave", 0],
+                        ["Personal leave", 0],
+                        ["Absent Without Reason", 0]]];
+                    name = ["Ken Kwan", "Vincy Pun"];
+                }
+            }
+
+            var result = "";
+            var i = 0;
+            rows.forEach(element => {
+                result +=
+                    `<tr class="rowData">
+                <td>`+ name[i] + `</td>
+                <td>`+ className + `</td>
+                <td>`+ element[0][1] + `%</td>
+                <td>`+ element[1][1] + `%</td>
+                <td>`+ element[2][1] + `%</td>
+                <td>`+ element[3][1] + `%</td>
+                <td>`+ element[4][1] + `%</td>
+                <td>`+ element[5][1] + `%</td>
+                <td><a class="btn btn-info mr-1" href="./report.html?type=student"
+                    id="edit">Detail</a></td></tr>`;
+                i++;
+            });
+            $("#data").after(result);
+        }
+
+        $(".item1").click(function () {
+            $("#dropdownMenuButton2").prop("disabled", false);
+            $("#dropdownMenuButton1").text($(this).text());
+            getData();
+        });
+
+        $(".item2").click(function () {
+            $("#dropdownMenuButton2").text($(this).text());
+            getData();
+        });
+
+        $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>

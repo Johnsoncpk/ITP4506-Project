@@ -49,11 +49,12 @@
 <script>
     $(document).ready(function () {
         $.ajax(
-            `../php/-ITP4506_backend/student/searchAttendance.php`,
+            `../../Attendance-Online-Server/student/searchAttendance.php`,
             {
                 dataType: "json",
                 timeout: 500,
                 success: function (data, status, xhr) {
+                    console.log(data);
                     var result = "";
                     $(data).each(function (index) {
                         result += `

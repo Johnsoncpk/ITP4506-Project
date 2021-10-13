@@ -36,8 +36,10 @@
   <script src="../js/common.js"></script>
   <script>
     $(document).ready(function () {
+      let searchParams = new URLSearchParams(window.location.search);
+      //alert(searchParams.get('type'));
       loadNavBar();
-      $("#main-app").load("../components/report/report.html");
+      $("#main-app").load("../components/report/report.html", {type: searchParams.get('type')});
     });
   </script>
 </body>
