@@ -60,7 +60,6 @@
     loadData(url, "*");
     $("#role").change(function () {
       role = $("#role option:selected").val();
-      $("#table").empty();
       if (role == "*") {
         url = "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
         loadData(url, "*");
@@ -78,6 +77,7 @@
     });
 
     function loadData(url, role) {
+      $("#table").empty();
       $.ajax(url, {
         method: "post",
         dataType: "json",
