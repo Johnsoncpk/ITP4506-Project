@@ -68,29 +68,6 @@
 
 <script>
     $(document).ready(function () {
-        $.ajax(
-            `../php/-ITP4506_backend/student/searchAttendance.php`,
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    var result = "";
-                    /* $(data).each(function (index) {
-                         result += `
-               <tr>
-             <td>${this.date}</td>
-             <td>${this.time}</td>
-             <td>${this.status}</td>
-             </tr>
-               `;
-                     });
-                     $("#table").append(result);*/
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    $("body").replace("Error: " + errorMessage);
-                },
-            }
-        );
 
         let searchParams = new URLSearchParams(window.location.search)
         //alert(searchParams.get('type'));
