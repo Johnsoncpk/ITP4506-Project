@@ -1,71 +1,76 @@
 <div class="page-content">
-    <div class="container-fluid">
-        <h2>Attendance Record</h2>
-        <hr />
-        <div class="row gutters-sm">
-            <div class="col-md-12 py-3">
-                <div class="row">
-                    <div class="col-md-12 py-3">
-                    </div>
-                </div>
-                <div class="card p-0">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Class</th>
-                                <th scope="col">Present</th>
-                                <th scope="col">Late</th>
-                                <th scope="col">Early Leave</th>
-                                <th scope="col">Sick Leave</th>
-                                <th scope="col">Personal leave</th>
-                                <th scope="col">Absent Without Reason</th>
-                                <th scope="col"></th>
-                            </tr>
-                            <tr>
-                                <td>Johnson Chong</td>
-                                <td>2B</td>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>
-                                    <a class="btn btn-info mr-1" href="../student/report-detail.html"
-                                        id="edit">Detail</a>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody id="table"></tbody>
-                    </table>
-                </div>
-            </div>
+  <div class="container-fluid">
+    <h2>Attendance Record</h2>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-12 py-3">
+        <div class="row">
+          <div class="col-md-12 py-3"></div>
         </div>
-        <hr />
-        <footer class="text-center">
-            <div class="mb-2">
-                <small>
-                    © 2021 made by -
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
-                        Ive Jai
-                    </a>
-                </small>
-            </div>
-        </footer>
+        <div class="card p-0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Class</th>
+                <th scope="col">Present</th>
+                <th scope="col">Late</th>
+                <th scope="col">Early Leave</th>
+                <th scope="col">Sick Leave</th>
+                <th scope="col">Personal leave</th>
+                <th scope="col">Absent Without Reason</th>
+                <th scope="col"></th>
+              </tr>
+              <tr>
+                <td>Johnson Chong</td>
+                <td>2B</td>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>
+                  <a
+                    class="btn btn-info mr-1"
+                    href="../student/report-detail.html"
+                    id="edit"
+                    >Detail</a
+                  >
+                </td>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        $.ajax(
-            `../php/-ITP4506_backend/student/searchAttendance.php`,
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    var result = "";
-                    /* $(data).each(function (index) {
+  $(document).ready(function () {
+    $.ajax(`../php/-ITP4506_backend/student/searchAttendance.php`, {
+      dataType: "json",
+      timeout: 500,
+      success: function (data, status, xhr) {
+        var result = "";
+        /* $(data).each(function (index) {
                          result += `
                <tr>
              <td>${this.date}</td>
@@ -74,23 +79,22 @@
              </tr>
                `;
                      });*/
-                    $("#table").append(result);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    $("body").replace("Error: " + errorMessage);
-                },
-            }
-        );
-
-        $(".dropdown-item").click(function () {
-            $("#dropdownMenuButton").text($(this).text());
-        });
-
-        $("#query").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-            });
-        });
+        $("#table").append(result);
+      },
+      error: function (jqXhr, textStatus, errorMessage) {
+        $("body").replace("Error: " + errorMessage);
+      },
     });
+
+    $(".dropdown-item").click(function () {
+      $("#dropdownMenuButton").text($(this).text());
+    });
+
+    $("#query").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#table tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+  });
 </script>
