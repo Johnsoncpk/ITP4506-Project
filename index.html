@@ -90,8 +90,8 @@
             type: "post",
             url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
             data: {
-              userID: $('userId').val(),
-              password: $('password').val(),
+              userID: $('#userId').val(),
+              password: $('#password').val(),
             },
             success: function (data, status, xhr) {
               console.log(data);
