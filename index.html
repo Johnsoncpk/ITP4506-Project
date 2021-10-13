@@ -74,47 +74,47 @@
       integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw=="
       crossorigin="anonymous"
     ></script>
-    <script src="./api/user.js"></script>
     <script src="./js/background.js"></script>
-
+    
     <script>
       $(document).ready(function () {
-        // $("#password").keydown(function (event) {
-        //   if (event.keyCode == 13) {
-        //     $("#login").click();
-        //   }
-        // });
-        $("#login").click(async function () {
-          var url = "http://127.0.0.1/itp4506/Attendance-Online-Server";
-          await $.ajax({
+        $("#password").keydown(function (event) {
+          if (event.keyCode == 13) {
+            $("#login").click();
+          }
+        });
+        $("#login").click(function () {
+          //var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php";
+          //getUserByRole.php
+          $.ajax({
             type: "post",
-            url: url + "/login.php",
+            url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
             data: {
-              id: this.id,
-              password: this.password,
+              userID: $('userId').val(),
+              password: $('password').val(),
             },
             success: function (data, status, xhr) {
               localStorage.setItem("userId", data.userId);
               localStorage.setItem("role", data.role);
-              $.toast({
-                heading: "Success",
-                text: "Login Success! Wellcom!",
-                icon: "success",
-                loader: true, // Change it to false to disable loader
-                loaderBg: "#9EC600", // To change the background
-              });
+              // $.toast({
+              //   heading: "Success",
+              //   text: "Login Success! Wellcom!",
+              //   icon: "success",
+              //   loader: true, // Change it to false to disable loader
+              //   loaderBg: "#9EC600", // To change the background
+              // });
               window.location.href =
                 "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
               
             },
             error: function (jqXhr, textStatus, errorMessage) {
-              $.toast({
-                heading: "Error",
-                text: "Loaders are enabled by default. Use `loader`, `loaderBg` to change the default behavior",
-                icon: "info",
-                loader: true, // Change it to false to disable loader
-                loaderBg: "#9EC600", // To change the background
-              });
+              // $.toast({
+              //   heading: "Error",
+              //   text: "Loaders are enabled by default. Use `loader`, `loaderBg` to change the default behavior",
+              //   icon: "info",
+              //   loader: true, // Change it to false to disable loader
+              //   loaderBg: "#9EC600", // To change the background
+              // });
               return errorMessage;
             },
           });
