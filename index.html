@@ -90,12 +90,11 @@
             type: "post",
             url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
             data: {
-              userID: $('#userId').val(),
-              password: $('#password').val(),
+              userID: $('userId').val(),
+              password: $('password').val(),
             },
             success: function (data, status, xhr) {
               console.log(data);
-              console.log(data[2]);
               localStorage.setItem("userId", data.userId);
               localStorage.setItem("role", data.role);
               // $.toast({
@@ -105,8 +104,8 @@
               //   loader: true, // Change it to false to disable loader
               //   loaderBg: "#9EC600", // To change the background
               // });
-              //window.location.href =
-              //  "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
+              window.location.href =
+                "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
               
             },
             error: function (jqXhr, textStatus, errorMessage) {

@@ -78,12 +78,51 @@
         }
 
         function getData() {
+            var rows = [];
             var className = "";
             var name = [];
             $(".rowData").empty();
 
             if (type == "class") {
-                rows = [[
+                $.ajax({
+                    type: "post",
+                    url: `http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/searchClass.php`,
+                    data: {
+                        class: '2B',
+                    },
+                    success: function (data, status, xhr) {
+                        var $result = "";
+                        var $studentID = data[0]["studentID"];
+                        $studentID.forEach(function (element) {
+                            $.post("http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-student.php", { userID: element }, function (inData) {
+                                //console.log(inData);
+                                inData.forEach(function (reportData) {
+                                    console.log(reportData);
+                                    $result +=
+                                        `<tr class="rowData">
+                                            <td>`+ reportData.student + `</td>
+                                            <td>`+ '2B' + `</td>
+                                            <td>`+ reportData.present.toFixed(2) + `%</td>
+                                            <td>`+ reportData.late.toFixed(2) + `%</td>
+                                            <td>`+ reportData.earlyLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.sickLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.personalLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.absentWithoutReason.toFixed(2) + `%</td>
+                                            <td><a class="btn btn-info mr-1" href="./report.html?type=student"
+                                                id="edit">Detail</a>
+                                            </td>
+                                     </tr>`;
+
+                                     $("#data").after($result);
+                                });
+                            });
+                        }, "json");
+
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                    }
+                });
+                /*rows = [[
                     ["Present", 88],
                     ["Late", 6],
                     ["Early Leave", 2],
@@ -98,10 +137,51 @@
                     ["Personal leave", 0],
                     ["Absent Without Reason", 0]]];
                 name = ["Johnson Chong", "Alvin Cheung"];
-                className = "2B";
+                className = "2B";*/
             } else if (type == "school") {
                 className = $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text();
-                if ($("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text() == "2B") {
+               
+                $.ajax({
+                    type: "post",
+                    url: `http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/searchClass.php`,
+                    data: {
+                        class: className,
+                    },
+                    success: function (data, status, xhr) {
+                        var $studentID = data[0]["studentID"];
+                        $studentID.forEach(function (element) {
+                            $.post("http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-student.php", { userID: element }, function (inData) {
+                                //console.log(inData);
+                                inData.forEach(function (reportData) {
+                                    var $result = "";
+                                    console.log(reportData);
+                                    alert(reportData.studentId);
+                                    $result +=
+                                        `<tr class="rowData">
+                                            <td>`+ reportData.student + `</td>
+                                            <td>`+ '2B' + `</td>
+                                            <td>`+ reportData.present.toFixed(2) + `%</td>
+                                            <td>`+ reportData.late.toFixed(2) + `%</td>
+                                            <td>`+ reportData.earlyLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.sickLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.personalLeave.toFixed(2) + `%</td>
+                                            <td>`+ reportData.absentWithoutReason.toFixed(2) + `%</td>
+                                            <td><a class="btn btn-info mr-1" href="./report.html?type=student&studentId=` + reportData.studentId + `
+                                                id="edit">Detail</a>
+                                            </td>
+                                     </tr>`;
+
+                                     $("#data").after($result);
+                                });
+                            });
+                        }, "json");
+
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                    }
+                });
+               
+                /*if ($("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text() == "2B") {
                     rows = [[
                         ["Present", 88],
                         ["Late", 6],
@@ -134,7 +214,7 @@
                         ["Personal leave", 0],
                         ["Absent Without Reason", 0]]];
                     name = ["Ken Kwan", "Vincy Pun"];
-                }
+                }*/
             }
 
             var result = "";
