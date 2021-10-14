@@ -12,8 +12,13 @@
                                 Period
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Year</a>
-                                <a class="dropdown-item" href="#">Month</a>
+                                <a class="dropdown-item" href="#">2021</a>
+                                <a class="dropdown-item" href="#">2020</a>
+                                <a class="dropdown-item" href="#">2019</a>
+                                <a class="dropdown-item" href="#">2018</a>
+                                <a class="dropdown-item" href="#">2017</a>
+                                <a class="dropdown-item" href="#">2016</a>
+                                <a class="dropdown-item" href="#">2015</a>
                             </div>
                         </div>
                     </div>
@@ -60,36 +65,63 @@
 
 
 <script>
-    function drawChart(barData) {
-        anychart.onDocumentReady(function () {
-            // set the data
-            var data = {
-                header: ["Name", "Percentage"],
-                rows: barData
-            };
-            // create the chart
-            chart = anychart.column();
-
-            // add the data
-            chart.data(data);
-
-            // set the chart title
-            chart.title("Attendance Record");
-
-            // draw
-            chart.container("container");
-            chart.draw();
-        });
-    }
 
     $(document).ready(function () {
+
+
+        function drawChart() {
+            anychart.onDocumentReady(function () {
+                if ($("#dropdownMenuButton").text() == "2021") {
+                    rows = [
+                        ["Monday", 79],
+                        ["Tuesday", 89],
+                        ["Wednesday", 100],
+                        ["Thursday", 100],
+                        ["Friday", 88],
+                    ];
+                } else if ($("#dropdownMenuButton").text() == "2020") {
+                    rows = [
+                        ["Monday", 98.6],
+                        ["Tuesday", 99.3],
+                        ["Wednesday", 100],
+                        ["Thursday", 100],
+                        ["Friday", 89.5],
+                    ];
+                } else {
+                    rows = [
+                        ["Monday", 77.6],
+                        ["Tuesday", 99.3],
+                        ["Wednesday", 98],
+                        ["Thursday", 89.8],
+                        ["Friday", 89.5],
+                    ];
+                }
+
+                // set the data
+                var data = {
+                    header: ["Name", "Percentage"],
+                    rows: rows
+                };
+                // create the chart
+                chart = anychart.column();
+
+                // add the data
+                chart.data(data);
+
+                // set the chart title
+                chart.title("Attendance Record");
+
+                // draw
+                chart.container("container");
+                chart.draw();
+            });
+        }
+
         let searchParams = new URLSearchParams(window.location.search)
-        localStorage.setItem("userId", "200413958");
-        localStorage.setItem("role", "teacher");
         var url = "";
         var studentId = "";
         if (localStorage.getItem("role") == "student") {
-            studentId = localStorage.getItem("userId");
+            studentId = localStorage.getItem("id");
         } else {
             studentId = searchParams.get('studentId');
         }
@@ -97,7 +129,7 @@
         var type = searchParams.get('type');
         var className = searchParams.get('className');
 
-        if(className == ""){
+        if (className == "") {
             className = "2B";
         }
 
@@ -110,45 +142,6 @@
             url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-school.php";
         }
 
-
-        /*$.ajax(
-            "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-school.php",
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    console.log(data);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                },
-            }
-        );*/
-        /*$.ajax(
-            url,
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    console.log(data);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                },
-            }
-        );*/
-
-        /*$.ajax({
-            type: "post",
-            url: url,
-            data: {
-                "userID": localStorage.getItem("userId"),
-            },
-            success: function (data, status, xhr) {
-                console.log(data);
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-            }
-        });*/
-
         if (type == "class") {
             $("#title").text("Class Report");
             $("#name").remove();
@@ -158,10 +151,10 @@
             $("#title").text("School Report");
             $("#name").remove();
             $("#className").remove();
-            $(".dropdown").remove();
             loadData();
         } else {
             $("#title").text("Student Report");
+            $(".dropdown").remove();
         }
 
 
@@ -188,17 +181,17 @@
                     success: function (data, status, xhr) {
                         console.log(data[0]);
 
-                        if ($("#dropdownMenuButton").text() == "Year") {
+                        //if ($("#dropdownMenuButton").text() == "Year") {
 
-                            rows = [
-                                ["Present", data[0].present.toFixed(2)],
-                                ["Late", data[0].late.toFixed(2)],
-                                ["Early Leave", data[0].earlyLeave.toFixed(2)],
-                                ["Sick Leave", data[0].sickLeave.toFixed(2)],
-                                ["Personal leave", data[0].personalLeave.toFixed(2)],
-                                ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
-                            ];
-                        } else {
+                        rows = [
+                            ["Present", data[0].present.toFixed(2)],
+                            ["Late", data[0].late.toFixed(2)],
+                            ["Early Leave", data[0].earlyLeave.toFixed(2)],
+                            ["Sick Leave", data[0].sickLeave.toFixed(2)],
+                            ["Personal leave", data[0].personalLeave.toFixed(2)],
+                            ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
+                        ];
+                        /*} else {
                             rows = [
                                 ["Present", 90],
                                 ["Late", 5],
@@ -207,7 +200,7 @@
                                 ["Personal leave", 0],
                                 ["Absent Without Reason", 0]
                             ];
-                        }
+                        }*/
                         name = data[0].student;
                         classReceived = data[0].class;
                         studentIdReceived = data[0].studentId;
@@ -250,14 +243,37 @@
                         timeout: 500,
                         success: function (data, status, xhr) {
                             console.log(data[0]);
-                            rows = [
-                                ["Present", data[0].present.toFixed(2)],
-                                ["Late", data[0].late.toFixed(2)],
-                                ["Early Leave", data[0].earlyLeave.toFixed(2)],
-                                ["Sick Leave", data[0].sickLeave.toFixed(2)],
-                                ["Personal leave", data[0].personalLeave.toFixed(2)],
-                                ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
-                            ];
+
+
+                            if ($("#dropdownMenuButton").text() == "2021") {
+
+                                rows = [
+                                    ["Present", data[0].present.toFixed(2)],
+                                    ["Late", data[0].late.toFixed(2)],
+                                    ["Early Leave", data[0].earlyLeave.toFixed(2)],
+                                    ["Sick Leave", data[0].sickLeave.toFixed(2)],
+                                    ["Personal leave", data[0].personalLeave.toFixed(2)],
+                                    ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
+                                ];
+                            } else if ($("#dropdownMenuButton").text() == "2020") {
+                                rows = [
+                                    ["Present", 87.6],
+                                    ["Late", 8.3],
+                                    ["Early Leave", 1.7],
+                                    ["Sick Leave", 2.4],
+                                    ["Personal leave", 0],
+                                    ["Absent Without Reason", 0]
+                                ];
+                            } else {
+                                rows = [
+                                    ["Present", 90],
+                                    ["Late", 5],
+                                    ["Early Leave", 0],
+                                    ["Sick Leave", 5],
+                                    ["Personal leave", 0],
+                                    ["Absent Without Reason", 0]
+                                ];
+                            }
                         },
                         error: function (jqXhr, textStatus, errorMessage) {
                         },
@@ -267,11 +283,11 @@
 
             if (type == "student") {
                 result += `<tr class="rowData">
-                <td>`+ name +`</td>
-                <td>` +classReceived + `</td>`
+                <td>`+ name + `</td>
+                <td>` + classReceived + `</td>`
             } else if (type == "class") {
                 result += `<tr class="rowData">
-                    <td>`+ classReceived +`</td>`
+                    <td>`+ classReceived + `</td>`
             } else {
                 result += `<tr class="rowData">`
             }
@@ -287,7 +303,7 @@
 
             if (type == "student") {
                 result += `<td>
-                    <a class="btn btn-info mr-1" href="./attendance.html?studentId=`+ studentIdReceived +`
+                    <a class="btn btn-info mr-1" href="./attendance.html?studentId=`+ studentIdReceived + `
                     " id="edit">Detail</a>
                 </td>
              </tr>`
@@ -295,7 +311,7 @@
                 result += `</tr>`
             }
             $("#data").after(result);
-            drawChart(rows);
+            drawChart();
         }
 
         $(".dropdown-item").click(function (event) {

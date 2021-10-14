@@ -94,10 +94,12 @@
               password: $("#password").val(),
             },
             success: function (data, status, xhr) {
-              data = JSON.parse(data);
+              console.log(data);
+              //data = JSON.parse(data);
               localStorage.setItem("id", data[0].id);
               localStorage.setItem("role", data[0].role);
-              console.log(localStorage.getItem("id"));
+              localStorage.setItem("firstName", data[0].firstName);
+              localStorage.setItem("lastName", data[0].lastName);
               // $.toast({
               //   heading: "Success",
               //   text: "Login Success! Wellcom!",

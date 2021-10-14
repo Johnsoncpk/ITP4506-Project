@@ -4,16 +4,35 @@
         <hr />
         <div class="row gutters-sm">
             <div class="col-md-12 py-3">
-                <div class="row">
-                    <div class="col-md-12 py-3">
+                <div class="col-md-12 py-3">
+
+                    <div class="row">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Period
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Year</a>
-                                <a class="dropdown-item" href="#">Month</a>
+                                <a class="dropdown-item item1" href="#">2021</a>
+                                <a class="dropdown-item item1" href="#">2020</a>
+                            </div>
+                        </div>
+                        <div class="dropdown ml-2">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Month
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item item2" href="#">01</a>
+                                <a class="dropdown-item item2" href="#">02</a>
+                                <a class="dropdown-item item2" href="#">03</a>
+                                <a class="dropdown-item item2" href="#">04</a>
+                                <a class="dropdown-item item2" href="#">05</a>
+                                <a class="dropdown-item item2" href="#">06</a>
+                                <a class="dropdown-item item2" href="#">07</a>
+                                <a class="dropdown-item item2" href="#">08</a>
+                                <a class="dropdown-item item2" href="#">09</a>
+                                <a class="dropdown-item item2" href="#">10</a>
+                                <a class="dropdown-item item2" href="#">11</a>
+                                <a class="dropdown-item item2" href="#">12</a>
                             </div>
                         </div>
                     </div>
@@ -63,11 +82,23 @@
                 console.log(data);
                 var result = "";
                 $(data).each(function (index) {
+                    $statusShow = this.status;
+                    if ($statusShow == "earlyLeave") {
+                        $statusShow = "early leave";
+                    } else if ($statusShow == "earlyLeave") {
+                        $statusShow = "early leave";
+                    } else if ($statusShow == "sickLeave") {
+                        $statusShow = "sick leave";
+                    } else if ($statusShow == "personalLeave") {
+                        $statusShow = "personal leave";
+                    } else if ($statusShow == "absent") {
+                        $statusShow = "absent without reason";
+                    }
                     result += `
-                        <tr>
+                        <tr class="record">
                         <td>${this.date}</td>
                         <td>${this.time}</td>
-                        <td>${this.status}</td>
+                        <td>`+ $statusShow + `</td>
                         </tr>
                         `;
                 });
@@ -77,8 +108,25 @@
             }
         });
 
-        $(".dropdown-item").click(function () {
-            $("#dropdownMenuButton").text($(this).text());
+        $(".item1").click(function () {
+            $("#dropdownMenuButton1").text($(this).text());
+            $(".record").hide();
+            if ($("#dropdownMenuButton2").text().trim() === "Month") {
+                $(".record").filter(":contains(" + $("#dropdownMenuButton1").text() + ")").show();
+            } else{
+                $(".record").filter(":contains(" + $("#dropdownMenuButton1").text() + "-" + $("#dropdownMenuButton2").text() + ")").show();
+            }
+        });
+
+
+        $(".item2").click(function () {
+            $("#dropdownMenuButton2").text($(this).text());
+            $(".record").hide();
+            if ($("#dropdownMenuButton1").text().trim() === "Year") {
+                $(".record").filter(":contains('-" + $("#dropdownMenuButton2").text() + "-')").show();
+            } else{
+                $(".record").filter(":contains(" + $("#dropdownMenuButton1").text() + "-" + $("#dropdownMenuButton2").text() + ")").show();
+            }
         });
 
         $("#query").on("keyup", function () {

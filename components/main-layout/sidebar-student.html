@@ -18,9 +18,8 @@
           />
         </div>
         <div class="user-info">
-          <span class="user-name"
-            >Johnson
-            <strong>Chong</strong>
+          <span id="user-name"
+            >Johnson Chong
           </span>
           <span class="user-role">Student</span>
         </div>
@@ -40,7 +39,7 @@
             </a>
           </li>
           <li>
-            <a href="./report.html?type=student">
+            <a href="http://127.0.0.1/itp4506/Attendance-Online-Web/student/report.html?type=student">
               <i class="fas fa-chart-bar"></i>
               <span>Report</span>
               <!-- <span class="badge badge-pill badge-primary">Beta</span> -->
@@ -121,6 +120,8 @@
   ></script>
   <script>
     jQuery(function ($) {
+      $("#user-name").text(localStorage.getItem("firstName") + " " +localStorage.getItem("lastName"));
+
       $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);
         if ($(this).parent().hasClass("active")) {

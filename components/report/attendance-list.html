@@ -5,30 +5,38 @@
         <div class="row gutters-sm">
             <div class="col-md-12 py-3">
                 <div class="row">
-                    <div class="col-md-12 py-3">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item item1" href="#">1</a>
+                            <a class="dropdown-item item1" href="#">2</a>
+                        </div>
+                    </div>
+                    <div class="dropdown ml-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Class
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item item2" href="#">A</a>
+                            <a class="dropdown-item item2" href="#">B</a>
+                        </div>
+                    </div>
 
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Year
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item item1" href="#">1</a>
-                                <a class="dropdown-item item1" href="#">2</a>
-                            </div>
-                        </div>
-                        <div class="dropdown py-2">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Class
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item item2" href="#">A</a>
-                                <a class="dropdown-item item2" href="#">B</a>
-                            </div>
-                        </div>
+
+                    <div class="dropdown ml-2">
+                        <input class="form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 py-3">
                         <div class="row justify-content-end">
 
                             <button class="btn btn-info mr-1" onclick="location.href = '#';" id="classReport"
-                                disabled>Get Class
+                                disabled>Get
+                                Class
                                 Report</button>
                         </div>
                     </div>
@@ -85,6 +93,9 @@
             $(".rowData").empty();
 
             if (type == "class") {
+                $('#classReport').prop("disabled", false);$('#classReport').click(function () {
+                    window.location.href = "report.html?type=class&className=2B";
+                });
                 $.ajax({
                     type: "post",
                     url: `http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/searchClass.php`,
@@ -142,7 +153,7 @@
                 className = "2B";*/
             } else if (type == "school") {
 
-                className = $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text(); 
+                className = $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text();
                 $('#classReport').click(function () {
                     window.location.href = "report.html?type=class&className=" + $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text();
                 });
@@ -163,14 +174,14 @@
                                     $result +=
                                         `<tr class="rowData">
                                             <td>`+ reportData.student + `</td>
-                                            <td>`+ '2B' + `</td>
+                                            <td>`+ reportData.class + `</td>
                                             <td>`+ reportData.present.toFixed(2) + `%</td>
                                             <td>`+ reportData.late.toFixed(2) + `%</td>
                                             <td>`+ reportData.earlyLeave.toFixed(2) + `%</td>
                                             <td>`+ reportData.sickLeave.toFixed(2) + `%</td>
                                             <td>`+ reportData.personalLeave.toFixed(2) + `%</td>
                                             <td>`+ reportData.absentWithoutReason.toFixed(2) + `%</td>
-                                            <td><a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` + reportData.studentId + `
+                                            <td><a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` + reportData.studentId + `"
                                                 >Detail</a>
                                             </td>
                                      </tr>`;
@@ -221,7 +232,7 @@
                 }*/
             }
 
-            var result = "";
+            /*var result = "";
             var i = 0;
             rows.forEach(element => {
                 result +=
@@ -238,7 +249,7 @@
                 >Detail</a></td></tr>`;
                 i++;
             });
-            $("#data").after(result);
+            $("#data").after(result);*/
         }
 
         $(".item1").click(function () {
@@ -254,10 +265,9 @@
         });
 
         $("#query").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#table tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-            });
+            var value = $(this).val();
+            $(".rowData").hide();
+            $(".rowData").filter(":contains(" + value + ")").show();
         });
     });
 </script>

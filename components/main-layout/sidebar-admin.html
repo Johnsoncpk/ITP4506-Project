@@ -18,9 +18,8 @@
           />
         </div>
         <div class="user-info">
-          <span class="user-name"
-            >Johnson
-            <strong>Chong</strong>
+          <span id="user-name"
+            >Johnson Chong
           </span>
           <span class="user-role">Administrator</span>
         </div>
@@ -113,6 +112,10 @@
 
   <script>
     jQuery(function ($) {
+
+      $("#user-name").text(localStorage.getItem("firstName") + " " +localStorage.getItem("lastName"));
+
+
       $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);
         if ($(this).parent().hasClass("active")) {

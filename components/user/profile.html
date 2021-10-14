@@ -109,27 +109,7 @@ IVE</textarea>
     <h3>Class Record</h3>
     <div class="card p-0">
       <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Academic Year</th>
-            <th scope="col">Class</th>
-            <th scope="col">Class Teacher</th>
-          </tr>
-        </thead>
         <tbody id="table">
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">2021</td>
-            <td scope="col">2B</td>
-            <td scope="col">Alan Po</td>
-          </tr>
-          <tr>
-            <td scope="col">2</td>
-            <td scope="col">2020</td>
-            <td scope="col">1C</td>
-            <td scope="col">Kenneth Tsang</td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -148,67 +128,99 @@ IVE</textarea>
 </main>
 <script>
   $(document).ready(function () {
-    localStorage.setItem("userId", "200413958");
-    localStorage.setItem("role", "student");
     var url = "";
+    var result = "";
     if (localStorage.getItem("role") == "student") {
-      url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student";
+      url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student"; 
+      result += `
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Academic Year</th>
+            <th scope="col">Class</th>
+            <th scope="col">Class Teacher</th>
+          </tr>
+          <tr>
+            <td scope="col">1</td>
+            <td scope="col">2021</td>
+            <td scope="col">2B</td>
+            <td scope="col">Ada Yuen</td>
+            </tr>
+            <tr>
+            <td scope="col">2</td>
+            <td scope="col">2020</td>
+            <td scope="col">1B</td>
+            <td scope="col">Ada Yuen</td>
+            </tr>`;
+        $("#table").append(result);
     } else if ((localStorage.getItem("role") == "teacher")) {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/teacher";
+      result += `
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Academic Year</th>
+            <th scope="col">Class</th>
+          </tr>
+          <tr>
+            <td scope="col">1</td>
+            <td scope="col">2021</td>
+            <td scope="col">2A</td>
+            </tr>`;
+        $("#table").append(result);
     }
-    $.ajax(
-      url + "/viewClass.php",
-      {
-        dataType: "json",
-        timeout: 500,
-        success: function (data, status, xhr) {
-          console.log(data);
-          $("#table").empty();
-          var result = "";
-          var number = 0;
-          data.forEach(element => {
-            result += `
+
+
+   /* $.ajax({
+      type: "post",
+      url: url + "/viewClass.php",
+      data: {
+        studentId: localStorage.getItem("id"),
+      },
+      success: function (data, status, xhr) {
+        console.log(data);
+        $("#table").empty();
+        var result = "";
+        var number = 0;
+        data.forEach(element => {
+          result += `
           <tr>
             <td scope="col">`+ number + `</td>
             <td scope="col">`+ element.academicYear + `</td>
             <td scope="col">`+ element.name + `</td>
             <td scope="col">`+ element.firstName + " " + element.lastName + `</td></tr>`;
-            number++;
-          });
-          $("#table").append(result);
+          number++;
+        });
+        $("#table").append(result);
 
-        },
-        error: function (jqXhr, textStatus, errorMessage) {
-          $("body").replace("Error: " + errorMessage);
-        },
+      },
+      error: function (jqXhr, textStatus, errorMessage) {
       }
-    );
+    });*/
 
-    $.ajax(
-      url + "/viewPersonal.php",
-      {
-        dataType: "json",
-        timeout: 500,
-        success: function (data, status, xhr) {
-          console.log(data[0]);
-          console.log(url);
+    $.ajax({
+      type: "post",
+      url: url + "/viewPersonal.php",
+      data: {
+        id: localStorage.getItem("id"),
+      },
+      success: function (data, status, xhr) {
+          console.log(data);
           $("#userId").text(data[0].id);
           $("#mobile").val(data[0].mobile);
           $("#name").text(data[0].firstName + " " + data[0].lastName);
           $("#address").val(data[0].address);
-        },
-        error: function (jqXhr, textStatus, errorMessage) {
-          $("body").replace("Error: " + errorMessage);
-        },
+
+      },
+      error: function (jqXhr, textStatus, errorMessage) {
       }
-    );
+    });
+
 
     $("#cancel").hide();
     $("#updatePwdForm").hide();
 
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: localStorage.getItem("userId")}, function (data) {   
+        $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: localStorage.getItem("id") }, function (data) {
           console.log(data);
         }, "json");
         $(this).text("Edit Profile");
@@ -228,7 +240,7 @@ IVE</textarea>
 
       // $("#editProfileForm").hide();
       if ($(this).text() == "Save") {
-        $.post(url + "/editPassword.php", { currentPassword: $("#originalPwd").val(), newPassword: $("#newPwd").val(), confirmPassword: $("#confirmPwd").val(), userID: localStorage.getItem("userId") }, function (data) {
+        $.post(url + "/editPassword.php", { currentPassword: $("#originalPwd").val(), newPassword: $("#newPwd").val(), confirmPassword: $("#confirmPwd").val(), userID: localStorage.getItem("id") }, function (data) {
           console.log(data[0].message);
           if (data[0].message == "success") {
             $("#originalPwd").val("");
