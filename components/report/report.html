@@ -83,19 +83,23 @@
     }
 
     $(document).ready(function () {
+        let searchParams = new URLSearchParams(window.location.search)
         localStorage.setItem("userId", "200413958");
-        localStorage.setItem("role", "student");
+        localStorage.setItem("role", "teacher");
         var url = "";
         var studentId = "";
-        if(localStorage.getItem("role") == "student"){
-            studentId =  localStorage.getItem("userId");
-        }else{
+        if (localStorage.getItem("role") == "student") {
+            studentId = localStorage.getItem("userId");
+        } else {
             studentId = searchParams.get('studentId');
         }
-        let searchParams = new URLSearchParams(window.location.search)
         //alert(searchParams.get('type'));
         var type = searchParams.get('type');
         var className = searchParams.get('className');
+
+        if(className == ""){
+            className = "2B";
+        }
 
 
         if (type == "student") {
@@ -143,7 +147,7 @@
             },
             error: function (jqXhr, textStatus, errorMessage) {
             }
-        });*/ 
+        });*/
 
         if (type == "class") {
             $("#title").text("Class Report");
@@ -166,22 +170,26 @@
 
             var result = "";
             var rows = [];
+            var name = "";
+            var classReceived = "";
+            var studentIdReceived = "";
             $("#container").empty();
             $(".rowData").empty();
 
-            
-            if (type == "student") {
-                if ($("#dropdownMenuButton").text() == "Year") {
 
-                    $.ajax({
-                        type: "post",
-                        url: url,
-                        async: false,
-                        data: {
-                            "userID": studentId,
-                        },
-                        success: function (data, status, xhr) {
-                            console.log(data[0]);
+            if (type == "student") {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    async: false,
+                    data: {
+                        "userID": studentId,
+                    },
+                    success: function (data, status, xhr) {
+                        console.log(data[0]);
+
+                        if ($("#dropdownMenuButton").text() == "Year") {
+
                             rows = [
                                 ["Present", data[0].present.toFixed(2)],
                                 ["Late", data[0].late.toFixed(2)],
@@ -190,28 +198,32 @@
                                 ["Personal leave", data[0].personalLeave.toFixed(2)],
                                 ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
                             ];
-
-                        },
-                        error: function (jqXhr, textStatus, errorMessage) {
+                        } else {
+                            rows = [
+                                ["Present", 90],
+                                ["Late", 5],
+                                ["Early Leave", 0],
+                                ["Sick Leave", 5],
+                                ["Personal leave", 0],
+                                ["Absent Without Reason", 0]
+                            ];
                         }
-                    });
-                } else {
-                    rows = [
-                        ["Present", 90],
-                        ["Late", 5],
-                        ["Early Leave", 0],
-                        ["Sick Leave", 5],
-                        ["Personal leave", 0],
-                        ["Absent Without Reason", 0]
-                    ];
-                }
+                        name = data[0].student;
+                        classReceived = data[0].class;
+                        studentIdReceived = data[0].studentId;
+
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                    }
+                });
+
             } else if (type == "class") {
                 $.ajax({
                     type: "post",
                     url: url,
                     async: false,
                     data: {
-                        class: '2B',
+                        class: className,
                     },
                     success: function (data, status, xhr) {
                         console.log(data[0]);
@@ -223,6 +235,7 @@
                             ["Personal leave", data[0].personalLeave.toFixed(2)],
                             ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
                         ];
+                        classReceived = data[0].class;
 
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
@@ -254,11 +267,11 @@
 
             if (type == "student") {
                 result += `<tr class="rowData">
-                <td>Johnson Chong</td>
-                <td>2B</td>`
+                <td>`+ name +`</td>
+                <td>` +classReceived + `</td>`
             } else if (type == "class") {
                 result += `<tr class="rowData">
-                    <td>2B</td>`
+                    <td>`+ classReceived +`</td>`
             } else {
                 result += `<tr class="rowData">`
             }
@@ -274,8 +287,8 @@
 
             if (type == "student") {
                 result += `<td>
-                    <a class="btn btn-info mr-1" href="./attendance.html"
-                    id="edit">Detail</a>
+                    <a class="btn btn-info mr-1" href="./attendance.html?studentId=`+ studentIdReceived +`
+                    " id="edit">Detail</a>
                 </td>
              </tr>`
             } else if (type == "class") {
