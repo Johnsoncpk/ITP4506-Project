@@ -83,66 +83,118 @@
     }
 
     $(document).ready(function () {
+        localStorage.setItem("userId", "200413958");
+        localStorage.setItem("role", "student");
+        var url = "";
+        var studentId = "";
+        if(localStorage.getItem("role") == "student"){
+            studentId =  localStorage.getItem("userId");
+        }else{
+            studentId = searchParams.get('studentId');
+        }
         let searchParams = new URLSearchParams(window.location.search)
         //alert(searchParams.get('type'));
         var type = searchParams.get('type');
+        var className = searchParams.get('className');
+
+
+        if (type == "student") {
+            url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-student.php";
+        } else if (type == "class") {
+            url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-class.php";
+        } else {
+            url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-school.php";
+        }
+
+
+        /*$.ajax(
+            "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-school.php",
+            {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                },
+            }
+        );*/
+        /*$.ajax(
+            url,
+            {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    console.log(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                },
+            }
+        );*/
+
+        /*$.ajax({
+            type: "post",
+            url: url,
+            data: {
+                "userID": localStorage.getItem("userId"),
+            },
+            success: function (data, status, xhr) {
+                console.log(data);
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+            }
+        });*/ 
+
         if (type == "class") {
             $("#title").text("Class Report");
             $("#name").remove();
             $(".dropdown").remove();
             loadData();
-        }else if(type == "school"){
+        } else if (type == "school") {
             $("#title").text("School Report");
             $("#name").remove();
             $("#className").remove();
             $(".dropdown").remove();
             loadData();
-        }else{
+        } else {
             $("#title").text("Student Report");
         }
 
-        $.ajax(
-            `../php/-ITP4506_backend/student/searchAttendance.php`,
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    var result = "";
-                    /* $(data).each(function (index) {
-                         result += `
-               <tr>
-             <td>${this.date}</td>
-             <td>${this.time}</td>
-             <td>${this.status}</td>
-             </tr>
-               `;
-                     });*/
-                    $("#table").append(result);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    $("body").replace("Error: " + errorMessage);
-                },
-            }
-        );
 
-        function loadData(){
+
+        async function loadData() {
 
             var result = "";
             var rows = [];
             $("#container").empty();
             $(".rowData").empty();
 
+            
             if (type == "student") {
                 if ($("#dropdownMenuButton").text() == "Year") {
-                    rows = [
-                        ["Present", 88],
-                        ["Late", 6],
-                        ["Early Leave", 2],
-                        ["Sick Leave", 2],
-                        ["Personal leave", 1],
-                        ["Absent Without Reason", 1]
-                    ];
 
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        async: false,
+                        data: {
+                            "userID": studentId,
+                        },
+                        success: function (data, status, xhr) {
+                            console.log(data[0]);
+                            rows = [
+                                ["Present", data[0].present.toFixed(2)],
+                                ["Late", data[0].late.toFixed(2)],
+                                ["Early Leave", data[0].earlyLeave.toFixed(2)],
+                                ["Sick Leave", data[0].sickLeave.toFixed(2)],
+                                ["Personal leave", data[0].personalLeave.toFixed(2)],
+                                ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
+                            ];
+
+                        },
+                        error: function (jqXhr, textStatus, errorMessage) {
+                        }
+                    });
                 } else {
                     rows = [
                         ["Present", 90],
@@ -153,16 +205,52 @@
                         ["Absent Without Reason", 0]
                     ];
                 }
-            } else if (type == "class" || type == "school"){
-                rows = [
-                    ["Present", 75],
-                    ["Late", 15],
-                    ["Early Leave", 4],
-                    ["Sick Leave", 1],
-                    ["Personal leave", 4],
-                    ["Absent Without Reason", 1]
-                ];
-            } 
+            } else if (type == "class") {
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    async: false,
+                    data: {
+                        class: '2B',
+                    },
+                    success: function (data, status, xhr) {
+                        console.log(data[0]);
+                        rows = [
+                            ["Present", data[0].present.toFixed(2)],
+                            ["Late", data[0].late.toFixed(2)],
+                            ["Early Leave", data[0].earlyLeave.toFixed(2)],
+                            ["Sick Leave", data[0].sickLeave.toFixed(2)],
+                            ["Personal leave", data[0].personalLeave.toFixed(2)],
+                            ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
+                        ];
+
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                    }
+                });
+            } else {
+                $.ajax(
+                    url,
+                    {
+                        async: false,
+                        dataType: "json",
+                        timeout: 500,
+                        success: function (data, status, xhr) {
+                            console.log(data[0]);
+                            rows = [
+                                ["Present", data[0].present.toFixed(2)],
+                                ["Late", data[0].late.toFixed(2)],
+                                ["Early Leave", data[0].earlyLeave.toFixed(2)],
+                                ["Sick Leave", data[0].sickLeave.toFixed(2)],
+                                ["Personal leave", data[0].personalLeave.toFixed(2)],
+                                ["Absent Without Reason", data[0].absentWithoutReason.toFixed(2)]
+                            ];
+                        },
+                        error: function (jqXhr, textStatus, errorMessage) {
+                        },
+                    }
+                );
+            }
 
             if (type == "student") {
                 result += `<tr class="rowData">
@@ -171,7 +259,7 @@
             } else if (type == "class") {
                 result += `<tr class="rowData">
                     <td>2B</td>`
-            } else{
+            } else {
                 result += `<tr class="rowData">`
             }
             result +=

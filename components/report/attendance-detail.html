@@ -48,32 +48,33 @@
 
 <script>
     $(document).ready(function () {
-        $.ajax(
-            `http://127.0.0.1/itp4506/Attendance-Online-Server/student/searchAttendance.php`,
-            {
-                dataType: "json",
-                timeout: 500,
-                success: function (data, status, xhr) {
-                    console.log(data);
-                    var result = "";
-                    $(data).each(function (index) {
-                        result += `
-              <tr>
-            <td>${this.date}</td>
-            <td>${this.time}</td>
-            <td>${this.status}</td>
-            </tr>
-              `;
-                    });
-                    $("#table").append(result);
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    $("body").replace("Error: " + errorMessage);
-                },
-            }
-        );
 
-        $(".dropdown-item").click(function(){
+
+        $.ajax({
+            type: "post",
+            url: `http://127.0.0.1/itp4506/Attendance-Online-Server/genReport/searchAttendance.php`,
+            data: {
+                id: '200583543',
+            },
+            success: function (data, status, xhr) {
+                console.log(data);
+                var result = "";
+                $(data).each(function (index) {
+                    result += `
+                        <tr>
+                        <td>${this.date}</td>
+                        <td>${this.time}</td>
+                        <td>${this.status}</td>
+                        </tr>
+                        `;
+                });
+                $("#table").append(result);
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+            }
+        });
+
+        $(".dropdown-item").click(function () {
             $("#dropdownMenuButton").text($(this).text());
         });
 
