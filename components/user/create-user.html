@@ -1,11 +1,11 @@
 <main class="page-content">
   <div class="container-fluid">
-    <h2>User Creation</h2>
+    <h2>Single User Creation</h2>
     <hr />
     <div class="row">
       <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
-          <form id="editProfileForm">
+          <form id="editProfileForm" method="post">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
@@ -14,11 +14,13 @@
                   </div>
                   <div class="col-sm-6">
                     <select
-                      class="form-control bg-info text-light select"
+                      class="form-control select"
                       title="availability"
+                      id="role"
                     >
-                      <option>Teacher</option>
-                      <option>Student</option>
+                      <option value="admin">Admin</option>
+                      <option value="teacher">Teacher</option>
+                      <option value="student">Student</option>
                     </select>
                   </div>
                 </div>
@@ -29,7 +31,7 @@
                   </div>
                   <div class="col-sm-6">
                     <p id="userId" class="form-text">
-                      *Will Be Genrate By System
+                      *Will Be Genrated By System
                     </p>
                   </div>
                 </div>
@@ -40,9 +42,11 @@
                   </div>
                   <div class="col-sm-4">
                     <input
+                      required
                       type="text"
                       class="form-control"
                       name="firstName"
+                      id="firstName"
                       placeholder="e.g. Alan"
                     />
                   </div>
@@ -51,9 +55,11 @@
                   </div>
                   <div class="col-sm-3">
                     <input
+                      required
                       type="text"
                       class="form-control"
                       name="lastName"
+                      id="lastName"
                       placeholder="e.g. Po"
                     />
                   </div>
@@ -65,6 +71,8 @@
                   </div>
                   <div class="col-sm-3">
                     <input
+                      id="academicYear"
+                      required
                       type="number"
                       class="form-control"
                       name="academicYear"
@@ -73,7 +81,9 @@
                   </div>
                 </div>
                 <hr />
-                <a class="btn btn-info mr-1" href="#" id="edit">Create</a>
+                <button class="btn btn-info mr-1" type="button" id="create">
+                  Create
+                </button>
                 <button class="btn btn-secondary" id="cancel" type="reset">
                   Reset
                 </button>
@@ -101,3 +111,26 @@
     </footer>
   </div>
 </main>
+
+<script>
+  $(document).ready(function () {
+    $("#academicYear").val(new Date().getFullYear());
+    $("#create").click(function () {
+      $.ajax(
+        "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/createAccount.php",
+        {
+          method: "post",
+          dataType: "json",
+          timeout: 500,
+          data: {
+            firstname: $("#firstName").val(),
+            lastname: $("#lastName").val(),
+            $email: "abc@student.com.hk",
+            $role: $('#role option:selected').val(),
+          },
+          success: function (data, status, xhr) {},
+        }
+      );
+    });
+  });
+</script>

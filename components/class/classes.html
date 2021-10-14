@@ -1,56 +1,94 @@
 <div class="page-content">
-    <div class="container-fluid">
-      <h2>Classes</h2>
-      <hr />
-      <div class="row gutters-sm">
-        <div class="col-md-12 py-3">
-          <div class="row justify-content-end">
-              <a title="Create clas archive" class="btn btn-secondary  mb-4 mr-2"><i class="fas fa-plus-square"></i></a>
-            <input
-              class="col-3 form-control mb-4 mr-3"
-              id="query"
-              type="text"
-              placeholder="Search here"
-            />
-          </div>
-          <div class="card p-0">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Class Name</th>
-                  <th scope="col">academic Year</th>
-                  <th scope="col">Teacher</th>
-                </tr>
-              </thead>
-              <tbody id="table"></tbody>
-            </table>
-          </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-9">
+        <h2 id="title"></h2>
+      </div>
+      <div class="col-md-3" id="archive-div">
+        <button type="button" class="btn btn-info" id="archive"></button>
+      </div>
+    </div>
+    <hr />
+    <div class="row gutters-sm">
+      <div class="col-md-12 py-3">
+        <div class="row justify-content-end">
+          <select id="year" class="col-3 form-control mb-4 mr-3"></select>
+          <input
+            class="col-3 form-control mb-4 mr-3"
+            id="query"
+            type="text"
+            placeholder="Search here"
+          />
+        </div>
+        <div class="card p-0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Class Name</th>
+                <th scope="col">Academic Year</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
         </div>
       </div>
-      <hr />
-      <footer class="text-center">
-        <div class="mb-2">
-          <small>
-            © 2021 made by -
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.ive.edu.hk/ivesite/html/tc/"
-            >
-              Ive Jai
-            </a>
-          </small>
-        </div>
-      </footer>
     </div>
+    <hr />
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
   </div>
-  
-  <script>
-    $(document).ready(function () {
+</div>
+
+<script>
+  $(document).ready(function () {
+    var year;
+    var years = [
+      { year: 2021, archived: false },
+      { year: 2020, archived: true },
+      { year: 2019, archived: true },
+    ];
+
+    refreshYear();
+    year = getYear($("#year option:selected").val());
+    loadData(year);
+    $("#year").change(function () {
+      year = getYear($("#year option:selected").val());
+      loadData(year);
+    });
+    $("#query").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#table tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+    function loadData(y) {
+      y.archived ? $('#archive').hide() : $('#archive').show();
+      $("#title").text(`Classes - ${$("#year option:selected").val()}`);
+      $("#archive").text(
+        `Archive Record of ${$("#year option:selected").val()}`
+      );
+      $("#table").empty();
       $.ajax(
-        `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php`,
+        `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewClass.php`,
         {
+          method: "post",
+          data: {
+            year: 2021,
+          },
           dataType: "json",
           timeout: 500,
           success: function (data, status, xhr) {
@@ -59,29 +97,51 @@
               result += `
               <tr>
             <th scope="row">${index + 1}</th>
-            <td>${this.firstName}</td>
-            <td>${this.lastName}</td>
-            <td>
-              <a class="btn btn-secondary" href="./user-detail.html?userId=${this.id}">
-                <i class="far fa-address-card"></i>
-              </a>
-            </td>
+            <td>${this.name}</td>
+            <td>${y.year}</td>
+            <td><a class="btn btn-secondary" href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/class-detail.html?classId=${
+              this.id
+            }&archived=${y.archived ? true : false}">${
+                y.archived ? "Details" : "Update"
+              }</a></td>
             </tr>
               `;
             });
             $("#table").append(result);
           },
           error: function (jqXhr, textStatus, errorMessage) {
-            $("body").replace("Error: " + errorMessage);
+            $("body").append("Error: " + errorMessage);
           },
         }
       );
-      $("#query").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#table tr").filter(function () {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-      });
+    }
+    function getYear(number) {
+      for (var index in years) {
+        if (number == years[index].year) {
+          return years[index];
+        }
+      }
+    }
+    function archiveYear() {
+      years[0].archived = true;
+      years.unshift({ year: years[0].year + 1, archived: false });
+      console.log(years[0].year);
+      refreshYear();
+      loadData(getYear($("#year option:selected").val()));
+    }
+    $("#archive").click(function () {
+      archiveYear();
     });
-  </script>
-  
+
+    function refreshYear() {
+      $("#year").empty();
+      var options = "";
+      for (var i in years) {
+        options += `<option value="${years[i].year}">${years[i].year} (${
+          years[i].archived ? "" : "Not "
+        }Archived)</option>`;
+      }
+      $("#year").append(options);
+    }
+  });
+</script>

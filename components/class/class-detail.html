@@ -13,7 +13,12 @@
                     <h6 class="form-text text-muted mb-0">Class</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input title="text" id="className" class="form-control" value="2B" />
+                    <input
+                      title="text"
+                      id="className"
+                      class="form-control"
+                      value="2B"
+                    />
                   </div>
                 </div>
                 <hr />
@@ -22,8 +27,14 @@
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input id="academicYear" type="number" class="form-control" name="academicYear" value="2022"
-                      placeholder="e.g. 2021" />
+                    <input
+                      id="academicYear"
+                      type="number"
+                      class="form-control"
+                      name="academicYear"
+                      value="2022"
+                      placeholder="e.g. 2021"
+                    />
                   </div>
                 </div>
                 <hr />
@@ -32,12 +43,33 @@
                     <h6 class="form-text text-muted mb-0">Description</h6>
                   </div>
                   <div class="col-sm-6">
-                    <textarea type="text" class="form-control" name="description" rows="3"
-                      placeholder="Description of Class..">Higher Diploma in Software Engineering</textarea>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      rows="3"
+                      placeholder="Description of Class.."
+                    >
+Higher Diploma in Software Engineering</textarea
+                    >
                   </div>
                 </div>
                 <hr />
-                <a class="btn btn-info mr-1" href="#" id="edit">Edit Class Info</a>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Teacher</h6>
+                  </div>
+                  <div class="col-sm-4">
+                    <a
+                      href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=200000001"
+                    >Alan Po</a>
+                  </div>
+                </div>
+                <hr>
+                <a class="btn btn-info mr-1" href="#" id="edit"
+                  >Edit Class Info</a
+                >
                 <button class="btn btn-secondary" id="cancel" type="reset">
                   Cancel
                 </button>
@@ -53,7 +85,11 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
             Ive Jai
           </a>
         </small>
@@ -63,29 +99,33 @@
 </main>
 
 <script>
+
   $(document).ready(function () {
-
-    $.ajax({
-      type: "post",
-      url: "http://127.0.0.1/php/-ITP4506_backend/student/editPassword.php",
-      data: {
-        "id": "200000000",
-        "currentPassword": "admin",
-        "newPassword": "123123123",
-        "confirmPassword": "123123123"
-      },
-      success: function (data, status, xhr) {
-        console.log(data);
-        console.log(status);
-        console.log(xhr);
-      },
-      error: function (jqXhr, textStatus, errorMessage) {
-        //console.log(jqXhr);
-        //console.log(textStatus);
-        //console.log(errorMessage);
-      }
-    });
-
+    let searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has("classId")) {
+      let classId = searchParams.get("classId");
+      
+      $.ajax({
+        type: "post",
+        url: "http://127.0.0.1/php/-ITP4506_backend/student/editPassword.php",
+        data: {
+          id: "200000000",
+          currentPassword: "admin",
+          newPassword: "123123123",
+          confirmPassword: "123123123",
+        },
+        success: function (data, status, xhr) {
+          console.log(data);
+          console.log(status);
+          console.log(xhr);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          //console.log(jqXhr);
+          //console.log(textStatus);
+          //console.log(errorMessage);
+        },
+      });
+    }
 
     $("#cancel").hide();
     form_control();

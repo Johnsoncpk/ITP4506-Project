@@ -1,10 +1,15 @@
 <main class="page-content">
     <div class="container-fluid">
-      <h2>Attendance Online</h2>
+      <div class="row ">
+        <div class="col text-left">
+          <h3 id="quote" class="font-weight-bold"><h6 class="text-right" id="author"></h6></h3> 
+        </div>
+      </div>
       <hr />
+      
       <div class="row">
-        <div class="form-group col-md-12">
-          學海無涯，回頭是岸。
+        <div class="form-group col-md-12 text-center">
+          <img src="../img/home-background.jpg" class="img-fluid"/>
         </div>
       </div>
       <hr />
@@ -25,3 +30,12 @@
       </footer>
     </div>
   </main>
+
+  <script>
+    $(document).ready(function(){
+      $.get("https://quotes.rest/qod?category=students&language=en", function(data, status){
+        $('#quote').text(data.contents.quotes[0].quote);
+        $('#author').text(data.contents.quotes[0].author);
+      })
+    });
+  </script>
