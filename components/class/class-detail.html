@@ -47,6 +47,7 @@
                       type="text"
                       class="form-control"
                       name="description"
+                      id="description"
                       rows="3"
                       placeholder="Description of Class.."
                     >
@@ -55,6 +56,17 @@ Higher Diploma in Software Engineering</textarea
                   </div>
                 </div>
                 <hr />
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Teacher</h6>
+                  </div>
+                  <div class="col-sm-4">
+                    <a
+                      href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=200000001"
+                    >Alan Po</a>
+                  </div>
+                </div>
+                <hr>
                 <a class="btn btn-info mr-1" href="#" id="edit"
                   >Edit Class Info</a
                 >
@@ -87,10 +99,12 @@ Higher Diploma in Software Engineering</textarea
 </main>
 
 <script>
+
   $(document).ready(function () {
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("classId")) {
       let classId = searchParams.get("classId");
+      
       $.ajax({
         type: "post",
         url: "http://127.0.0.1/php/-ITP4506_backend/student/editPassword.php",

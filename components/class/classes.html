@@ -1,15 +1,18 @@
 <div class="page-content">
   <div class="container-fluid">
-    <h2>Classes</h2>
+    <div class="row">
+      <div class="col-md-9">
+        <h2 id="title"></h2>
+      </div>
+      <div class="col-md-3" id="archive-div">
+        <button type="button" class="btn btn-info" id="archive"></button>
+      </div>
+    </div>
     <hr />
     <div class="row gutters-sm">
       <div class="col-md-12 py-3">
         <div class="row justify-content-end">
-          <select id="year" class="col-2 form-control mb-4 mr-3">
-            <option value="2021" selected>2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-          </select>
+          <select id="year" class="col-3 form-control mb-4 mr-3"></select>
           <input
             class="col-3 form-control mb-4 mr-3"
             id="query"
@@ -52,25 +55,39 @@
 
 <script>
   $(document).ready(function () {
-    var year = $("#year option:selected").val();
+    var year;
+    var years = [
+      { year: 2021, archived: false },
+      { year: 2020, archived: true },
+      { year: 2019, archived: true },
+    ];
+
+    refreshYear();
+    year = getYear($("#year option:selected").val());
     loadData(year);
     $("#year").change(function () {
-      year = $("#year option:selected").val();
+      year = getYear($("#year option:selected").val());
       loadData(year);
     });
-
     $("#query").on("keyup", function () {
       var value = $(this).val().toLowerCase();
       $("#table tr").filter(function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
       });
     });
-    function loadData(year) {
+    function loadData(y) {
+      y.archived ? $('#archive').hide() : $('#archive').show();
+      $("#title").text(`Classes - ${$("#year option:selected").val()}`);
+      $("#archive").text(
+        `Archive Record of ${$("#year option:selected").val()}`
+      );
       $("#table").empty();
-      $.ajax(`http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewClass.php`,{
-          method: 'post',
+      $.ajax(
+        `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewClass.php`,
+        {
+          method: "post",
           data: {
-            year: year,
+            year: 2021,
           },
           dataType: "json",
           timeout: 500,
@@ -81,8 +98,12 @@
               <tr>
             <th scope="row">${index + 1}</th>
             <td>${this.name}</td>
-            <td>${this.academicYear}</td>
-            <td><a class="btn btn-secondary" href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/class-detail.html?classId=${this.id}">Details</a></td>
+            <td>${y.year}</td>
+            <td><a class="btn btn-secondary" href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/class-detail.html?classId=${
+              this.id
+            }&archived=${y.archived ? true : false}">${
+                y.archived ? "Details" : "Update"
+              }</a></td>
             </tr>
               `;
             });
@@ -91,7 +112,36 @@
           error: function (jqXhr, textStatus, errorMessage) {
             $("body").append("Error: " + errorMessage);
           },
-        });
+        }
+      );
+    }
+    function getYear(number) {
+      for (var index in years) {
+        if (number == years[index].year) {
+          return years[index];
+        }
+      }
+    }
+    function archiveYear() {
+      years[0].archived = true;
+      years.unshift({ year: years[0].year + 1, archived: false });
+      console.log(years[0].year);
+      refreshYear();
+      loadData(getYear($("#year option:selected").val()));
+    }
+    $("#archive").click(function () {
+      archiveYear();
+    });
+
+    function refreshYear() {
+      $("#year").empty();
+      var options = "";
+      for (var i in years) {
+        options += `<option value="${years[i].year}">${years[i].year} (${
+          years[i].archived ? "" : "Not "
+        }Archived)</option>`;
+      }
+      $("#year").append(options);
     }
   });
 </script>
