@@ -1,0 +1,94 @@
+<div class="page-content">
+    <div class="container-fluid">
+      <h2>Student of Class 2A</h2>
+      <hr />
+      <div class="row gutters-sm">
+        <div class="col-md-12 py-3">
+          <div class="row justify-content-end">
+            <input
+              class="col-3 form-control mb-4 mr-3"
+              id="query"
+              type="text"
+              placeholder="Search here"
+            />
+          </div>
+          <div class="card p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Fiirst Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody id="table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <footer class="text-center">
+        <div class="mb-2">
+          <small>
+            © 2021 made by -
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.ive.edu.hk/ivesite/html/tc/"
+            >
+              Ive Jai
+            </a>
+          </small>
+        </div>
+      </footer>
+    </div>
+  </div>
+  
+  <script>
+    $(document).ready(function () {
+      var role = "*";
+      var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
+      loadData(url, "student");
+      $("#query").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#table tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+  
+      function loadData(url, role) {
+        $("#table").empty();
+        $.ajax(url, {
+          method: "post",
+          dataType: "json",
+          timeout: 500,
+          data: {
+            role: role,
+          },
+          success: function (data, status, xhr) {
+            var result = "";
+            $(data).each(function (index) {
+              result += `
+              <tr>
+            <th scope="row">${index + 1}</th>
+            <td>${this.firstName}</td>
+            <td>${this.lastName}</td>
+            <td>
+              <a class="btn btn-info" href="./student-detail.html?userId=${this.id}">
+                <i class="far fa-address-card"></i>
+              </a>
+            </td>
+            </tr>
+              `;
+            });
+            $("#table").append(result);
+          },
+          error: function (jqXhr, textStatus, errorMessage) {
+            $("body").replace("Error: " + errorMessage);
+          },
+        });
+      }
+    });
+  </script>
+  

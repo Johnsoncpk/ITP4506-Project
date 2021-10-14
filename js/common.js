@@ -1,4 +1,5 @@
 function loadNavBar() {
+  console.log(localStorage.getItem("role"));
   switch (localStorage.getItem("role")) {
     case "admin":
       $("#main-sidebar").load("../components/main-layout/sidebar-admin.html");

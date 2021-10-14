@@ -1,19 +1,19 @@
 <main class="page-content">
   <div class="container-fluid">
-    <h2>Class Allocation</h2>
+    <h2>Class Allocation For Next Year</h2>
     <hr />
     <div class="row">
       <div class="form-group col-md-12">
-        <div class="col-md-10 my-2 py-2">
+        <div class="col-md-12 my-1 py-1">
           <form id="editClassForm">
-            <div class="form-group mb-3 card">
+            <div class="form-group mb-2 card">
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-2">
                     <h6 class="form-text text-muted mb-0">Class</h6>
                   </div>
                   <div class="col-sm-3">
-                    <h6 class="form-text mb-0">2B</h6>
+                    <h6 class="form-text mb-0">2A</h6>
                   </div>
                   <div class="col-sm-3">
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
@@ -40,24 +40,35 @@
         </div>
       </div>
     </div>
-    <h5>Student list</h5>
+    <h5>Student List</h5>
     <hr />
-    <div class="container">
     <div class="row">
-      <div class="col-md-12 py-2">
+      <div class="col-md-6 py-1">
         <div class="row justify-content-end">
-          <div class="col-sm-2">
+          <h6 class="col-md-2">All Student</h6>
+          <div class="col">
+            <select class="form-control">
+              <option value="">Year</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+            </select>
+          </div>
+          <div class="col">
             <select class="form-control">
               <option value="">Class</option>
-              <option>1A</option>
-              <option>2B</option>
-              <option>3C</option>
-              <option>4D</option>
-              <option>5E</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+              <option>E</option>
             </select>
           </div>
           <input
-            class="col-3 form-control mb-4 mr-3"
+            class="col form-control mb-4 mr-3"
             id="query"
             type="text"
             placeholder="Search here"
@@ -67,32 +78,64 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col" id="select-all">Select All</th>
+                <th scope="col" class="select-all">Select All</th>
                 <th scope="col">#</th>
                 <th scope="col">Fiirst Name</th>
                 <th scope="col">Last Name</th>
-                <th scope="col">Class</th>
+                <th scope="col">Current Class</th>
               </tr>
             </thead>
-            <tbody id="table"></tbody>
+            <tbody id="table1"></tbody>
           </table>
         </div>
-
         <div class="row justify-content-end pt-3">
-            <div class="col-sm-2">
-            <a class="btn btn-info" href="#" id="updatePwd">Confirm</a></div>
-            <div class="col-sm-2">
-            <button class="btn btn-secondary" id="cancel" type="reset">
-              Cancel
-            </button>
+          <div class="col-sm-3">
+            <a class="btn btn-info row" href="#" id="updatePwd">Add to list</a>
+          </div>
+          <button
+            class="btn btn-secondary col-2 mb-4 mr-3"
+            id="cancel"
+            type="reset"
+          >
+            Cancel
+          </button>
         </div>
+      </div>
+      <div class="col-md-6 py-1">
+        <div class="row justify-content-start">
+          <h6 class="col-md-2 mb-4 mr-3">Waiting List</h6>
+          <p class="col form-control mb-4 mr-3" hidden></p>
         </div>
-
+        <div class="card p-0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="select-all">Select All</th>
+                <th scope="col">#</th>
+                <th scope="col">Fiirst Name</th>
+                <th scope="col">Last Name</th>
+              </tr>
+            </thead>
+            <tbody id="table2"></tbody>
+          </table>
+        </div>
+        <div class="row justify-content-end pt-3">
+          <div class="col-sm-4">
+            <a class="btn btn-info row" href="#" id="updatePwd"
+              >Remove From List</a
+            >
+          </div>
+          <button
+            class="btn btn-success col-sm-4 mb-4 mr-3"
+            id="cancel"
+            type="reset"
+          >
+            Allocate to class
+          </button>
+        </div>
       </div>
     </div>
-</div>
     <hr />
-
     <footer class="text-center">
       <div class="mb-2">
         <small>
@@ -111,8 +154,8 @@
 </main>
 
 <script>
-  $("#select-all").css("cursor", "pointer");
-  $("#select-all").click(function () {
+  $(".select-all").css("cursor", "pointer");
+  $(".select-all").click(function () {
     $(".form-check-input").prop(
       "checked",
       !$(".form-check-input").prop("checked")
@@ -141,7 +184,7 @@
           </tr>
             `;
           });
-          $("#table").append(result);
+          $("#table1").append(result);
         },
         error: function (jqXhr, textStatus, errorMessage) {
           $("body").replace("Error: " + errorMessage);
