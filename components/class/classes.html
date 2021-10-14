@@ -128,6 +128,10 @@
       console.log(years[0].year);
       refreshYear();
       $("#table").empty();
+      $("#title").text(`Classes - ${$("#year option:selected").val()}`);
+      $("#archive").text(
+        `Archive Record of ${$("#year option:selected").val()}`
+      );
       //loadData(getYear($("#year option:selected").val()));
     }
     $("#archive").click(function () {
