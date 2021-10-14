@@ -17,7 +17,7 @@
                       title="text"
                       id="className"
                       class="form-control"
-                      value="2B"
+                      value="2A"
                     />
                   </div>
                 </div>
@@ -32,7 +32,7 @@
                       type="number"
                       class="form-control"
                       name="academicYear"
-                      value="2022"
+                      value="2021"
                       placeholder="e.g. 2021"
                     />
                   </div>
@@ -63,10 +63,11 @@ Higher Diploma in Software Engineering</textarea
                   <div class="col-sm-4">
                     <a
                       href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=200000001"
-                    >Alan Po</a>
+                      >Alan Po</a
+                    >
                   </div>
                 </div>
-                <hr>
+                <hr />
                 <a class="btn btn-info mr-1" href="#" id="edit"
                   >Edit Class Info</a
                 >
@@ -99,37 +100,23 @@ Higher Diploma in Software Engineering</textarea
 </main>
 
 <script>
-
   $(document).ready(function () {
+    var year;
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("classId")) {
       let classId = searchParams.get("classId");
-      
-      $.ajax({
-        type: "post",
-        url: "http://127.0.0.1/php/-ITP4506_backend/student/editPassword.php",
-        data: {
-          id: "200000000",
-          currentPassword: "admin",
-          newPassword: "123123123",
-          confirmPassword: "123123123",
-        },
-        success: function (data, status, xhr) {
-          console.log(data);
-          console.log(status);
-          console.log(xhr);
-        },
-        error: function (jqXhr, textStatus, errorMessage) {
-          //console.log(jqXhr);
-          //console.log(textStatus);
-          //console.log(errorMessage);
-        },
-      });
+      let archived = searchParams.get("archived");
+      year = searchParams.get("year");
+      if(archived=="true"){
+        $('#edit').hide();
+      }
+    } else {
+      year = new Date().getFullYear();
     }
 
     $("#cancel").hide();
     form_control();
-    $("#academicYear").val(new Date().getFullYear() + 1);
+    $("#academicYear").val(year);
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
         $(this).text("Edit Class Info");
