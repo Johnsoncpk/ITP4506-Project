@@ -125,7 +125,8 @@
         } else {
             studentId = searchParams.get('studentId');
         }
-        //alert(searchParams.get('type'));
+
+        //alert(studentId);
         var type = searchParams.get('type');
         var className = searchParams.get('className');
 
@@ -151,10 +152,11 @@
             $("#title").text("School Report");
             $("#name").remove();
             $("#className").remove();
-            loadData();
+            //loadData();
         } else {
             $("#title").text("Student Report");
             $(".dropdown").remove();
+            loadData();
         }
 
 

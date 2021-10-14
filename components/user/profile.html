@@ -80,7 +80,7 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">Original Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input class="form-control" id="originalPwd" name="originalPwd" />
+                  <input type="password" class="form-control" id="originalPwd" name="originalPwd" />
                 </div>
               </div>
               <hr />
@@ -89,7 +89,7 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">New Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input class="form-control" id="newPwd" name="newPwd" />
+                  <input type="password" class="form-control" id="newPwd" name="newPwd" />
                 </div>
               </div>
               <hr />
@@ -98,7 +98,7 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">Comfirm Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input class="form-control" id="confirmPwd" name="confirmPwd" />
+                  <input type="password" class="form-control" id="confirmPwd" name="confirmPwd" />
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@ IVE</textarea>
     var url = "";
     var result = "";
     if (localStorage.getItem("role") == "student") {
-      url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student"; 
+      url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student";
       result += `
           <tr>
             <th scope="col">#</th>
@@ -151,7 +151,7 @@ IVE</textarea>
             <td scope="col">1B</td>
             <td scope="col">Ada Yuen</td>
             </tr>`;
-        $("#table").append(result);
+      $("#table").append(result);
     } else if ((localStorage.getItem("role") == "teacher")) {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/teacher";
       result += `
@@ -165,36 +165,36 @@ IVE</textarea>
             <td scope="col">2021</td>
             <td scope="col">2A</td>
             </tr>`;
-        $("#table").append(result);
+      $("#table").append(result);
     }
 
 
-   /* $.ajax({
-      type: "post",
-      url: url + "/viewClass.php",
-      data: {
-        studentId: localStorage.getItem("id"),
-      },
-      success: function (data, status, xhr) {
-        console.log(data);
-        $("#table").empty();
-        var result = "";
-        var number = 0;
-        data.forEach(element => {
-          result += `
-          <tr>
-            <td scope="col">`+ number + `</td>
-            <td scope="col">`+ element.academicYear + `</td>
-            <td scope="col">`+ element.name + `</td>
-            <td scope="col">`+ element.firstName + " " + element.lastName + `</td></tr>`;
-          number++;
-        });
-        $("#table").append(result);
-
-      },
-      error: function (jqXhr, textStatus, errorMessage) {
-      }
-    });*/
+    /* $.ajax({
+       type: "post",
+       url: url + "/viewClass.php",
+       data: {
+         studentId: localStorage.getItem("id"),
+       },
+       success: function (data, status, xhr) {
+         console.log(data);
+         $("#table").empty();
+         var result = "";
+         var number = 0;
+         data.forEach(element => {
+           result += `
+           <tr>
+             <td scope="col">`+ number + `</td>
+             <td scope="col">`+ element.academicYear + `</td>
+             <td scope="col">`+ element.name + `</td>
+             <td scope="col">`+ element.firstName + " " + element.lastName + `</td></tr>`;
+           number++;
+         });
+         $("#table").append(result);
+ 
+       },
+       error: function (jqXhr, textStatus, errorMessage) {
+       }
+     });*/
 
     $.ajax({
       type: "post",
@@ -203,11 +203,11 @@ IVE</textarea>
         id: localStorage.getItem("id"),
       },
       success: function (data, status, xhr) {
-          console.log(data);
-          $("#userId").text(data[0].id);
-          $("#mobile").val(data[0].mobile);
-          $("#name").text(data[0].firstName + " " + data[0].lastName);
-          $("#address").val(data[0].address);
+        console.log(data);
+        $("#userId").text(data[0].id);
+        $("#mobile").val(data[0].mobile);
+        $("#name").text(data[0].firstName + " " + data[0].lastName);
+        $("#address").val(data[0].address);
 
       },
       error: function (jqXhr, textStatus, errorMessage) {
@@ -233,6 +233,8 @@ IVE</textarea>
       }
       form_control();
     });
+
+
     $("#updatePwd").click(function () {
       $("#editProfileForm").fadeOut(function () {
         $("#updatePwdForm").fadeIn();
@@ -246,7 +248,7 @@ IVE</textarea>
             $("#originalPwd").val("");
             $("#newPwd").val("");
             $("#confirmPwd").val("");
-            $(this).text("Update Password");
+            $("#updatePwd").text("Update Password");
             $("#cancel").hide();
             $("#edit").show();
             $("#updatePwdForm").fadeOut(function () {
