@@ -47,24 +47,24 @@
         <div class="row justify-content-end">
           <h6 class="col-md-2">All Student</h6>
           <div class="col">
-            <select class="form-control">
-              <option value="">Year</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
+            <select class="form-control" id="year">
+              <option value="*">Year</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
             </select>
           </div>
           <div class="col">
-            <select class="form-control">
-              <option value="">Class</option>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>E</option>
+            <select class="form-control" id="class">
+              <option value="*">Class</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
             </select>
           </div>
           <input
@@ -78,7 +78,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col" class="select-all">Select All</th>
+                <th scope="col" class="select-all-1">Select All</th>
                 <th scope="col">#</th>
                 <th scope="col">Fiirst Name</th>
                 <th scope="col">Last Name</th>
@@ -90,7 +90,9 @@
         </div>
         <div class="row justify-content-end pt-3">
           <div class="col-sm-3">
-            <a class="btn btn-info row" href="#" id="updatePwd">Add to list</a>
+            <button class="btn btn-info row" href="#" id="add-to-list">
+              Add to list
+            </button>
           </div>
           <button
             class="btn btn-secondary col-2 mb-4 mr-3"
@@ -110,10 +112,11 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col" class="select-all">Select All</th>
+                <th scope="col" class="select-all-2">Select All</th>
                 <th scope="col">#</th>
                 <th scope="col">Fiirst Name</th>
                 <th scope="col">Last Name</th>
+                <th scope="col">Current Class</th>
               </tr>
             </thead>
             <tbody id="table2"></tbody>
@@ -121,14 +124,14 @@
         </div>
         <div class="row justify-content-end pt-3">
           <div class="col-sm-4">
-            <a class="btn btn-info row" href="#" id="updatePwd"
-              >Remove From List</a
-            >
+            <button class="btn btn-info row" href="#" id="remove-from-list">
+              Remove From List
+            </button>
           </div>
           <button
             class="btn btn-success col-sm-4 mb-4 mr-3"
-            id="cancel"
-            type="reset"
+            id="allocate"
+            type="button"
           >
             Allocate to class
           </button>
@@ -154,42 +157,134 @@
 </main>
 
 <script>
-  $(".select-all").css("cursor", "pointer");
-  $(".select-all").click(function () {
-    $(".form-check-input").prop(
-      "checked",
-      !$(".form-check-input").prop("checked")
-    );
-  });
   $(document).ready(function () {
-    $.ajax(
-      `http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php`,
-      {
+    $("#allocate").click(function () {
+      $("#table2").empty();
+      alert("Success!");
+    });
+    var students1 = [];
+    var students2 = [];
+    var indexes = [];
+
+    loadData1(
+      "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
+    );
+
+    $("#add-to-list").click(function () {
+      updateIndex(".form-check-input-1:checked");
+      for (var i in indexes[0]) {
+        students2.push(students1[indexes[0][i]]);
+        students1.splice(indexes[0][i], 1);
+      }
+      loadData("#table1", "form-check-input-1", students1);
+      loadData("#table2", "form-check-input-2", students2);
+    });
+
+    $("#remove-from-list").click(function () {
+      updateIndex(".form-check-input-2:checked");
+      for (var i in indexes[0]) {
+        students1.push(students2[indexes[0][i]]);
+        students2.splice(indexes[0][i], 1);
+      }
+      loadData("#table1", "form-check-input-1", students1);
+      loadData("#table2", "form-check-input-2", students2);
+    });
+
+    function updateIndex(name) {
+      indexes = [];
+      var trs = $(name).closest("tr");
+      var index = $.map(trs, function (tr) {
+        return $(tr).index();
+      });
+      indexes.push(index);
+    }
+
+    if ($("#year option:selected").val() == "*") {
+      $("#class").prop("disabled", true);
+    }
+
+    $(".select-all-1").css("cursor", "pointer");
+    $(".select-all-1").click(function () {
+      $(".form-check-input-1").prop(
+        "checked",
+        !$(".form-check-input-1").prop("checked")
+      );
+    });
+    $(".select-all-2").css("cursor", "pointer");
+    $(".select-all-2").click(function () {
+      $(".form-check-input-2").prop(
+        "checked",
+        !$(".form-check-input-2").prop("checked")
+      );
+    });
+    function loadData1(url) {
+      $.ajax(url, {
         dataType: "json",
         timeout: 500,
         success: function (data, status, xhr) {
-          var result = "";
-          $(data).each(function (index) {
-            result += `
-            <tr>
-          <td><div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="${this.id}">
-  </div></td>
-  <th scope="row">${index + 1}</th>
-          <td>${this.firstName}</td>
-          <td>${this.lastName}</td>
-          <td>
-            2B
-          </td>
-          </tr>
-            `;
-          });
-          $("#table1").append(result);
+          students1 = data;
+          loadData("#table1", "form-check-input-1", students1);
         },
         error: function (jqXhr, textStatus, errorMessage) {
           $("body").replace("Error: " + errorMessage);
         },
+      });
+    }
+    $("#class").change(function () {
+      if ($("#class option:selected").val() == "*") {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-year1.json"
+        );
+      } else if ($("#class option:selected").val() == "B") {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-year1-b.json"
+        );
+      } else {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-year1-a.json"
+        );
       }
-    );
+    });
+
+    $("#year").change(function () {
+      if ($("#year option:selected").val() == "*") {
+        $("#class").prop("disabled", true);
+      } else {
+        $("#class").prop("disabled", false);
+      }
+      if ($("#year option:selected").val() == "*") {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
+        );
+      } else if ($("#year option:selected").val() == 1) {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-year1.json"
+        );
+      } else {
+        loadData1(
+          "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-year2.json"
+        );
+      }
+    });
+    function loadData(tableName, formName, students) {
+      var result = "";
+      $(students).each(function (index) {
+        $(tableName).empty();
+        result += `
+            <tr>
+          <td><div class="form-group form-check">
+    <input type="checkbox" class="${formName}" id="${this.index}">
+  </div></td>
+  <th scope="row">${index + 1}</th>
+          <td>${this.firstname}</td>
+          <td>${this.lastname}</td>
+          <td>
+            ${this.class}
+          </td>
+          </tr>
+            `;
+      });
+      $(tableName).append(result);
+    }
   });
 </script>
