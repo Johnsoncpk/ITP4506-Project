@@ -101,7 +101,7 @@
             <td>${y.year}</td>
             <td><a class="btn btn-secondary" href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/class-detail.html?classId=${
               this.id
-            }&archived=${y.archived ? true : false}">${
+            }&archived=${y.archived ? true : false}&year=${y.year}">${
                 y.archived ? "Details" : "Update"
               }</a></td>
             </tr>
@@ -127,7 +127,8 @@
       years.unshift({ year: years[0].year + 1, archived: false });
       console.log(years[0].year);
       refreshYear();
-      loadData(getYear($("#year option:selected").val()));
+      $("#table").empty();
+      //loadData(getYear($("#year option:selected").val()));
     }
     $("#archive").click(function () {
       archiveYear();
