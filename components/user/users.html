@@ -11,12 +11,7 @@
             <option value="teacher">Teacher</option>
             <option value="student">Student</option>
           </select>
-          <input
-            class="col-3 form-control mb-4 mr-3"
-            id="query"
-            type="text"
-            placeholder="Search here"
-          />
+          <input class="col-3 form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
         </div>
         <div class="card p-0">
           <table class="table table-striped">
@@ -40,16 +35,34 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
             Ive Jai
           </a>
         </small>
       </div>
     </footer>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: lightskyblue;">Disable User?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="color: black;">
+        Are you sure to disable the user?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="confirm">Confirm</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -88,7 +101,7 @@
         success: function (data, status, xhr) {
           var result = "";
           $(data).each(function (index) {
-            result += `
+            /*result += `
             <tr>
           <th scope="row">${index + 1}</th>
           <td>${this.firstName}</td>
@@ -99,7 +112,7 @@
               this.id
             }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
               <input type="email" name="userID" value="${this.id}" hidden>
-              <select class="form-control bg-secondary text-light select" title="availability">
+              <select class="form-control bg-secondary text-light select" title="availability" >
                 <option ${this.suspended ? "selected" : ""}>Enable</option>
                 <option ${!this.suspended ? "selected" : ""}>Disabled</option>
               </select>
@@ -112,8 +125,52 @@
           </td>
           </tr>
             `;
+          });*/
+            if (this.suspended == 1) {
+              $availability = "Enabled";
+            } else {
+              $availability = "Disabled";
+            }
+            result += `
+            <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${this.firstName}</td>
+          <td>${this.lastName}</td>
+          <td>${this.role}</td>
+          <td>
+            <form id="${this.id
+              }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
+              <input type="email" name="userID" value="${this.id}" hidden>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 `+ $availability + `
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" class="enabled">Enabled</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" class="disabled">Disabled</a>
+                </div>
+              </div>
+          </form>
+          </td>
+          <td>
+            <a class="btn btn-info" href="./user-detail.html?userId=${this.id}">
+              <i class="far fa-address-card"></i>
+            </a>
+          </td>
+          </tr>
+            `;
           });
           $("#table").append(result);
+
+          $("a").click(function () {
+            if($("#dropdownMenuButton").text().trim() == "Disabled"){
+              $("#dropdownMenuButton").text("Enabled");
+            }
+          });
+
+          $("#confirm").click(function () {
+            $("#dropdownMenuButton").text("Disabled");
+          });
         },
         error: function (jqXhr, textStatus, errorMessage) {
           $("body").replace("Error: " + errorMessage);
