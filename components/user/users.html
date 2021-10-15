@@ -141,12 +141,12 @@
               }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
               <input type="email" name="userID" value="${this.id}" hidden>
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton-${this.id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  `+ $availability + `
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" class="enabled">Enabled</a>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" class="disabled">Disabled</a>
+                  <a class="dropdown-item" href="#" class="enabled" name='${this.id}'">Enabled</a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" class="disabled" name='${this.id}'>Disabled</a>
                 </div>
               </div>
           </form>
@@ -161,14 +161,17 @@
           });
           $("#table").append(result);
 
+          var name = "";
+
           $("a").click(function () {
-            if($("#dropdownMenuButton").text().trim() == "Disabled"){
-              $("#dropdownMenuButton").text("Enabled");
+            name = $(this).prop('name');
+            if($("#dropdownMenuButton-"+$(this).prop('name').trim()).text().trim() == "Disabled"){
+              $("#dropdownMenuButton-"+$(this).prop('name').trim()).text("Enabled");
             }
           });
 
           $("#confirm").click(function () {
-            $("#dropdownMenuButton").text("Disabled");
+            $("#dropdownMenuButton-"+name).text("Disabled");
           });
         },
         error: function (jqXhr, textStatus, errorMessage) {
