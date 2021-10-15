@@ -163,38 +163,10 @@ IVE</textarea>
           <tr>
             <td scope="col">1</td>
             <td scope="col">2021</td>
-            <td scope="col">2A</td>
+            <td scope="col">2B</td>
             </tr>`;
       $("#table").append(result);
     }
-
-
-    /* $.ajax({
-       type: "post",
-       url: url + "/viewClass.php",
-       data: {
-         studentId: localStorage.getItem("id"),
-       },
-       success: function (data, status, xhr) {
-         console.log(data);
-         $("#table").empty();
-         var result = "";
-         var number = 0;
-         data.forEach(element => {
-           result += `
-           <tr>
-             <td scope="col">`+ number + `</td>
-             <td scope="col">`+ element.academicYear + `</td>
-             <td scope="col">`+ element.name + `</td>
-             <td scope="col">`+ element.firstName + " " + element.lastName + `</td></tr>`;
-           number++;
-         });
-         $("#table").append(result);
- 
-       },
-       error: function (jqXhr, textStatus, errorMessage) {
-       }
-     });*/
 
     $.ajax({
       type: "post",
@@ -226,6 +198,7 @@ IVE</textarea>
         $(this).text("Edit Profile");
         $("#cancel").hide();
         $("#updatePwd").show();
+            alert("success");
       } else {
         $(this).text("Save");
         $("#cancel").show();
@@ -254,6 +227,7 @@ IVE</textarea>
             $("#updatePwdForm").fadeOut(function () {
               $("#editProfileForm").show();
             });
+            alert("success");
             $("#errorMsg").text("");
           } else {
             $("#errorMsg").text("*Wrong password or Password not match");
