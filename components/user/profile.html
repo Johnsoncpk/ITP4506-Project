@@ -183,38 +183,38 @@ IVE</textarea
     if (localStorage.getItem("role") == "student") {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student";
       result += `
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Academic Year</th>
-            <th scope="col">Class</th>
-            <th scope="col">Class Teacher</th>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">2021</td>
-            <td scope="col">2B</td>
-            <td scope="col">Ada Yuen</td>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Class</th>
+              <th scope="col">Class Teacher</th>
             </tr>
             <tr>
-            <td scope="col">2</td>
-            <td scope="col">2020</td>
-            <td scope="col">1B</td>
-            <td scope="col">Ada Yuen</td>
-            </tr>`;
+              <td scope="col">1</td>
+              <td scope="col">2021</td>
+              <td scope="col">2B</td>
+              <td scope="col">Ada Yuen</td>
+              </tr>
+              <tr>
+              <td scope="col">2</td>
+              <td scope="col">2020</td>
+              <td scope="col">1B</td>
+              <td scope="col">Ada Yuen</td>
+              </tr>`;
       $("#table").append(result);
     } else if (localStorage.getItem("role") == "teacher") {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/teacher";
       result += `
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Academic Year</th>
-            <th scope="col">Class</th>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">2021</td>
-            <td scope="col">2B</td>
-            </tr>`;
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Class</th>
+            </tr>
+            <tr>
+              <td scope="col">1</td>
+              <td scope="col">2021</td>
+              <td scope="col">2B</td>
+              </tr>`;
       $("#table").append(result);
     }
 
@@ -244,7 +244,6 @@ IVE</textarea
       error: function (jqXhr, textStatus, errorMessage) {},
     });
 
-    
     $("#cancel").hide();
     $("#updatePwdForm").hide();
 
@@ -272,16 +271,17 @@ IVE</textarea
         $("#updatePwd").hide();
       }
       form_control();
-
+    });
+    $(".btn").click(function () {
       if ($("#mobile").val() != "") {
-        $('#span-mobile').hide();
-      }else{
-        $('#span-mobile').show();
+        $("#span-mobile").hide();
+      } else {
+        $("#span-mobile").show();
       }
       if ($("#address").val() != "") {
-        $('#span-address').hide();
-      }else{
-        $('#span-address').show();
+        $("#span-address").hide();
+      } else {
+        $("#span-address").show();
       }
     });
 
