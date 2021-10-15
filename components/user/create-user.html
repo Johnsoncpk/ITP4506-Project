@@ -116,21 +116,19 @@
   $(document).ready(function () {
     $("#academicYear").val(new Date().getFullYear());
     $("#create").click(function () {
-      $.ajax(
-        "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/createAccount.php",
-        {
-          method: "post",
-          dataType: "json",
-          timeout: 500,
-          data: {
-            firstname: $("#firstName").val(),
-            lastname: $("#lastName").val(),
-            $email: "abc@student.com.hk",
-            $role: $('#role option:selected').val(),
-          },
-          success: function (data, status, xhr) {},
-        }
-      );
+      $.ajax({
+        type: "post",
+        url: "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/createAccount.php",
+        data: {
+          firstname: $("#firstName").val(),
+          lastname: $("#lastName").val(),
+          role: $("#role option:selected").val(),
+        },
+        success: function (data, status, xhr) {
+          alert("user created successfully with\nUser ID: " + data);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {},
+      });
     });
   });
 </script>

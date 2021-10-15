@@ -7,7 +7,12 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
-              <img src="../img/student-icon.png" alt="Admin" class="rounded-circle" width="150" />
+              <img
+                src="../img/student-icon.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
               <div class="mt-3">
                 <h4 id="name">Johnson Chong</h4>
                 <p class="text-secondary mb-1" id="class">2B</p>
@@ -19,11 +24,13 @@
         <div class="row py-2">
           <div class="col">
             <a class="btn btn-info mr-1" href="#" id="edit">Edit Profile</a>
-            <a class="pl-1 btn btn-info mx-1" href="#" id="updatePwd">Update Password</a>
+            <a class="pl-1 btn btn-info mx-1" href="#" id="updatePwd"
+              >Update Password</a
+            >
             <button class="btn btn-secondary" id="cancel" type="reset">
               Cancel
             </button>
-            <h7 style="color: red;" id="errorMsg"></h7>
+            <h7 style="color: red" id="errorMsg"></h7>
           </div>
         </div>
       </div>
@@ -37,7 +44,13 @@
                 </div>
                 <div class="col-sm-6">
                   <p id="userId" class="form-text">200373237</p>
-                  <input class="form-control" name="userId" value="200373237" disabled hidden />
+                  <input
+                    class="form-control"
+                    name="userId"
+                    value="200373237"
+                    disabled
+                    hidden
+                  />
                 </div>
               </div>
               <hr />
@@ -47,7 +60,13 @@
                 </div>
                 <div class="col-sm-6">
                   <p id="email" class="form-text">200373237@stu.vtc.edu.hk</p>
-                  <input class="form-control" name="email" value="200373237@stu.vtc.edu.hk" disabled hidden />
+                  <input
+                    class="form-control"
+                    name="email"
+                    value="200373237@stu.vtc.edu.hk"
+                    disabled
+                    hidden
+                  />
                 </div>
               </div>
               <hr />
@@ -55,8 +74,15 @@
                 <div class="col-sm-3">
                   <h6 class="form-text text-muted mb-0">Mobile</h6>
                 </div>
-                <div class="col-sm-6">
-                  <input class="form-control" id="mobile" name="mobile" value="+852 65867246" disabled />
+                <div class="col-sm-6" id="mobile-div">
+                  <input
+                    class="form-control"
+                    id="mobile"
+                    name="mobile"
+                    value="+852 65867246"
+                    disabled
+                    placeholder="e.g. 98695229"
+                  />
                 </div>
               </div>
               <hr />
@@ -64,9 +90,15 @@
                 <div class="col-sm-3">
                   <h6 class="form-text text-muted mb-0">Address</h6>
                 </div>
-                <div class="col-sm-6">
-                  <textarea class="form-control" id="address" disabled>
-IVE</textarea>
+                <div class="col-sm-6" id="address-div">
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    disabled
+                    placeholder="e.g. Bay Area, San Francisco, CA"
+                  >
+IVE</textarea
+                  >
                 </div>
               </div>
             </div>
@@ -80,7 +112,12 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">Original Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input type="password" class="form-control" id="originalPwd" name="originalPwd" />
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="originalPwd"
+                    name="originalPwd"
+                  />
                 </div>
               </div>
               <hr />
@@ -89,7 +126,12 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">New Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input type="password" class="form-control" id="newPwd" name="newPwd" />
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="newPwd"
+                    name="newPwd"
+                  />
                 </div>
               </div>
               <hr />
@@ -98,7 +140,12 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">Comfirm Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input type="password" class="form-control" id="confirmPwd" name="confirmPwd" />
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPwd"
+                    name="confirmPwd"
+                  />
                 </div>
               </div>
             </div>
@@ -109,8 +156,7 @@ IVE</textarea>
     <h3>Class Record</h3>
     <div class="card p-0">
       <table class="table">
-        <tbody id="table">
-        </tbody>
+        <tbody id="table"></tbody>
       </table>
     </div>
     <hr />
@@ -118,7 +164,11 @@ IVE</textarea>
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
             Ive Jai
           </a>
         </small>
@@ -133,38 +183,38 @@ IVE</textarea>
     if (localStorage.getItem("role") == "student") {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student";
       result += `
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Academic Year</th>
-            <th scope="col">Class</th>
-            <th scope="col">Class Teacher</th>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">2021</td>
-            <td scope="col">2B</td>
-            <td scope="col">Ada Yuen</td>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Class</th>
+              <th scope="col">Class Teacher</th>
             </tr>
             <tr>
-            <td scope="col">2</td>
-            <td scope="col">2020</td>
-            <td scope="col">1B</td>
-            <td scope="col">Ada Yuen</td>
-            </tr>`;
+              <td scope="col">1</td>
+              <td scope="col">2021</td>
+              <td scope="col">2B</td>
+              <td scope="col">Ada Yuen</td>
+              </tr>
+              <tr>
+              <td scope="col">2</td>
+              <td scope="col">2020</td>
+              <td scope="col">1B</td>
+              <td scope="col">Ada Yuen</td>
+              </tr>`;
       $("#table").append(result);
-    } else if ((localStorage.getItem("role") == "teacher")) {
+    } else if (localStorage.getItem("role") == "teacher") {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/teacher";
       result += `
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Academic Year</th>
-            <th scope="col">Class</th>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">2021</td>
-            <td scope="col">2B</td>
-            </tr>`;
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Class</th>
+            </tr>
+            <tr>
+              <td scope="col">1</td>
+              <td scope="col">2021</td>
+              <td scope="col">2B</td>
+              </tr>`;
       $("#table").append(result);
     }
 
@@ -177,28 +227,44 @@ IVE</textarea>
       success: function (data, status, xhr) {
         console.log(data);
         $("#userId").text(data[0].id);
-        $("#mobile").val(data[0].mobile);
+        $("#mobile").val(data[0].mobile == 0 ? "" : data[0].mobile);
         $("#name").text(data[0].firstName + " " + data[0].lastName);
         $("#address").val(data[0].address);
-
+        if ($("#mobile").val() == "") {
+          $(
+            '<div class="col"><span class="badge badge-pill badge-danger" id="span-mobile" title="Please fill in your phone.">!</span></div>'
+          ).insertAfter("#mobile-div");
+        }
+        if ($("#address").val() == "") {
+          $(
+            '<div class="col"><span class="badge badge-pill badge-danger" id="span-address" title="Please fill in your address.">!</span></div>'
+          ).insertAfter("#address-div");
+        }
       },
-      error: function (jqXhr, textStatus, errorMessage) {
-      }
+      error: function (jqXhr, textStatus, errorMessage) {},
     });
-
 
     $("#cancel").hide();
     $("#updatePwdForm").hide();
 
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: localStorage.getItem("id") }, function (data) {
-          console.log(data);
-        }, "json");
+        $.post(
+          url + "/editPersonal.php",
+          {
+            address: $("#address").val(),
+            mobile: $("#mobile").val(),
+            id: localStorage.getItem("id"),
+          },
+          function (data) {
+            console.log(data);
+          },
+          "json"
+        );
         $(this).text("Edit Profile");
         $("#cancel").hide();
         $("#updatePwd").show();
-            alert("success");
+        alert("success");
       } else {
         $(this).text("Save");
         $("#cancel").show();
@@ -206,7 +272,18 @@ IVE</textarea>
       }
       form_control();
     });
-
+    $(".btn").click(function () {
+      if ($("#mobile").val() != "") {
+        $("#span-mobile").hide();
+      } else {
+        $("#span-mobile").show();
+      }
+      if ($("#address").val() != "") {
+        $("#span-address").hide();
+      } else {
+        $("#span-address").show();
+      }
+    });
 
     $("#updatePwd").click(function () {
       $("#editProfileForm").fadeOut(function () {
@@ -215,24 +292,34 @@ IVE</textarea>
 
       // $("#editProfileForm").hide();
       if ($(this).text() == "Save") {
-        $.post(url + "/editPassword.php", { currentPassword: $("#originalPwd").val(), newPassword: $("#newPwd").val(), confirmPassword: $("#confirmPwd").val(), userID: localStorage.getItem("id") }, function (data) {
-          console.log(data[0].message);
-          if (data[0].message == "success") {
-            $("#originalPwd").val("");
-            $("#newPwd").val("");
-            $("#confirmPwd").val("");
-            $("#updatePwd").text("Update Password");
-            $("#cancel").hide();
-            $("#edit").show();
-            $("#updatePwdForm").fadeOut(function () {
-              $("#editProfileForm").show();
-            });
-            alert("success");
-            $("#errorMsg").text("");
-          } else {
-            $("#errorMsg").text("*Wrong password or Password not match");
-          }
-        }, "json");
+        $.post(
+          url + "/editPassword.php",
+          {
+            currentPassword: $("#originalPwd").val(),
+            newPassword: $("#newPwd").val(),
+            confirmPassword: $("#confirmPwd").val(),
+            userID: localStorage.getItem("id"),
+          },
+          function (data) {
+            console.log(data[0].message);
+            if (data[0].message == "success") {
+              $("#originalPwd").val("");
+              $("#newPwd").val("");
+              $("#confirmPwd").val("");
+              $("#updatePwd").text("Update Password");
+              $("#cancel").hide();
+              $("#edit").show();
+              $("#updatePwdForm").fadeOut(function () {
+                $("#editProfileForm").show();
+              });
+              alert("success");
+              $("#errorMsg").text("");
+            } else {
+              $("#errorMsg").text("*Wrong password or Password not match");
+            }
+          },
+          "json"
+        );
       } else {
         $(this).text("Save");
         $("#cancel").show();
@@ -254,7 +341,6 @@ IVE</textarea>
       $("#errorMsg").text("");
       form_control();
     });
-
   });
   function form_control() {
     $("#editProfileForm .form-control").each(function () {

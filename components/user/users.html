@@ -69,12 +69,14 @@
 <script>
   $(document).ready(function () {
     var role = "*";
-    var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
+    var url =
+      "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
     loadData(url, "*");
     $("#role").change(function () {
       role = $("#role option:selected").val();
       if (role == "*") {
-        url = "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
+        url =
+          "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
         loadData(url, "*");
       } else {
         url =
@@ -108,15 +110,12 @@
           <td>${this.lastName}</td>
           <td>${this.role}</td>
           <td>
-            <form id="${
-              this.id
-            }" action="http://127.0.0.1/itp4506/Attendance-Online-Server/admin/accountStatus.php" method="post">
               <input type="email" name="userID" value="${this.id}" hidden>
-              <select class="form-control bg-secondary text-light select" title="availability" >
+              <select class="form-control select" title="availability" id="availability-${this.id}">
                 <option ${this.suspended ? "selected" : ""}>Enable</option>
                 <option ${!this.suspended ? "selected" : ""}>Disabled</option>
               </select>
-          </form>
+
           </td>
           <td>
             <a class="btn btn-info" href="./user-detail.html?userId=${this.id}">
