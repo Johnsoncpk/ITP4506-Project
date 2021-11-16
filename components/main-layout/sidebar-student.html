@@ -22,6 +22,10 @@
       <div class="user-info">
         <span id="user-name">Johnson Chong </span>
         <span class="user-role">Student</span>
+        <!--<button class="btn justify-content-end"><i class='fas fa-exclamation' style='font-size:24px;color:red'></i></button> -->
+      </div>
+      <div>
+        <button id="notice" data-toggle="modal" data-target="#exampleModal" class="btn justify-content-end"><i style='font-size:20px;color:red' class='fas'>&#xf0f3;</i></i></button>
       </div>
     </div>
     <!-- sidebar-header  -->
@@ -61,6 +65,36 @@
 </nav>
 <!-- sidebar-wrapper  -->
 
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Sick Leave Certification Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Illness:</label>
+            <input type="text" value="Stomachache" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" style="color:rgb(73, 119, 204)" class="col-form-label">Medical Certification:</label>
+            <input type="file" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="upload" data-dismiss="modal">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -77,6 +111,16 @@
     $("#user-name").text(
       localStorage.getItem("firstName") + " " + localStorage.getItem("lastName")
     );
+
+    $("#upload").click(function(){
+        $("#notice").hide();
+      })
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var recipient = button.data('whatever') // Extract info from data-* attributes
+      var modal = $(this)
+    })
 
     $(".sidebar-dropdown > a").click(function () {
       $(".sidebar-submenu").slideUp(200);

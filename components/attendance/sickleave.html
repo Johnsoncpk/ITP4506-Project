@@ -1,0 +1,194 @@
+<style>
+    option {
+        color: black;
+    }
+</style>
+
+<main class="page-content">
+    <div class="container-fluid">
+        <h2>Sick Leave</h2>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="col-md-12 my-1 py-1">
+                    <form id="editClassForm">
+                        <div class="form-group mb-2 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h6 class="form-text text-muted mb-0">Class</h6>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control select" title="availability" id="stuClass">
+                                            <option value="1A">1A</option>
+                                            <option value="1B">1B</option>
+                                            <option value="1C">1C</option>
+                                            <option value="2A">2A</option>
+                                            <option value="2B">2B</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h6 class="form-text text-muted mb-0">Academic Year</h6>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <h6 class="form-text mb-0">2022</h6>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h6 class="form-text text-muted mb-0">Description</h6>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <select class="form-control select" id="subject">
+                                            <option value="SE">Higher Diploma in Software Engineering</option>
+                                            <option value="game">Higher Diploma in Game Software Development</option>
+                                            <option value="cybersecurity">Higher Diploma in Cybersecurity</option>
+                                            <option value="ai">Higher Diploma in AI and Smart Technology</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h6 class="form-text text-muted mb-0">Student</h6>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="btn btn-info" href="#" id="select">Select</a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h6 class="form-text mb-0" id="student"></h6>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h6 class="form-text text-muted mb-0">Date</h6>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <input id="datepicker" class="form-control" type="date" value="" />
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h6 class="form-text text-muted mb-0">Illness</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1">
+                                <a class="btn btn-info" href="http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html" id="confirm">Confirm</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <h5>Student List</h5>
+        <hr />
+        <div class="row" id="studentlist">
+            <div class="col-md-12 py-1">
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 justify-content-end">
+                        <input class="col form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
+                    </div>
+                </div>
+                <div class="card p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table1"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer class="text-center">
+            <div class="mb-2">
+                <small>
+                    © 2021 made by -
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+                        Ive Jai
+                    </a>
+                </small>
+            </div>
+        </footer>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $("#allocate").click(function () {
+            $("#table2").empty();
+            alert("Success!");
+        });
+        var students1 = [];
+        var students2 = [];
+        var indexes = [];
+
+        loadData1(
+            "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
+        );
+
+        $("#studentlist").hide();
+
+        $("#select").click(function () {
+            $("#studentlist").show();
+        });
+
+        var today = new Date($.now());
+        $("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+
+        function loadData1(url) {
+            $.ajax(url, {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    students1 = data;
+                    loadData("#table1", "form-check-input-1", students1);
+                    $("a").click(function () {
+                        var num = $(this).prop("name").trim();
+                        $("#student").text($("#fName-" + num).text() + " " + $("#lName-" + num).text());
+                        if (num != "") {
+                            $("#studentlist").hide();
+                        }
+                    });
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    $("body").replace("Error: " + errorMessage);
+                },
+            });
+        }
+
+        function loadData(tableName, formName, students) {
+            var result = "";
+            $(students).each(function (index) {
+                $(tableName).empty();
+                result += `
+              <tr>
+            <th scope="row">${index + 1}</th>
+            <td id="fName-`+ (index + 1) + `">${this.firstname}</td>
+            <td id="lName-`+ (index + 1) + `">${this.lastname}</td>
+            <td>
+                <a class="btn btn-info" href="#" name="${index + 1}">Select</a>
+            </td>
+            </tr>
+              `;
+            });
+            $(tableName).append(result);
+        }
+    });
+</script>

@@ -1,0 +1,70 @@
+<main class="page-content">
+    <div class="container-fluid">
+        <h2>Multiple User Creation</h2>
+        <hr />
+        <div class="row">
+            <div class="form col-md-12">
+                <div class="col-md-10 my-2 py-2">
+                    <form id="editProfileForm" method="post">
+                        <div class="form-group mb-3 card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="form-text text-muted mb-0">User ID</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p id="userId" class="form-text">
+                                            *Will Be Genrated By System
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="form-text text-muted mb-0">Csv File</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="file" />
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-info mr-1 mt-3" type="button" id="create">
+                                    Create
+                                </button>
+                                <button class="btn btn-secondary mt-3" id="cancel" type="reset">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h4 id="msg" class="form-text text-muted mb-0">17 new records are created</h6>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <footer class="text-center">
+            <div class="mb-2">
+                <small>
+                    © 2021 made by -
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+                        Ive Jai
+                    </a>
+                </small>
+            </div>
+        </footer>
+    </div>
+</main>
+
+<script>
+    $(document).ready(function () {
+        $("#msg").hide();
+        $("#create").click(function(){
+            $("#msg").show();
+        })
+        $("#academicYear").val(new Date().getFullYear());
+    });
+</script>
