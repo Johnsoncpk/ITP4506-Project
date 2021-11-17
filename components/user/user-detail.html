@@ -108,7 +108,7 @@ IVE</textarea>
     <h3>Class Record</h3>
     <div class="card p-0">
       <table class="table">
-        <tbody id="table">
+        <tbody id="classRecord">
         </tbody>
       </table>
     </div>
@@ -166,7 +166,7 @@ IVE</textarea>
             <td scope="col">1B</td>
             <td scope="col">Ada Yuen</td>
             </tr>`;
-          $("#table").append(result);
+          $("#classRecord").append(result);
         } else if ((data[0].role == "teacher")) {
           result += `
           <tr>
@@ -179,7 +179,7 @@ IVE</textarea>
             <td scope="col">2021</td>
             <td scope="col">2B</td>
             </tr>`;
-          $("#table").append(result);
+          $("#classRecord").append(result);
         }
       },
       error: function (jqXhr, textStatus, errorMessage) {

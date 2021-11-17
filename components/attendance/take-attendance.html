@@ -18,7 +18,7 @@
                                 <th scope="col">Remark</th>
                             </tr>
                         </thead>
-                        <tbody id="table"></tbody>
+                        <tbody id="attend"></tbody>
                     </table>
                 </div>
                 <div class="col-md-12 py-3">
@@ -89,6 +89,7 @@
                 loadData(url, role);
             }
         });
+
         $("#query").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $("#table tr").filter(function () {
@@ -103,7 +104,7 @@
         })
 
         function loadData(url, role) {
-            $("#table").empty();
+            $("#attend").empty();
             $.ajax(url, {
                 method: "post",
                 dataType: "json",
@@ -138,7 +139,7 @@
             </tr>
               `;
                     });
-                    $("#table").append(result);
+                    $("#attend").append(result);
 
                     var name = "";
 
