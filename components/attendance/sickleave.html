@@ -2,6 +2,11 @@
     option {
         color: black;
     }
+
+    .scrollit {
+        overflow: scroll;
+        height: 300px;
+    }
 </style>
 
 <main class="page-content">
@@ -60,6 +65,31 @@
                                         <h6 class="form-text mb-0" id="student"></h6>
                                     </div>
                                 </div>
+                                <div class="row" id="studentlist">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10 py-1">
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4 justify-content-end">
+                                                <input class="col form-control mb-4 mr-3" id="query" type="text"
+                                                    placeholder="Search here" />
+                                            </div>
+                                        </div>
+                                        <div class="card p-0 scrollit">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">First Name</th>
+                                                        <th scope="col">Last Name</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table1"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr />
                                 <div class="row">
                                     <div class="col-sm-2">
@@ -83,14 +113,16 @@
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">
-                                <a class="btn btn-info" href="http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html" id="confirm">Confirm</a>
+                                <a class="btn btn-info"
+                                    href="http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html"
+                                    id="confirm">Confirm</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <h5>Student List</h5>
+        <!--<h5>Student List</h5>
         <hr />
         <div class="row" id="studentlist">
             <div class="col-md-12 py-1">
@@ -114,7 +146,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div>-->
         <hr />
         <footer class="text-center">
             <div class="mb-2">
@@ -143,6 +175,7 @@
             "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
         );
 
+
         $("#studentlist").hide();
 
         $("#select").click(function () {
@@ -166,6 +199,15 @@
                             $("#studentlist").hide();
                         }
                     });
+
+                    
+        $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            //alert(value);
+            $(".stulist").hide();
+            $(".stulist").filter(":contains(" + value + ")").show();
+        });
+
                 },
                 error: function (jqXhr, textStatus, errorMessage) {
                     $("body").replace("Error: " + errorMessage);
@@ -178,7 +220,7 @@
             $(students).each(function (index) {
                 $(tableName).empty();
                 result += `
-              <tr>
+              <tr class="stulist">
             <th scope="row">${index + 1}</th>
             <td id="fName-`+ (index + 1) + `">${this.firstname}</td>
             <td id="lName-`+ (index + 1) + `">${this.lastname}</td>

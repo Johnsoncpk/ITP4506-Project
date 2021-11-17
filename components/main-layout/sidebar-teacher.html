@@ -134,17 +134,17 @@
               <th scope="col">Student Name</th>
               <th scope="col"></th>
             </tr>
-            <tr>
+            <tr id="tr-1">
               <td scope="col">1</td>
-              <td scope="col" name="class-1">2B</td>
-              <td scope="col" name="name-1">Vincy Pun</td>
+              <td scope="col" id="class-1">2B</td>
+              <td scope="col" id="name-1">Vincy Pun</td>
               <td scope="col"><button type="button" data-toggle="modal" data-target="#exampleModal"
                   class="btn btn-primary sicklist" data-dismiss="modal" name="1">Detail</button></td>
             </tr>
-            <tr>
+            <tr id="tr-2">
               <td scope="col">2</td>
-              <td scope="col" name="class-2">1A</td>
-              <td scope="col" name="name-2">Melo Tsui</td>
+              <td scope="col" id="class-2">1A</td>
+              <td scope="col" id="name-2">Melo Tsui</td>
               <td scope="col"><button type="button" data-toggle="modal" data-target="#exampleModal"
                   class="btn btn-primary sicklist" data-dismiss="modal" name="2">Detail</button></td>
             </tr>
@@ -170,7 +170,7 @@
         <form>
           <div class="form-group">
             <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Class:</label>
-            <input type="text" value="2B" class="form-control" id="recipient-name">
+            <input type="text" value="2B" class="form-control" id="recipient-class">
           </div>
           <div class="form-group">
             <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Student Name:</label>
@@ -178,13 +178,13 @@
           </div>
           <div class="form-group">
             <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Illness:</label>
-            <input type="text" value="Stomachache" class="form-control" id="recipient-name">
+            <input type="text" value="Stomachache" class="form-control" id="recipient-illness">
           </div>
           <div class="form-group">
             <label for="message-text" style="color:rgb(73, 119, 204)" class="col-form-label">Medical
               Certification:</label>
             <h6><a
-                href="http://127.0.0.1/itp4506/Attendance-Online-Web/docs/VincyPun_SickLeaveMedicalCerification.pdf">VincyPun_SickLeaveMedicalCerification</a>
+                href="http://127.0.0.1/itp4506/Attendance-Online-Web/docs/VincyPun_SickLeaveMedicalCerification.pdf" id="cert">SickLeaveMedicalCerification.pdf</a>
             </h6>
           </div>
         </form>
@@ -217,16 +217,16 @@
 
     $("#user-name").text(localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"));
 
-    /*$(".sick").click(function(){
-      $("#notice").hide();
-    })*/
+    $(".sick").click(function(){
+      $("#tr-" + name).hide();
+    })
+
+    var name="";
 
     $(".sicklist").click(function(){
       name = $(this).prop('name');
-      alert(name);
-      alert($("#name-"+name).text());
-      alert($("#class-"+name).text());
-      //$("#dropdownMenuButton-" + name).text($(this).text());
+      $("#recipient-class").val($("#class-"+name).text());
+      $("#recipient-name").val($("#name-"+name).text());
     })
 
     $(".sidebar-dropdown > a").click(function () {
