@@ -46,7 +46,7 @@
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody id="table"></tbody>
+                        <tbody id="attendDetail"></tbody>
                     </table>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                         </tr>
                         `;
                 });
-                $("#table").append(result);
+                $("#attendDetail").append(result);
             },
             error: function (jqXhr, textStatus, errorMessage) {
             }

@@ -22,7 +22,7 @@
                   <th scope="col">Details</th>
                 </tr>
               </thead>
-              <tbody id="table"></tbody>
+              <tbody id="stu"></tbody>
             </table>
           </div>
         </div>
@@ -58,7 +58,7 @@
       });
   
       function loadData(url, role) {
-        $("#table").empty();
+        $("#stu").empty();
         $.ajax(url, {
           method: "post",
           dataType: "json",
@@ -82,7 +82,7 @@
             </tr>
               `;
             });
-            $("#table").append(result);
+            $("#stu").append(result);
           },
           error: function (jqXhr, textStatus, errorMessage) {
             $("body").replace("Error: " + errorMessage);

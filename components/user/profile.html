@@ -156,7 +156,7 @@ IVE</textarea
     <h3>Class Record</h3>
     <div class="card p-0">
       <table class="table">
-        <tbody id="table"></tbody>
+        <tbody id="record"></tbody>
       </table>
     </div>
     <hr />
@@ -201,7 +201,7 @@ IVE</textarea
               <td scope="col">1B</td>
               <td scope="col">Ada Yuen</td>
               </tr>`;
-      $("#table").append(result);
+      $("#record").append(result);
     } else if (localStorage.getItem("role") == "teacher") {
       url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/teacher";
       result += `
@@ -215,7 +215,7 @@ IVE</textarea
               <td scope="col">2021</td>
               <td scope="col">2B</td>
               </tr>`;
-      $("#table").append(result);
+      $("#record").append(result);
     }
 
     $.ajax({
