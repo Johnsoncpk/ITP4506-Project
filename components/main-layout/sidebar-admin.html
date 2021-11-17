@@ -22,6 +22,8 @@
             >Johnson Chong
           </span>
           <span class="user-role">Administrator</span>
+          <button class="btn btn-dark" id="night">Night Mode</button>
+          <button class="btn btn-secondary" id="day">Day Mode</button>
         </div>
       </div>
       <!-- sidebar-header  -->
@@ -118,6 +120,14 @@
 
       $("#user-name").text(localStorage.getItem("firstName") + " " +localStorage.getItem("lastName"));
 
+      $("#night").click(function(){
+        $("*").css("color", "#212529");
+        $("hr").css("background-color", "#1d2124");
+        $(".card").css("background-color", "#96dacd");
+        $("input").css("background-color", "#ffffff");
+        $("body").css("background-color", "#ffffff");
+        $(".chiller-theme .sidebar-wrapper .sidebar-menu ul li a i").css("background-color", "#ffffff");
+      })
 
       $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);

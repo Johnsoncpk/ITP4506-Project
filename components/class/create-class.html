@@ -5,7 +5,7 @@
     <div class="row">
       <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
-          <form id="editProfileForm">
+          <form id="classCreateForm" method="post">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
@@ -13,13 +13,8 @@
                     <h6 class="form-text text-muted mb-0">Class</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input
-                    id="className"
-                      type="text"
-                      class="form-control"
-                      name="className"
-                      placeholder="e.g. 2A"
-                    />
+                    <input id="className" type="text" class="form-control" name="className" placeholder="e.g. 2A"
+                      required />
                   </div>
                 </div>
                 <hr />
@@ -28,13 +23,8 @@
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input
-                    id="academicYear"
-                      type="number"
-                      class="form-control"
-                      name="academicYear"
-                      placeholder="e.g. 2021"
-                    />
+                    <input id="academicYear" type="number" class="form-control" name="academicYear"
+                      placeholder="e.g. 2021" required />
                   </div>
                 </div>
                 <hr />
@@ -43,18 +33,14 @@
                     <h6 class="form-text text-muted mb-0">Description</h6>
                   </div>
                   <div class="col-sm-6">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      name="description"
-                      rows="3"
-                      placeholder="Description of Class.."
-                    ></textarea>
+                    <textarea type="text" class="form-control" name="description" rows="3"
+                      placeholder="Description of Class.." required></textarea>
                   </div>
                 </div>
                 <hr />
-                <a class="btn btn-info mr-1" href="#" id="edit">Create</a>
-                <button class="btn btn-secondary" id="cancel" type="reset">
+
+                <button class="btn btn-info" id="createConfirm" type="submit">Confirm</button>
+                <button class="btn btn-secondary" id="cancelConfirm" type="reset">
                   Reset
                 </button>
               </div>
@@ -69,11 +55,7 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
             Ive Jai
           </a>
         </small>
@@ -82,9 +64,35 @@
   </div>
 </main>
 
+<div class="modal" id="createClassMsg" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color: rgb(73, 119, 204);">Class information successfully changed</p>
+        <p id="msg" style="color: rgb(73, 119, 204);"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-  $(document).ready(function(){
-    $('#academicYear').val(new Date().getFullYear()+1);
+  $(document).ready(function () {
+
+   /* $("#classCreateForm").submit(function () {
+      e.preventDefault();
+      $("#createClassMsg").modal('show');
+    })*/
+
+    $('#academicYear').val(new Date().getFullYear() + 1);
   });
-  
+
 </script>

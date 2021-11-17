@@ -97,6 +97,27 @@ Higher Diploma in Software Engineering</textarea
       </div>
     </footer>
   </div>
+
+  <div class="modal" id="editClassMsg" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color: rgb(73, 119, 204);">Class information successfully changed</p>
+          <p id="msg" style="color: rgb(73, 119, 204);"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <script>
@@ -106,6 +127,7 @@ Higher Diploma in Software Engineering</textarea
     if (searchParams.has("classId")) {
       let classId = searchParams.get("classId");
       let archived = searchParams.get("archived");
+      $("#className").val(classId);
       year = searchParams.get("year");
       if(archived=="true"){
         $('#edit').hide();
@@ -122,6 +144,7 @@ Higher Diploma in Software Engineering</textarea
         $(this).text("Edit Class Info");
         $("#cancel").hide();
         form_control();
+        $('#editClassMsg').modal('show');
       } else {
         $(this).text("Save");
         $("#cancel").show();

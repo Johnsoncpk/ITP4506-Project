@@ -5,7 +5,7 @@
         <div class="row">
             <div class="form col-md-12">
                 <div class="col-md-10 my-2 py-2">
-                    <form id="editProfileForm" method="post">
+                    <form id="editProfileForm">
                         <div class="form-group mb-3 card">
                             <div class="card-body">
                                 <div class="row">
@@ -24,11 +24,11 @@
                                         <h6 class="form-text text-muted mb-0">Csv File</h6>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="file" />
+                                        <input type="file" id="csvfile" required />
                                     </div>
                                 </div>
 
-                                <button class="btn btn-info mr-1 mt-3" type="button" id="create">
+                                <button class="btn btn-info mr-1 mt-3" type="submit" id="create">
                                     Create
                                 </button>
                                 <button class="btn btn-secondary mt-3" id="cancel" type="reset">
@@ -38,7 +38,20 @@
                         </div>
 
                         <div class="row">
-                            <h4 id="msg" class="form-text text-muted mb-0">17 new records are created</h6>
+                            <h4 id="msg" class="form-text text-muted mb-0">8 new records are created. 1 error is found
+                                </h6>
+                        </div>
+                        <div class="card p-0" id="result">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="newAccount"></tbody>
+                            </table>
                         </div>
                     </form>
                 </div>
@@ -62,9 +75,67 @@
 <script>
     $(document).ready(function () {
         $("#msg").hide();
-        $("#create").click(function(){
+        $("#result").hide();
+        var fileName = "";
+        $("#editProfileForm").submit(function (e) {
+            e.preventDefault();
+            fileName = $("#csvfile").val().split('\\').pop();
+            
+        if (fileName == "accountRecord_error.csv") {
+            $("#msg").text("8 new records are created. 1 error is found");
+        } else {
+            $("#wrong").hide();
+            $("#msg").text("8 new records are created.");
+        }
             $("#msg").show();
+            $("#result").show();
         })
         $("#academicYear").val(new Date().getFullYear());
+
+        loadData1(
+            "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
+        );
+
+        function loadData1(url) {
+            $.ajax(url, {
+                dataType: "json",
+                timeout: 500,
+                success: function (data, status, xhr) {
+                    students1 = data;
+                    loadData("#newAccount", students1);
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    $("body").replace("Error: " + errorMessage);
+                },
+            });
+        }
     });
+
+    function loadData(tableName, students) {
+        var result = "";
+        var count = 0;
+        $(students).each(function (index) {
+            $(tableName).empty();
+            count = index;
+            result += `
+            <tr>
+  <td scope="row">${index + 1}</td>
+          <td>${this.firstname} ${this.lastname}</td>
+          <td>
+            Student
+          </td>
+          </tr>
+            `;
+        });
+            result += `
+            <tr id="wrong">
+  <td scope="row">${count + 2}</td>
+          <td><h4 style="color:red;">!</h4></td>
+          <td>
+            Student
+          </td>
+          </tr>
+            `;
+        $(tableName).append(result);
+    }
 </script>

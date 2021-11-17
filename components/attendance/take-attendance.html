@@ -15,7 +15,6 @@
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Remark</th>
                             </tr>
                         </thead>
                         <tbody id="attend"></tbody>
@@ -49,7 +48,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Personal Leave Reason</h5>
+                <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Personal Leave Reason
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,7 +75,7 @@
     $(document).ready(function () {
         var role = "*";
         var url =
-            "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
+            "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
         loadData(url, "*");
         $("#role").change(function () {
             role = $("#role option:selected").val();
@@ -89,13 +89,14 @@
                 loadData(url, role);
             }
         });
-
+        
         $("#query").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#table tr").filter(function () {
+            $(".attendList").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
         });
+
 
         $('#reasonModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -110,14 +111,14 @@
                 dataType: "json",
                 timeout: 500,
                 data: {
-                    role: role,
+                    role: "student",
                 },
                 success: function (data, status, xhr) {
                     var result = "";
                     $(data).each(function (index) {
                         result += `
-              <tr>
-            <th scope="row">${index + 1}</th>
+              <tr class="attendList">
+            <td scope="row">${index + 1}</td>
             <td>${this.firstName}</td>
             <td>${this.lastName}</td>
             <td>
@@ -130,12 +131,11 @@
                     <a class="dropdown-item" href="#" class="disabled" name='${this.id}'>Late</a>
                     <a class="dropdown-item" href="#" class="earlyleave" name='${this.id}'">Early Leave</a>
                     <a class="dropdown-item" href="#" class="sickleave" name='${this.id}'">Sick Leave</a>
-                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal"  href="#" class="personalleave" name='${this.id}'">Personal Leave</a>
+                    <a class="dropdown-item" href="#" class="personalleave" name='${this.id}'">Personal Leave</a>
                     <a class="dropdown-item" href="#" class="absent" name='${this.id}'>Absent</a>
                   </div>
                 </div>
             </td>
-            <td id="remark-${this.id}"></td>
             </tr>
               `;
                     });

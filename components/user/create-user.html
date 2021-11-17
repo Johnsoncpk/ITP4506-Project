@@ -81,7 +81,7 @@
                   </div>
                 </div>
                 <hr />
-                <button class="btn btn-info mr-1" type="button" id="create">
+                <button class="btn btn-info mr-1" type="submit" id="create">
                   Create
                 </button>
                 <button class="btn btn-secondary" id="cancel" type="reset">
@@ -94,6 +94,26 @@
       </div>
     </div>
     <hr />
+
+    <div class="modal" id="createMsg" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p style="color: rgb(73, 119, 204);">User created successfully with</p>
+            <p id="msg" style="color: rgb(73, 119, 204);"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="text-center">
       <div class="mb-2">
@@ -110,6 +130,8 @@
       </div>
     </footer>
   </div>
+
+
 </main>
 
 <script>
@@ -125,7 +147,13 @@
           role: $("#role option:selected").val(),
         },
         success: function (data, status, xhr) {
-          alert("user created successfully with\nUser ID: " + data);
+          $("#msg").text("User ID: " + data);
+    $("form").submit(function (e) {
+      e.preventDefault();
+      $('#createMsg').modal('show');
+      $("#firstName").val("");
+      $("#lastName").val("");
+    }); 
         },
         error: function (jqXhr, textStatus, errorMessage) {},
       });

@@ -1,42 +1,42 @@
 [
   {
     "firstname": "Alan",
-    "lastname": "Po 1",
+    "lastname": "Po",
     "class": "1A"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 2",
+    "firstname": "Melo",
+    "lastname": "Tsui",
     "class": "1B"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 3",
+    "firstname": "Anna",
+    "lastname": "Hui",
     "class": "1C"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 4",
+    "firstname": "Ivan",
+    "lastname": "Leung",
     "class": "1A"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 5",
+    "firstname": "Horace",
+    "lastname": "Ho",
     "class": "1A"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 1",
+    "firstname": "Kan",
+    "lastname": "Yan",
     "class": "2A"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 2",
+    "firstname": "Kelly",
+    "lastname": "Leung",
     "class": "2B"
   },
   {
-    "firstname": "Alan",
-    "lastname": "Po 3",
+    "firstname": "Chris",
+    "lastname": "Paul",
     "class": "2C"
   }
 ]

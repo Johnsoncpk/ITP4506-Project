@@ -175,6 +175,26 @@ IVE</textarea
       </div>
     </footer>
   </div>
+
+  <div class="modal" id="editProfile" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="msgContent" style="color: rgb(73, 119, 204);">Profile successfully changed</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 <script>
   $(document).ready(function () {
@@ -246,7 +266,6 @@ IVE</textarea
 
     $("#cancel").hide();
     $("#updatePwdForm").hide();
-
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
         $.post(
@@ -264,7 +283,8 @@ IVE</textarea
         $(this).text("Edit Profile");
         $("#cancel").hide();
         $("#updatePwd").show();
-        alert("success");
+        $("#msgContent").text("Profile Information successfully changed");
+        $("#editProfile").modal('show');
       } else {
         $(this).text("Save");
         $("#cancel").show();
@@ -312,7 +332,8 @@ IVE</textarea
               $("#updatePwdForm").fadeOut(function () {
                 $("#editProfileForm").show();
               });
-              alert("success");
+              $("#msgContent").text("Password successfully changed");
+              $("#editProfile").modal('show');
               $("#errorMsg").text("");
             } else {
               $("#errorMsg").text("*Wrong password or Password not match");

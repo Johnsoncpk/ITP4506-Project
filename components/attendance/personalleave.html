@@ -11,12 +11,12 @@
 
 <main class="page-content">
     <div class="container-fluid">
-        <h2>Sick Leave</h2>
+        <h2>Personal Leave</h2>
         <hr />
         <div class="row">
             <div class="form-group col-md-12">
                 <div class="col-md-12 my-1 py-1">
-                    <form id="sickLeaveForm">
+                    <form id="personalLeaveForm">
                         <div class="form-group mb-2 card">
                             <div class="card-body">
                                 <div class="row">
@@ -66,9 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="col-sm-2"></div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-4">
                                         <h6 class="form-text mb-0" id="student"> </h6>
                                     </div>
                                 </div>
@@ -109,10 +108,10 @@
                                 <hr />
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <h6 class="form-text text-muted mb-0">Illness</h6>
+                                        <h6 class="form-text text-muted mb-0">Reason</h6>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" id="ill" required class="form-control" />
+                                        <input type="text" id="ill" class="form-control" required />
                                     </div>
                                 </div>
                             </div>
@@ -120,6 +119,7 @@
                         <div class="row">
                             <div class="col-md-11"></div>
                             <div class="col-md-1">
+
                                 <button class="btn btn-info" id="confirmLeave" type="submit">Confirm</button>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
 </main>
 
 
-<div class="modal" id="sickMsg" tabindex="-1" role="dialog">
+<div class="modal" id="personalMsg" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -177,7 +177,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p style="color: rgb(73, 119, 204);">New sick leave record is created</p>
+                <p style="color: rgb(73, 119, 204);">New personal leave record is created</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -200,17 +200,6 @@
             "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
         );
 
-        $("#sickLeaveForm").submit(function (e) {
-            if ($("#student").text() != " ") {
-                e.preventDefault();
-                $("#sickMsg").modal('show');
-                $("#ill").val("");
-                $("#student").text(" ");
-                $("#errorMsg").hide();
-            } else {
-                $("#errorMsg").show();
-            }
-        })
         $("#errorMsg").hide();
 
         $("#studentlist").hide();
@@ -237,6 +226,18 @@
                         }
                     });
 
+                    $("#personalLeaveForm").submit(function (e) {
+                        if ($("#student").text() != " ") {
+                            e.preventDefault();
+                            $('#personalMsg').modal('show');
+                            $("#ill").val("");
+                            $("#student").text(" ");
+                            $("#errorMsg").hide();
+                        } else {
+
+                            $("#errorMsg").show();
+                        }
+                    })
 
                     $("#query").on("keyup", function () {
                         var value = $(this).val().toLowerCase();
