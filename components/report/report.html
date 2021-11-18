@@ -5,7 +5,7 @@
     <div class="row gutters-sm">
       <div class="col-md-12 pb-2">
         <div class="row">
-            <h5 class="col-md-4 py-3">Please Select the academic year: </h5>
+          <h5 class="col-md-4 py-3">Please Select the academic year:</h5>
           <div class="col-md-3 py-3">
             <div class="dropdown">
               <button
@@ -31,6 +31,43 @@
           </div>
         </div>
         <div class="card p-0">
+          <div class="form-group col-md-12">
+            <div class="col-md-12 my-1 py-1">
+              <form id="sickLeaveForm">
+                <div class="form-group mb-2 card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="form-text text-muted mb-0">Academic Year</h6>
+                      </div>
+                      <div class="col-sm-3">
+                        <h6 class="form-text mb-0" id="y"></h6>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <h6 class="form-text text-muted mb-0">
+                          Number of Classes
+                        </h6>
+                      </div>
+                      <div class="col-sm-3">
+                        <h6 class="form-text mb-0" id="noOfClass"></h6>
+                      </div>
+                      <div class="col-sm-2">
+                        <h6 class="form-text text-muted mb-0">
+                          Number of Students
+                        </h6>
+                      </div>
+                      <div class="col-sm-3">
+                        <h6 class="form-text mb-0" id="totalStudent"></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
           <table class="table table-striped">
             <thead>
               <tr id="data">
@@ -45,11 +82,10 @@
                 <th scope="col"></th>
               </tr>
             </thead>
-            
             <tbody id="table"></tbody>
           </table>
         </div>
-        <hr>
+        <hr />
         <div class="row">
           <div class="col-md-12 py-3" style="height: 500px">
             <div id="container" style="width: 100%; height: 100%"></div>
@@ -80,6 +116,9 @@
     function drawChart() {
       anychart.onDocumentReady(function () {
         if ($("#dropdownMenuButton").text() == "2021") {
+          $("#y").text("2021");
+          $('#totalStudent').text('532');
+          $('#noOfClass').text("30");
           rows = [
             ["Monday", 91.6],
             ["Tuesday", 95.3],
@@ -87,7 +126,11 @@
             ["Thursday", 96.2],
             ["Friday", 89.5],
           ];
+          title = "Chart for student present rate in weekday for 2021";
         } else if ($("#dropdownMenuButton").text() == "2020") {
+          $("#y").text("2020");
+          $('#totalStudent').text('420');
+          $('#noOfClass').text("25");
           rows = [
             ["Monday", 79],
             ["Tuesday", 89],
@@ -95,7 +138,11 @@
             ["Thursday", 95],
             ["Friday", 88],
           ];
+          title = "Chart for student present rate in weekday for 2020";
         } else {
+          $("#y").text("2019");
+          $('#totalStudent').text('341');
+          $('#noOfClass').text("20");
           rows = [
             ["Monday", 77.6],
             ["Tuesday", 99.3],
@@ -103,6 +150,7 @@
             ["Thursday", 89.8],
             ["Friday", 89.5],
           ];
+          title = "Chart for student present rate in weekday for 2019";
         }
 
         // set the data
@@ -117,7 +165,7 @@
         chart.data(data);
 
         // set the chart title
-        chart.title("Chart for student present rate in weekday");
+        chart.title(title);
 
         // draw
         chart.container("container");

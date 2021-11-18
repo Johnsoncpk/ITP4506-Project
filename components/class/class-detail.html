@@ -27,32 +27,14 @@
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input
+                    <h6 ></h6>
+                    <h6
                       id="academicYear"
-                      type="number"
-                      class="form-control"
+                      class="form-text mb-0"
                       name="academicYear"
                       value="2021"
-                      placeholder="e.g. 2021"
-                    />
-                  </div>
-                </div>
-                <hr />
-                <div class="row">
-                  <div class="col-sm-2">
-                    <h6 class="form-text text-muted mb-0">Description</h6>
-                  </div>
-                  <div class="col-sm-6">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      rows="3"
-                      placeholder="Description of Class.."
-                    >
-Higher Diploma in Software Engineering</textarea
-                    >
+                      >
+                    </h6>
                   </div>
                 </div>
                 <hr />
@@ -68,6 +50,24 @@ Higher Diploma in Software Engineering</textarea
                   </div>
                 </div>
                 <hr />
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Note</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      rows="2"
+                      placeholder="Description of Class.."
+                    >Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this class.,</textarea
+                    >
+                  </div>
+                </div>
+                <hr />
+                
                 <a class="btn btn-info mr-1" href="#" id="edit"
                   >Edit Class Info</a
                 >
@@ -79,6 +79,11 @@ Higher Diploma in Software Engineering</textarea
           </form>
         </div>
       </div>
+    </div>
+    <h4>Student list</h4>
+    <hr />
+    <div class="row">
+      
     </div>
     <hr />
 
@@ -138,7 +143,7 @@ Higher Diploma in Software Engineering</textarea
 
     $("#cancel").hide();
     form_control();
-    $("#academicYear").val(year);
+    $("#academicYear").text(year);
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
         $(this).text("Edit Class Info");
