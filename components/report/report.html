@@ -5,7 +5,7 @@
     <div class="row gutters-sm">
       <div class="col-md-12 pb-2">
         <div class="row">
-          <h5 class="col-md-4 py-3">Please Select the academic year:</h5>
+          <h5 class="col-md-4 py-3" id="aYear">Please select the academic year:</h5>
           <div class="col-md-3 py-3">
             <div class="dropdown">
               <button
@@ -31,41 +31,39 @@
           </div>
         </div>
         <div class="card p-0">
-          <div class="form-group col-md-12">
-            <div class="col-md-12 my-1 py-1">
-              <form id="sickLeaveForm">
-                <div class="form-group mb-2 card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <h6 class="form-text text-muted mb-0">Academic Year</h6>
-                      </div>
-                      <div class="col-sm-3">
-                        <h6 class="form-text mb-0" id="y"></h6>
-                      </div>
+          <div class="form-group col-md-12" id="schoolReport">
+            <div class="col-md-12">
+              <div class="form-group mb-2 card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="form-text text-muted mb-0">Academic Year</h6>
                     </div>
-                    <hr />
-                    <div class="row">
-                      <div class="col-sm-2">
-                        <h6 class="form-text text-muted mb-0">
-                          Number of Classes
-                        </h6>
-                      </div>
-                      <div class="col-sm-3">
-                        <h6 class="form-text mb-0" id="noOfClass"></h6>
-                      </div>
-                      <div class="col-sm-2">
-                        <h6 class="form-text text-muted mb-0">
-                          Number of Students
-                        </h6>
-                      </div>
-                      <div class="col-sm-3">
-                        <h6 class="form-text mb-0" id="totalStudent"></h6>
-                      </div>
+                    <div class="col-sm-3">
+                      <h6 class="form-text mb-0" id="y"></h6>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <h6 class="form-text text-muted mb-0">
+                        Number of Classes
+                      </h6>
+                    </div>
+                    <div class="col-sm-3">
+                      <h6 class="form-text mb-0" id="noOfClass"></h6>
+                    </div>
+                    <div class="col-sm-2">
+                      <h6 class="form-text text-muted mb-0">
+                        Number of Students
+                      </h6>
+                    </div>
+                    <div class="col-sm-3">
+                      <h6 class="form-text mb-0" id="totalStudent"></h6>
                     </div>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
           <table class="table table-striped">
@@ -115,22 +113,22 @@
   $(document).ready(function () {
     function drawChart() {
       anychart.onDocumentReady(function () {
-        if ($("#dropdownMenuButton").text() == "2021") {
-          $("#y").text("2021");
-          $('#totalStudent').text('532');
-          $('#noOfClass').text("30");
+        if ($("#dropdownMenuButton").text() == "2019") {
+          $("#y").text("2019");
+          $("#totalStudent").text("341");
+          $("#noOfClass").text("20");
           rows = [
-            ["Monday", 91.6],
-            ["Tuesday", 95.3],
-            ["Wednesday", 94.5],
-            ["Thursday", 96.2],
+            ["Monday", 77.6],
+            ["Tuesday", 99.3],
+            ["Wednesday", 98],
+            ["Thursday", 89.8],
             ["Friday", 89.5],
           ];
-          title = "Chart for student present rate in weekday for 2021";
+          title = "Chart for student present rate in weekday for 2019";
         } else if ($("#dropdownMenuButton").text() == "2020") {
           $("#y").text("2020");
-          $('#totalStudent').text('420');
-          $('#noOfClass').text("25");
+          $("#totalStudent").text("420");
+          $("#noOfClass").text("25");
           rows = [
             ["Monday", 79],
             ["Tuesday", 89],
@@ -140,17 +138,17 @@
           ];
           title = "Chart for student present rate in weekday for 2020";
         } else {
-          $("#y").text("2019");
-          $('#totalStudent').text('341');
-          $('#noOfClass').text("20");
+          $("#y").text("2021");
+          $("#totalStudent").text("532");
+          $("#noOfClass").text("30");
           rows = [
-            ["Monday", 77.6],
-            ["Tuesday", 99.3],
-            ["Wednesday", 98],
-            ["Thursday", 89.8],
+            ["Monday", 91.6],
+            ["Tuesday", 95.3],
+            ["Wednesday", 94.5],
+            ["Thursday", 96.2],
             ["Friday", 89.5],
           ];
-          title = "Chart for student present rate in weekday for 2019";
+          title = "Chart for student present rate in weekday for 2021";
         }
 
         // set the data
@@ -202,16 +200,22 @@
     }
 
     if (type == "class") {
+      $('#schoolReport').hide();
+      $('aYear').hide();
       $("#title").text("Class Report");
       $("#name").remove();
       $(".dropdown").remove();
       loadData();
     } else if (type == "school") {
+      $('#schoolReport').show();
+      $('aYear').show();
       $("#title").text("School Report");
       $("#name").remove();
       $("#className").remove();
       //loadData();
     } else {
+      $('aYear').hide();
+      $('#schoolReport').hide();
       $("#title").text("Student Report");
       $(".dropdown").remove();
       loadData();
