@@ -1,8 +1,8 @@
 <style>
   .scrollit {
-    overflow:scroll;
-    height:300px;
-}
+    overflow: scroll;
+    height: 300px;
+  }
 </style>
 
 <main class="page-content">
@@ -74,12 +74,7 @@
               <option value="E">E</option>
             </select>
           </div>
-          <input
-            class="col form-control mb-4 mr-3"
-            id="query"
-            type="text"
-            placeholder="Search here"
-          />
+          <input class="col form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
         </div>
         <div class="card p-0 scrollit">
           <table class="table table-striped">
@@ -101,11 +96,7 @@
               Add to list
             </button>
           </div>
-          <button
-            class="btn btn-secondary col-2 mb-4 mr-3"
-            id="cancel"
-            type="reset"
-          >
+          <button class="btn btn-secondary col-2 mb-4 mr-3" id="cancel" type="reset">
             Cancel
           </button>
         </div>
@@ -135,26 +126,32 @@
               Remove From List
             </button>
           </div>
-          <button
-            class="btn btn-success col-sm-4 mb-4 mr-3"
-            id="allocate"
-            type="button"
-          >
+          <button class="btn btn-success col-sm-4 mb-4 mr-3" id="allocate" type="button">
             Allocate to class
           </button>
         </div>
       </div>
     </div>
     <hr />
+
+    <div classs="container p-5" id="successMsg">
+      <div class="row no-gutters fixed-top mt-3 mr-3">
+        <div class="col-lg-5 col-md-12 ml-auto">
+          <div class="alert alert-primary fade show" role="alert">
+            <button id="closeMsg" type="button" class="close" aria-label="Close">
+              <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+            </button>
+            <p style="color: rgb(77, 114, 182);" id="msg">Successfully allocated</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="text-center">
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
             Ive Jai
           </a>
         </small>
@@ -165,9 +162,25 @@
 
 <script>
   $(document).ready(function () {
+
+
+    $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".attendList").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+    $("#successMsg").hide();
+    $("#closeMsg").click(function () {
+      $("#successMsg").hide();
+    })
+
     $("#allocate").click(function () {
       $("#table2").empty();
-      alert("Success!");
+      $("#successMsg").show();
+
+
     });
     var students1 = [];
     var students2 = [];
@@ -176,6 +189,7 @@
     loadData1(
       "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
     );
+
 
     $("#add-to-list").click(function () {
       updateIndex(".form-check-input-1:checked");
@@ -278,7 +292,7 @@
       $(students).each(function (index) {
         $(tableName).empty();
         result += `
-            <tr>
+            <tr class="attendList">
           <td><div class="form-group form-check">
     <input type="checkbox" class="${formName}" id="${this.index}">
   </div></td>

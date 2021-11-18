@@ -5,7 +5,7 @@
     <div class="row">
       <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
-          <form id="editClassForm">
+          <form id="editClassForm" onsubmit="return false;">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
@@ -13,12 +13,7 @@
                     <h6 class="form-text text-muted mb-0">Class</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input
-                      title="text"
-                      id="className"
-                      class="form-control"
-                      value="2A"
-                    />
+                    <input title="text" id="className" class="form-control" value="2A" required/>
                   </div>
                 </div>
                 <hr />
@@ -27,13 +22,8 @@
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-4">
-                    <h6 ></h6>
-                    <h6
-                      id="academicYear"
-                      class="form-text mb-0"
-                      name="academicYear"
-                      value="2021"
-                      >
+                    <h6></h6>
+                    <h6 id="academicYear" class="form-text mb-0" name="academicYear" value="2021">
                     </h6>
                   </div>
                 </div>
@@ -43,10 +33,8 @@
                     <h6 class="form-text text-muted mb-0">Teacher</h6>
                   </div>
                   <div class="col-sm-4">
-                    <a
-                      href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=201116523"
-                      >Ada Yuen</a
-                    >
+                    <a href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=201116523">Ada
+                      Yuen</a>
                   </div>
                 </div>
                 <hr />
@@ -55,22 +43,13 @@
                     <h6 class="form-text text-muted mb-0">Note</h6>
                   </div>
                   <div class="col-sm-6">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      rows="2"
-                      placeholder="Description of Class.."
-                    >Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this class.,</textarea
-                    >
+                    <textarea type="text" class="form-control" name="description" id="description" rows="2"
+                      placeholder="Description of Class.." required>Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this class.,</textarea>
                   </div>
                 </div>
                 <hr />
                 
-                <a class="btn btn-info mr-1" href="#" id="edit"
-                  >Edit Class Info</a
-                >
+                <button class="btn btn-info mr-1" id="edit" type="submit">Edit Class Info</button>
                 <button class="btn btn-secondary" id="cancel" type="reset">
                   Cancel
                 </button>
@@ -83,7 +62,7 @@
     <h4>Student list</h4>
     <hr />
     <div class="row">
-      
+
     </div>
     <hr />
 
@@ -91,11 +70,7 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
             Ive Jai
           </a>
         </small>
@@ -103,38 +78,37 @@
     </footer>
   </div>
 
-  <div class="modal" id="editClassMsg" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+  <div classs="container p-5" id="successMsg">
+    <div class="row no-gutters fixed-top mt-3 mr-3">
+      <div class="col-lg-5 col-md-12 ml-auto">
+        <div class="alert alert-primary fade show" role="alert">
+          <button id="closeMsg" type="button" class="close" aria-label="Close">
+            <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
           </button>
-        </div>
-        <div class="modal-body">
-          <p style="color: rgb(73, 119, 204);">Class information successfully changed</p>
-          <p id="msg" style="color: rgb(73, 119, 204);"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <p style="color: rgb(77, 114, 182);" id="msg">Class information successfully changed</p>
         </div>
       </div>
     </div>
   </div>
+
 
 </main>
 
 <script>
   $(document).ready(function () {
     var year;
+    $("#successMsg").hide();
+    $("#closeMsg").click(function () {
+      $("#successMsg").hide();
+    })
+
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("classId")) {
       let classId = searchParams.get("classId");
       let archived = searchParams.get("archived");
       $("#className").val(classId);
       year = searchParams.get("year");
-      if(archived=="true"){
+      if (archived == "true") {
         $('#edit').hide();
       }
     } else {
@@ -146,10 +120,13 @@
     $("#academicYear").text(year);
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        $(this).text("Edit Class Info");
-        $("#cancel").hide();
-        form_control();
-        $('#editClassMsg').modal('show');
+        if($("#className").val().trim() != "" && $("#description").val().trim() != ""){
+          $(this).text("Edit Class Info");
+          $("#cancel").hide();
+          form_control();
+          $("#successMsg").show();
+        }
+
       } else {
         $(this).text("Save");
         $("#cancel").show();

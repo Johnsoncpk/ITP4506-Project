@@ -5,7 +5,7 @@
     <div class="row">
       <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
-          <form id="classCreateForm" method="post">
+          <form id="classCreateForm" onsubmit="return false;">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
@@ -34,7 +34,7 @@
                   </div>
                   <div class="col-sm-6">
                     <textarea type="text" class="form-control" name="description" rows="3"
-                      placeholder="Description of Class.." required></textarea>
+                      placeholder="Description of Class.." id="description" required></textarea>
                   </div>
                 </div>
                 <hr />
@@ -63,34 +63,31 @@
     </footer>
   </div>
 </main>
-
-<div class="modal" id="createClassMsg" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div classs="container p-5" id="successMsg">
+  <div class="row no-gutters fixed-top mt-3 mr-3">
+      <div class="col-lg-5 col-md-12 ml-auto">
+          <div class="alert alert-primary fade show" role="alert">
+              <button id="closeMsg" type="button" class="close" aria-label="Close">
+                  <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+              </button>
+              <p style="color: rgb(77, 114, 182);" id="msg">New class is successfully created</p>
+          </div>
       </div>
-      <div class="modal-body">
-        <p style="color: rgb(73, 119, 204);">Class information successfully changed</p>
-        <p id="msg" style="color: rgb(73, 119, 204);"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
   </div>
 </div>
 
 <script>
   $(document).ready(function () {
+    $("#successMsg").hide();
+    $("#closeMsg").click(function(){
+      $("#successMsg").hide();
+    })
 
-   /* $("#classCreateForm").submit(function () {
-      e.preventDefault();
-      $("#createClassMsg").modal('show');
-    })*/
+    $("#classCreateForm").submit(function () {          
+      $("#successMsg").show();
+      $("#className").val("");
+      $("#description").val("");
+    })
 
     $('#academicYear').val(new Date().getFullYear() + 1);
   });
