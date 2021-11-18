@@ -28,7 +28,8 @@
                                     </div>
                                 </div>
 
-                                <button class="btn btn-info mr-1 mt-3" data-toggle="modal" data-target="#exampleModal" type="submit" id="create">
+                                <button class="btn btn-info mr-1 mt-3" data-toggle="modal" data-target="#exampleModal"
+                                    type="submit" id="create">
                                     Create
                                 </button>
                                 <button class="btn btn-secondary mt-3" id="cancel" type="reset">
@@ -68,57 +69,58 @@
     </div>
 
     <!-- modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Record Confirm</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-         
-                <table class="table table-striped">
-                    <thead>
-                        <tr class="head">
-                            <th class="text-dark" scope="col">#</th>
-                            <th class="text-dark" scope="col">Name</th>
-                            <th class="text-dark" scope="col">Role</th>
-                        </tr>
-                    </thead>
-                    <tbody id="newAccount"></tbody>
-                </table>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Record Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="head">
+                                    <th class="text-dark" scope="col">#</th>
+                                    <th class="text-dark" scope="col">Name</th>
+                                    <th class="text-dark" scope="col">Role</th>
+                                </tr>
+                            </thead>
+                            <tbody id="newAccount"></tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <h4 id="msg" class="form-text text-muted mb-0 ml-4">8 new records are created. 1 error is
+                                found
+                                </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary sick" data-dismiss="modal">Confirm</button>
+                </div>
             </div>
-        <div class="form-group">
-        <div class="row">
-            <h4 id="msg" class="form-text text-muted mb-0 ml-4">8 new records are created. 1 error is found
-                </h6>
-        </div>
         </div>
     </div>
-    <div class="modal-footer">
-        
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary sick" data-dismiss="modal">Confirm</button>
-    </div>
-  </div>
-</div>
-</div>
 
 </main>
 
 <style>
     .head th {
-      color: rgb(17, 22, 39);
+        color: rgb(17, 22, 39);
     }
-  
+
     .head td {
-      color: rgb(73, 119, 204);
+        color: rgb(73, 119, 204);
     }
-  </style>
+</style>
 
 <script>
     $(document).ready(function () {
@@ -127,14 +129,14 @@ aria-hidden="true">
         var fileName = "";
         $("#editProfileForm").submit(function (e) {
             fileName = $("#csvfile").val().split('\\').pop();
-            
-        if (fileName == "accountRecord_error.csv") {
-            $("#wrong").show();
-            $("#msg").text("8 new records are created. 1 error is found");
-        } else {
-            $("#wrong").hide();
-            $("#msg").text("8 new records are created.");
-        }
+
+            if (fileName == "accountRecord_error.csv") {
+                $("#wrong").show();
+                $("#msg").text("8 new records are created. 1 error is found");
+            } else {
+                $("#wrong").hide();
+                $("#msg").text("8 new records are created.");
+            }
             $("#msg").show();
             $("#result").show();
         })
@@ -175,7 +177,7 @@ aria-hidden="true">
           </tr>
             `;
         });
-            result += `
+        result += `
             <tr id="wrong" class="head">
   <td scope="row">${count + 2}</td>
           <td><h4 style="color:red;">!</h4></td>

@@ -78,49 +78,51 @@
         }
       });
       $("#login").click(function () {
-        if($("#userId").val().trim() == "200000001"){
+        if ($("#userId").val().trim() == "200000001") {
           $("#successMsg").show();
-        }else{
-        //var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php";
-        //getUserByRole.php
-        $.ajax({
-          type: "post",
-          url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
-          data: {
-            userID: $("#userId").val(),
-            password: $("#password").val(),
-          },
-          success: function (data, status, xhr) {
-            console.log(data);
-            //data = JSON.parse(data);
-            localStorage.setItem("id", data[0].id);
-            localStorage.setItem("role", data[0].role);
-            localStorage.setItem("firstName", data[0].firstName);
-            localStorage.setItem("lastName", data[0].lastName);
-            // $.toast({
-            //   heading: "Success",
-            //   text: "Login Success! Wellcom!",
-            //   icon: "success",
-            //   loader: true, // Change it to false to disable loader
-            //   loaderBg: "#9EC600", // To change the background
-            // });
-            window.location.href =
-              "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
-          },
-          error: function (jqXhr, textStatus, errorMessage) {
-            // $.toast({
-            //   heading: "Error",
-            //   text: "Loaders are enabled by default. Use `loader`, `loaderBg` to change the default behavior",
-            //   icon: "info",
-            //   loader: true, // Change it to false to disable loader
-            //   loaderBg: "#9EC600", // To change the background
-            // });
-            return errorMessage;
-          },
-        });
-      }
+        } else {
+          //var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php";
+          //getUserByRole.php
+          $.ajax({
+            type: "post",
+            url: "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php",
+            data: {
+              userID: $("#userId").val(),
+              password: $("#password").val(),
+            },
+            success: function (data, status, xhr) {
+              console.log(data);
+              //data = JSON.parse(data);
+              localStorage.setItem("id", data[0].id);
+              localStorage.setItem("role", data[0].role);
+              localStorage.setItem("firstName", data[0].firstName);
+              localStorage.setItem("lastName", data[0].lastName);
+              // $.toast({
+              //   heading: "Success",
+              //   text: "Login Success! Wellcom!",
+              //   icon: "success",
+              //   loader: true, // Change it to false to disable loader
+              //   loaderBg: "#9EC600", // To change the background
+              // });
+              window.location.href =
+                "http://127.0.0.1/itp4506/Attendance-Online-Web/user/home.html";
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              $("#msg").text("Wrong User ID or Password");
+              $("#successMsg").show();
+              // $.toast({
+              //   heading: "Error",
+              //   text: "Loaders are enabled by default. Use `loader`, `loaderBg` to change the default behavior",
+              //   icon: "info",
+              //   loader: true, // Change it to false to disable loader
+              //   loaderBg: "#9EC600", // To change the background
+              // });
+              return errorMessage;
+            },
+          });
+        }
       });
-      
+
     });
   </script>
 </body>
