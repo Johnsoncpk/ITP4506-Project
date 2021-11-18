@@ -23,7 +23,7 @@
               <div class="mt-3">
                 <h4 id="name">Johnson Chong</h4>
                 <p class="text-secondary mb-1" id="class">2B</p>
-                <p class="text-secondary mb-1" id="role">Student</p>
+                <p class="text-secondary mb-1" id="role"></p>
               </div>
             </div>
           </div>
@@ -160,14 +160,15 @@ IVE</textarea>
         id: userId,
       },
       success: function (data, status, xhr) {
-        console.log(data);
         mobile = data[0].mobile;
         address = data[0].address;
         $("#userId").text(data[0].id);
+        domain =  (data[0].role == "student")? "@stu.vtc.edu.hk" : "@vtc.edu.hk";
+        $('#email').text(data[0].id + domain);
         $("#mobile").val(data[0].mobile);
         $("#name").text(data[0].firstName + " " + data[0].lastName);
         $("#address").val(data[0].address);
-
+        $("#role").text((data[0].firstName=='Ada')? "Teacher": "Student");
         var result = "";
         if (data[0].role == "student") {
           result += `
@@ -201,7 +202,11 @@ IVE</textarea>
             <td scope="col">1</td>
             <td scope="col">2021</td>
             <td scope="col">2B</td>
-            </tr>`;
+          </tr><tr>
+            <td scope="col">1</td>
+            <td scope="col">2020</td>
+            <td scope="col">2B</td>
+          </tr>`;
           $("#classRecord").append(result);
         }
       },

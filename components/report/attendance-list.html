@@ -1,21 +1,13 @@
 <div class="page-content">
   <div class="container-fluid">
-    <h2>Attendance Record</h2>
-    <hr />
-    <h3>Search for Class</h3>
+    <h2>Attendance Summary</h2>
     <hr />
     <div class="row gutters-sm">
       <div class="col-md-12 py-3">
-        <div class="row">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton1"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+        <div class="row justify-content-end">
+          <div class="dropdown col align-self-start">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Year
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -23,16 +15,9 @@
               <a class="dropdown-item item1" href="#">2</a>
             </div>
           </div>
-          <div class="dropdown ml-2">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton2"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              disabled
-            >
+          <div class="dropdown col align-self-start">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
               Class
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -40,31 +25,8 @@
               <a class="dropdown-item item2" href="#">B</a>
             </div>
           </div>
-
-          <div class="dropdown ml-2">
-            <input
-              class="form-control mb-4 mr-3"
-              id="query"
-              type="text"
-              placeholder="Search here"
-            />
-          </div>
-
-          <div class="col-md-3 py-3">
-            <div class="row justify-content-end">
-              <button
-                class="btn btn-info mr-1"
-                onclick="location.href = '#';"
-                id="classReport"
-                disabled
-              >
-                Get Report
-              </button>
-            </div>
-          </div>
+          <input class="col-3 form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
         </div>
-        <h3>Search for Student</h3>
-        <hr>
         <div class="card p-0">
           <table class="table table-striped">
             <thead>
@@ -91,11 +53,7 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
             Ive Jai
           </a>
         </small>
@@ -182,7 +140,7 @@
               );
             }, "json");
           },
-          error: function (jqXhr, textStatus, errorMessage) {},
+          error: function (jqXhr, textStatus, errorMessage) { },
         });
         /*rows = [[
                     ["Present", 88],
@@ -252,10 +210,8 @@
                                             <td>` +
                       reportData.absentWithoutReason.toFixed(2) +
                       `%</td>
-                                            <td><a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` +
-                      reportData.studentId +
-                      `"
-                                                >Detail</a>
+                      <td>
+                        <a class="btn btn-info mr-1" href="./attendance.html?studentId=` + reportData.studentId +`" id="edit">Detail</a>
                                             </td>
                                      </tr>`;
 
@@ -265,7 +221,7 @@
               );
             }, "json");
           },
-          error: function (jqXhr, textStatus, errorMessage) {},
+          error: function (jqXhr, textStatus, errorMessage) { },
         });
 
         /*if ($("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text() == "2B") {
