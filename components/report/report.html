@@ -6,8 +6,19 @@
       <div class="col-md-12 pb-2">
         <div class="row">
           <h5 class="col-md-4 py-3" id="aYear">Please select the academic year:</h5>
-          <div class="col-md-3 py-3">
+          <div class="col-md-4 py-3">
             <div class="dropdown">
+            <select id="dropdownMenuButton" class="col-2 form-control mb-4 mr-3">
+              <option class="dropdown-item" value="2021">2021</option>
+              <option class="dropdown-item" value="2020">2020</option>
+              <option class="dropdown-item" value="2019">2019</option>
+              <option class="dropdown-item" value="2018">2018</option>
+              <option class="dropdown-item" value="2017">2017</option>
+              <option class="dropdown-item" value="2016">2016</option>
+              <option class="dropdown-item" value="2015">2015</option>
+            </select>
+          </div>
+            <!--<div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle px-3"
                 type="button"
@@ -26,7 +37,7 @@
                 <a class="dropdown-item" href="#">2016</a>
                 <a class="dropdown-item" href="#">2015</a>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
         <div class="card p-0">
@@ -78,7 +89,6 @@
                 <th scope="col">Sick Leave</th>
                 <th scope="col">Personal leave</th>
                 <th scope="col">Absent Without Reason</th>
-                <th scope="col"></th>
               </tr>
             </thead>
             <tbody id="table"></tbody>
@@ -298,7 +308,7 @@
           success: function (data, status, xhr) {
             console.log(data[0]);
 
-            if ($("#dropdownMenuButton").text() == "2021") {
+            if ($("#dropdownMenuButton").val() == "2021") {
               rows = [
                 ["Present", data[0].present.toFixed(2)],
                 ["Late", data[0].late.toFixed(2)],
@@ -310,7 +320,7 @@
                   data[0].absentWithoutReason.toFixed(2),
                 ],
               ];
-            } else if ($("#dropdownMenuButton").text() == "2020") {
+            } else if ($("#dropdownMenuButton").val() == "2020") {
               rows = [
                 ["Present", 87.6],
                 ["Late", 8.3],
@@ -371,23 +381,13 @@
         `%</td>
                 <td>` +
         rows[5][1] +
-        `%</td>`;
+        `%</td></tr>`;
 
-      if (type == "student") {
-        result +=
-          `<td>
-            <a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` +studentIdReceived +`">Detail</a>
-            </td>
-            </tr>`;
-      } else if (type == "class") {
-        result += `</tr>`;
-      }
       $("#data").after(result);
       drawChart();
     }
 
-    $(".dropdown-item").click(function (event) {
-      $("#dropdownMenuButton").text($(this).text());
+    $("#dropdownMenuButton").change(function (event) {
       loadData();
     });
 

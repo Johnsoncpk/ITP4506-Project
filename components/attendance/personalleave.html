@@ -42,27 +42,13 @@
                                 <hr />
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <h6 class="form-text text-muted mb-0">Description</h6>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select" id="subject">
-                                            <option value="SE">Higher Diploma in Software Engineering</option>
-                                            <option value="game">Higher Diploma in Game Software Development</option>
-                                            <option value="cybersecurity">Higher Diploma in Cybersecurity</option>
-                                            <option value="ai">Higher Diploma in AI and Smart Technology</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-2">
                                         <h6 class="form-text text-muted mb-0">Student</h6>
                                     </div>
                                     <div class="col-sm-6">
 
                                         <h6 class="form-text mb-0" id="errorMsg" style="color:red">*Please select the
                                             student</h6>
-                                        <a class="btn btn-info" href="#" id="select">Select</a>
+                                        <a class="btn btn-info" href="#" id="select">Search for student</a>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -203,7 +189,12 @@
         $("#studentlist").hide();
 
         $("#select").click(function () {
-            $("#studentlist").show();
+            
+            if ($("#studentlist").is(":visible")) {
+                $("#studentlist").hide();
+            } else {
+                $("#studentlist").show();
+            }
         });
 
         var today = new Date($.now());

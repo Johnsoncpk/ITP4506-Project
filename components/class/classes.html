@@ -42,7 +42,7 @@ aria-hidden="true">
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Archive Confirm</h5>
+      <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Archive Confirm</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -50,7 +50,7 @@ aria-hidden="true">
     <div class="modal-body">
       <form>
         <div class="form-group">
-          <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">One archived the class details can no longer be edit. are you sure?</label>
+          <label for="recipient-name" class="text-dark col-form-label">Once archived the class details can no longer be edited. Are you sure?</label>
         </div>
         
       </form>
@@ -169,7 +169,7 @@ aria-hidden="true">
       $("#year").empty();
       var options = "";
       for (var i in years) {
-        options += `<option value="${years[i].year}">${years[i].year} (${
+        options += `<option class='form-control' value="${years[i].year}">${years[i].year} (${
           years[i].archived ? "" : "Not "
         }Archived)</option>`;
       }

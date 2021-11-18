@@ -15,6 +15,7 @@
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Time</th>
                             </tr>
                         </thead>
                         <tbody id="attend"></tbody>
@@ -48,24 +49,24 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Personal Leave Reason
+                <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Recorded Time
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="setTime">
                     <div class="form-group">
-                        <label for="recipient-name" style="color:rgb(73, 119, 204)"
-                            class="col-form-label">Reason:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Time:</label>
+                        <input type="time" class="form-control" id="recipient-time" required>
+                        <h6 id="recipient-errorMsg" style="color:red;">*Please enter the time</h6>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="confirm" data-dismiss="modal">Confirm</button>
+                <button type="button" form="setTime" type="submit" class="btn btn-primary" id="confirm">Confirm</button>
             </div>
         </div>
     </div>
@@ -89,7 +90,7 @@
                 loadData(url, role);
             }
         });
-        
+
         $("#query").on("keyup", function () {
             var value = $(this).val().toLowerCase();
             $(".attendList").filter(function () {
@@ -127,26 +128,40 @@
                     Present 
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" class="enabled" name='${this.id}'">Present</a>
-                    <a class="dropdown-item" href="#" class="disabled" name='${this.id}'>Late</a>
-                    <a class="dropdown-item" href="#" class="earlyleave" name='${this.id}'">Early Leave</a>
+                    <a class="dropdown-item" href="#" class="present" name='${this.id}'">Present</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="late" name='${this.id}'>Late</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="earlyleave" name='${this.id}'">Early Leave</a>
                     <a class="dropdown-item" href="#" class="sickleave" name='${this.id}'">Sick Leave</a>
                     <a class="dropdown-item" href="#" class="personalleave" name='${this.id}'">Personal Leave</a>
                     <a class="dropdown-item" href="#" class="absent" name='${this.id}'>Absent</a>
                   </div>
                 </div>
             </td>
+            <td id="time-${this.id}">08:30</td>
             </tr>
               `;
                     });
                     $("#attend").append(result);
 
                     var name = "";
+                    var choice = "";
 
                     $("a").click(function () {
                         name = $(this).prop('name');
-                        $("#dropdownMenuButton-" + name).text($(this).text());
+                        choice = $(this).text();
                     });
+
+                    $("#recipient-errorMsg").hide();
+                    $("#confirm").click(function () {
+                        if ($("#recipient-time").val() != "") {
+                            $("#recipient-errorMsg").hide();
+                            $("#time-" + name).text($("#recipient-time").val());
+                            $("#dropdownMenuButton-" + name).text(choice);
+                            $("#reasonModal").modal("hide");
+                        }else{
+                            $("#recipient-errorMsg").show();
+                        }
+                    })
 
                     $("#update").click(function () {
                         $(".dropdown-toggle").css("background-color", "#555555");

@@ -5,11 +5,33 @@
     <div class="row gutters-sm">
       <div class="col-md-12 py-3">
         <div class="row justify-content-end">
-          <div class="dropdown col align-self-start">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+          <div class="col">
+            <select id="dropdownMenuButton1" class="col-2 form-control mb-4 mr-3">
+              <option class="form-control item1" value="*">All</option>
+              <option class="form-control item1" value="1A">1A</option>
+              <option class="form-control item1" value="1B">1B</option>
+              <option class="form-control item1" value="1C">1C</option>
+              <option class="form-control item1" value="2A">2A</option>
+              <option class="form-control item1" value="2B">2B</option>
+              <option class="form-control item1" value="2C">2C</option>
+              <option class="form-control item1" value="3A">3A</option>
+              <option class="form-control item1" value="3B">3B</option>
+              <option class="form-control item1" value="3C">3C</option>
+              <option class="form-control item1" value="4A">4A</option>
+              <option class="form-control item1" value="4B">4B</option>
+              <option class="form-control item1" value="4C">4C</option>
+              <option class="form-control item1" value="5A">5A</option>
+              <option class="form-control item1" value="5B">5B</option>
+              <option class="form-control item1" value="5C">5C</option>
+              <option class="form-control item1" value="6A">6A</option>
+              <option class="form-control item1" value="6B">6B</option>
+              <option class="form-control item1" value="6C">6C</option>
+            </select>
+            <!--<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Year
             </button>
+  
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item item1" href="#">1</a>
               <a class="dropdown-item item1" href="#">2</a>
@@ -23,7 +45,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item item2" href="#">A</a>
               <a class="dropdown-item item2" href="#">B</a>
-            </div>
+            </div>-->
           </div>
           <input class="col-3 form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
         </div>
@@ -71,6 +93,7 @@
       $(".dropdown").remove();
       getData();
     }
+    getData();
 
     function getData() {
       var rows = [];
@@ -160,12 +183,11 @@
                 className = "2B";*/
       } else if (type == "school") {
         className =
-          $("#dropdownMenuButton1").text() + $("#dropdownMenuButton2").text();
+          $("#dropdownMenuButton1").val();
         $("#classReport").click(function () {
           window.location.href =
             "report.html?type=class&className=" +
-            $("#dropdownMenuButton1").text() +
-            $("#dropdownMenuButton2").text();
+            $("#dropdownMenuButton1").text();
         });
         $.ajax({
           type: "post",
@@ -280,18 +302,18 @@
             $("#data").after(result);*/
     }
 
-    $(".item1").click(function () {
-      $("#dropdownMenuButton2").prop("disabled", false);
-      $("#dropdownMenuButton1").text($(this).text());
+    $("#dropdownMenuButton1").change(function () {
       getData();
     });
 
-    $(".item2").click(function () {
-      $("#dropdownMenuButton2").text($(this).text());
-      $("#classReport").prop("disabled", false);
-      getData();
-    });
+    $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".rowData").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
 
+    /*    
     $("#query").on("keyup", function () {
       var value = $(this).val();
       $(".rowData").hide();
@@ -299,5 +321,6 @@
         .filter(":contains(" + value + ")")
         .show();
     });
+    */
   });
 </script>
