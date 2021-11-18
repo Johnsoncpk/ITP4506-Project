@@ -14,8 +14,7 @@
                 id="dropdownMenuButton"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"
-              >
+                aria-expanded="false" >
                 Year
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -31,6 +30,8 @@
           </div>
         </div>
         <div class="card p-0">
+
+          
           <div class="form-group col-md-12" id="schoolReport">
             <div class="col-md-12">
               <div class="form-group mb-2 card">
@@ -201,20 +202,20 @@
 
     if (type == "class") {
       $('#schoolReport').hide();
-      $('aYear').hide();
+      $('#aYear').hide();
       $("#title").text("Class Report");
       $("#name").remove();
       $(".dropdown").remove();
       loadData();
     } else if (type == "school") {
       $('#schoolReport').show();
-      $('aYear').show();
+      $('#aYear').show();
       $("#title").text("School Report");
       $("#name").remove();
       $("#className").remove();
       //loadData();
     } else {
-      $('aYear').hide();
+      $('#aYear').hide();
       $('#schoolReport').hide();
       $("#title").text("Student Report");
       $(".dropdown").remove();
@@ -375,12 +376,9 @@
       if (type == "student") {
         result +=
           `<td>
-                    <a class="btn btn-info mr-1" href="./attendance.html?studentId=` +
-          studentIdReceived +
-          `
-                    " id="edit">Detail</a>
-                </td>
-             </tr>`;
+            <a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` +studentIdReceived +`">Detail</a>
+            </td>
+            </tr>`;
       } else if (type == "class") {
         result += `</tr>`;
       }
