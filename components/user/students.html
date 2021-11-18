@@ -57,6 +57,13 @@
         });
       });
   
+      $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".attendList").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
       function loadData(url, role) {
         $("#stu").empty();
         $.ajax(url, {
@@ -70,7 +77,7 @@
             var result = "";
             $(data).each(function (index) {
               result += `
-              <tr>
+              <tr class="attendList">
             <th scope="row">${index + 1}</th>
             <td>${this.firstName}</td>
             <td>${this.lastName}</td>

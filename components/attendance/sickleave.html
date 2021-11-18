@@ -14,9 +14,22 @@
         <h2>Sick Leave</h2>
         <hr />
         <div class="row">
+
+            <div classs="container p-5" id="successMsg">
+                <div class="row no-gutters fixed-top mt-3 mr-3">
+                    <div class="col-lg-5 col-md-12 ml-auto">
+                        <div class="alert alert-primary fade show" role="alert">
+                            <button id="closeMsg" type="button" class="close" aria-label="Close">
+                                <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+                            </button>
+                            <p style="color: rgb(77, 114, 182);" id="msg">New sick leave record is created</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="form-group col-md-12">
                 <div class="col-md-12 my-1 py-1">
-                    <form id="sickLeaveForm">
+                    <form id="sickLeaveForm" onsubmit="return false;">
                         <div class="form-group mb-2 card">
                             <div class="card-body">
                                 <div class="row">
@@ -162,31 +175,18 @@
 </main>
 
 
-<div class="modal" id="sickMsg" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p style="color: rgb(73, 119, 204);">New sick leave record is created</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(document).ready(function () {
         $("#allocate").click(function () {
             $("#table2").empty();
             alert("Success!");
         });
+
+        $("#successMsg").hide();
+        $("#closeMsg").click(function () {
+            $("#successMsg").hide();
+        })
+
         var students1 = [];
         var students2 = [];
         var indexes = [];
@@ -197,8 +197,8 @@
 
         $("#sickLeaveForm").submit(function (e) {
             if ($("#student").text() != " ") {
-                e.preventDefault();
-                $("#sickMsg").modal('show');
+                $("#msg").text("New personal leave record is created");
+                $("#successMsg").show();
                 $("#ill").val("");
                 $("#student").text(" ");
                 $("#errorMsg").hide();

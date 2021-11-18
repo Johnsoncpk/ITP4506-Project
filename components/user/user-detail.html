@@ -2,6 +2,18 @@
   <div class="container-fluid">
     <h2>Profile</h2>
     <hr />
+    <div classs="container p-5" id="successMsg">
+      <div class="row no-gutters fixed-top mt-3 mr-3">
+        <div class="col-lg-5 col-md-12 ml-auto">
+          <div class="alert alert-primary fade show" role="alert">
+            <button id="closeMsg" type="button" class="close" aria-label="Close">
+              <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+            </button>
+            <p style="color: rgb(77, 114, 182);" id="msg">Successfully Changed</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row gutters-sm">
       <div class="col-md-4 my-2 py-2 auto-fit">
         <div class="card">
@@ -18,7 +30,9 @@
         </div>
         <div class="row py-2">
           <div class="col">
-            <a class="btn btn-info mr-1" href="#" id="edit">Edit Profile</a>
+            <button class="btn btn-info mr-1" id="edit" type="submit">
+              Edit Profile
+            </button>
             <button class="btn btn-secondary" id="cancel" type="reset">
               Cancel
             </button>
@@ -27,7 +41,7 @@
         </div>
       </div>
       <div class="col-md-8 my-2 py-2">
-        <form id="editProfileForm">
+        <form id="editProfileForm" onsubmit="return false;">
           <div class="form-group mb-3 card">
             <div class="card-body">
               <div class="row">
@@ -55,7 +69,7 @@
                   <h6 class="form-text text-muted mb-0">Mobile</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input class="form-control" id="mobile" name="mobile" value="+852 65867246" disabled />
+                  <input class="form-control" id="mobile" name="mobile" value="+852 65867246" disabled required />
                 </div>
               </div>
               <hr />
@@ -64,7 +78,7 @@
                   <h6 class="form-text text-muted mb-0">Address</h6>
                 </div>
                 <div class="col-sm-6">
-                  <textarea class="form-control" id="address" disabled>
+                  <textarea class="form-control" id="address" disabled required>
 IVE</textarea>
                 </div>
               </div>
@@ -126,27 +140,18 @@ IVE</textarea>
   </div>
 
 
-  <div classs="container p-5" id="successMsg">
-    <div class="row no-gutters fixed-top mt-3 mr-3">
-      <div class="col-lg-5 col-md-12 ml-auto">
-        <div class="alert alert-primary fade show" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
-          </button>
-          <p style="color: rgb(77, 114, 182);" id="msg">This is an alert within a column. The column can be made any size at
-            different viewpoints.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </main>
 <script>
   $(document).ready(function () {
+    var mobile = "";
+    var address = "";
     let searchParams = new URLSearchParams(window.location.search)
     var userId = searchParams.get('userId');
     var url = "http://127.0.0.1/ITP4506/Attendance-Online-Server/student";
-
+    $("#successMsg").hide();
+    $("#closeMsg").click(function () {
+      $("#successMsg").hide();
+    })
 
     $.ajax({
       type: "post",
@@ -156,6 +161,8 @@ IVE</textarea>
       },
       success: function (data, status, xhr) {
         console.log(data);
+        mobile = data[0].mobile;
+        address = data[0].address;
         $("#userId").text(data[0].id);
         $("#mobile").val(data[0].mobile);
         $("#name").text(data[0].firstName + " " + data[0].lastName);
@@ -207,19 +214,26 @@ IVE</textarea>
     $("#updatePwdForm").hide();
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: userId }, function (data) {
-          console.log(data);
-        }, "json");
-        $(this).text("Edit Profile");
-        $("#cancel").hide();
-        $("#updatePwd").show();
-        $('#editProfile').modal('show');
+        if ($("#mobile").val().trim() != "" && $("#mobile").val().trim() != "0" && $("#address").val().trim() != "") {
+          $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: userId }, function (data) {
+            console.log(data);
+          }, "json");
+          $(this).text("Edit Profile");
+          $("#cancel").hide();
+          $("#updatePwd").show();
+          $("#msg").text("Personal Information is changed successfully");
+          $("#successMsg").show();
+          mobile = $("#mobile").val();
+          address = $("#address").val();
+          form_control();
+        }
       } else {
         $(this).text("Save");
+        $(this).attr("form", "editProfileForm");
         $("#cancel").show();
         $("#updatePwd").hide();
+        form_control();
       }
-      form_control();
     });
 
     $("#updatePwd").click(function () {
@@ -232,6 +246,8 @@ IVE</textarea>
         $.post(url + "/editPassword.php", { currentPassword: $("#originalPwd").val(), newPassword: $("#newPwd").val(), confirmPassword: $("#confirmPwd").val(), userID: localStorage.getItem("id") }, function (data) {
           console.log(data[0].message);
           if (data[0].message == "success") {
+            $("#msg").text("Password is changed successfully");
+            $("#successMsg").show();
             $("#originalPwd").val("");
             $("#newPwd").val("");
             $("#confirmPwd").val("");
@@ -257,6 +273,8 @@ IVE</textarea>
 
     $("#cancel").click(function () {
       $(this).hide();
+      $("#mobile").val(mobile);
+      $("#address").val(address);
       $("#edit").text("Edit Profile");
       $("#edit").show();
       $("#updatePwd").text("Update Password");
