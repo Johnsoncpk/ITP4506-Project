@@ -1,11 +1,25 @@
 <main class="page-content">
   <div class="container-fluid">
     <h2>Single User Creation</h2>
+
+    <div classs="container p-5" id="successMsg">
+      <div class="row no-gutters fixed-top mt-3 mr-3">
+        <div class="col-lg-5 col-md-12 ml-auto">
+          <div class="alert alert-primary fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+            </button>
+            <p style="color: rgb(77, 114, 182);" id="msg">This is an alert within a column. The column can be made any size at
+              different viewpoints.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <hr />
     <div class="row">
       <div class="form col-md-12">
         <div class="col-md-10 my-2 py-2">
-          <form id="editProfileForm" method="post">
+          <form id="createForm" onsubmit="return false;">
             <div class="form-group mb-3 card">
               <div class="card-body">
                 <div class="row">
@@ -24,14 +38,10 @@
                     <h6 class="form-text text-muted mb-0">Account Type</h6>
                   </div>
                   <div class="col-sm-6">
-                    <select
-                      class="form-control select"
-                      title="availability"
-                      id="role"
-                    >
-                      <option value="admin">Admin</option>
-                      <option value="teacher">Teacher</option>
-                      <option value="student">Student</option>
+                    <select class="form-control select" title="availability" id="role">
+                      <option class="form-control" value="admin">Admin</option>
+                      <option class="form-control" value="teacher">Teacher</option>
+                      <option class="form-control" value="student">Student</option>
                     </select>
                   </div>
                 </div>
@@ -52,32 +62,29 @@
                     <h6 class="form-text text-muted mb-0">Firstname</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input
-                      required
-                      type="text"
-                      class="form-control"
-                      name="firstName"
-                      id="firstName"
-                      placeholder="e.g. Alan"
-                    />
+                    <input required type="text" class="form-control" name="firstName" id="firstName"
+                      placeholder="e.g. Alan" />
                   </div>
                   <div class="col-sm-2">
                     <h6 class="form-text text-muted mb-0">Lastname</h6>
                   </div>
                   <div class="col-sm-3">
-                    <input
-                      required
-                      type="text"
-                      class="form-control"
-                      name="lastName"
-                      id="lastName"
-                      placeholder="e.g. Po"
-                    />
+                    <input required type="text" class="form-control" name="lastName" id="lastName"
+                      placeholder="e.g. Po" />
                   </div>
                 </div>
                 <hr />
-                
-                <button class="btn btn-info mr-1" type="submit" id="create">
+                <div class="row">
+                  <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">Academic Year</h6>
+                  </div>
+                  <div class="col-sm-3">
+                    <input id="academicYear" required type="number" class="form-control" name="academicYear"
+                      placeholder="e.g. 2021" />
+                  </div>
+                </div>
+                <hr />
+                <button class="btn btn-info mr-1" id="createbtn" type="submit">
                   Create
                 </button>
                 <button class="btn btn-secondary" id="cancel" type="reset">
@@ -91,40 +98,17 @@
     </div>
     <hr />
 
-    <div class="modal" id="createMsg" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" style="color:rgb(73, 119, 204)">Success</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p style="color: rgb(73, 119, 204);">User created successfully with</p>
-            <p id="msg" style="color: rgb(73, 119, 204);"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
+  </div>
+  <footer class="text-center">
+    <div class="mb-2">
+      <small>
+        © 2021 made by -
+        <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+          Ive Jai
+        </a>
+      </small>
     </div>
-
-    <footer class="text-center">
-      <div class="mb-2">
-        <small>
-          © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
-            Ive Jai
-          </a>
-        </small>
-      </div>
-    </footer>
+  </footer>
   </div>
 
 
@@ -132,8 +116,11 @@
 
 <script>
   $(document).ready(function () {
+
+    $("#successMsg").hide();
     $("#academicYear").val(new Date().getFullYear());
-    $("#create").click(function () {
+    
+    $("#createForm").submit(function () {
       $.ajax({
         type: "post",
         url: "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/createAccount.php",
@@ -143,15 +130,12 @@
           role: $("#role option:selected").val(),
         },
         success: function (data, status, xhr) {
-          $("#msg").text("User ID: " + data);
-    $("form").submit(function (e) {
-      e.preventDefault();
-      $('#createMsg').modal('show');
-      $("#firstName").val("");
-      $("#lastName").val("");
-    }); 
+            $("#msg").text("User created successfully with user ID: " + data);
+            $("#successMsg").show();
+            $("#firstName").val("");
+            $("#lastName").val("");
         },
-        error: function (jqXhr, textStatus, errorMessage) {},
+        error: function (jqXhr, textStatus, errorMessage) { },
       });
     });
   });

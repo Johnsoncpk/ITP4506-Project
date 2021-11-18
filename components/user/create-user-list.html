@@ -82,6 +82,7 @@
             fileName = $("#csvfile").val().split('\\').pop();
             
         if (fileName == "accountRecord_error.csv") {
+            $("#wrong").show();
             $("#msg").text("8 new records are created. 1 error is found");
         } else {
             $("#wrong").hide();
