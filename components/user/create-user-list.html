@@ -5,7 +5,7 @@
         <div class="row">
             <div class="form col-md-12">
                 <div class="col-md-10 my-2 py-2">
-                    <form id="editProfileForm">
+                    <form id="editProfileForm" onsubmit="return false;">
                         <div class="form-group mb-3 card">
                             <div class="card-body">
                                 <div class="row">
@@ -28,7 +28,7 @@
                                     </div>
                                 </div>
 
-                                <button class="btn btn-info mr-1 mt-3" type="submit" id="create">
+                                <button class="btn btn-info mr-1 mt-3" data-toggle="modal" data-target="#exampleModal" type="submit" id="create">
                                     Create
                                 </button>
                                 <button class="btn btn-secondary mt-3" id="cancel" type="reset">
@@ -37,11 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <h4 id="msg" class="form-text text-muted mb-0">8 new records are created. 1 error is found
-                                </h6>
-                        </div>
-                        <div class="card p-0" id="result">
+                        <!--<div class="card p-0" id="result">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -52,7 +48,7 @@
                                 </thead>
                                 <tbody id="newAccount"></tbody>
                             </table>
-                        </div>
+                        </div>-->
                     </form>
                 </div>
             </div>
@@ -70,7 +66,57 @@
             </div>
         </footer>
     </div>
+
+    <!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" style="color:rgb(73, 119, 204)" id="exampleModalLabel">Record Confirm</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+         
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="head">
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newAccount"></tbody>
+                </table>
+            </div>
+        <div class="form-group">
+        <div class="row">
+            <h4 id="msg" class="form-text text-muted mb-0 ml-4">8 new records are created. 1 error is found
+                </h6>
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary sick" data-dismiss="modal">Confirm</button>
+    </div>
+  </div>
+</div>
+</div>
+
 </main>
+
+<style>
+    .head th {
+      color: rgb(17, 22, 39);
+    }
+  
+    .head td {
+      color: rgb(73, 119, 204);
+    }
+  </style>
 
 <script>
     $(document).ready(function () {
@@ -78,7 +124,6 @@
         $("#result").hide();
         var fileName = "";
         $("#editProfileForm").submit(function (e) {
-            e.preventDefault();
             fileName = $("#csvfile").val().split('\\').pop();
             
         if (fileName == "accountRecord_error.csv") {
@@ -119,7 +164,7 @@
             $(tableName).empty();
             count = index;
             result += `
-            <tr>
+            <tr class="head">
   <td scope="row">${index + 1}</td>
           <td>${this.firstname} ${this.lastname}</td>
           <td>
@@ -129,7 +174,7 @@
             `;
         });
             result += `
-            <tr id="wrong">
+            <tr id="wrong" class="head">
   <td scope="row">${count + 2}</td>
           <td><h4 style="color:red;">!</h4></td>
           <td>
