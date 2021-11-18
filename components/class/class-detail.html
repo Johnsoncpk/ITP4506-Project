@@ -13,28 +13,43 @@
                     <h6 class="form-text text-muted mb-0">Class</h6>
                   </div>
                   <div class="col-sm-4">
-                    <input title="text" id="className" class="form-control" value="2A" required/>
+                    <input
+                      title="text"
+                      id="className"
+                      class="form-control"
+                      value="2A"
+                      required
+                    />
                   </div>
-                </div>
-                <hr />
-                <div class="row">
                   <div class="col-sm-2">
                     <h6 class="form-text text-muted mb-0">Academic Year</h6>
                   </div>
                   <div class="col-sm-4">
                     <h6></h6>
-                    <h6 id="academicYear" class="form-text mb-0" name="academicYear" value="2021">
-                    </h6>
+                    <h6
+                      id="academicYear"
+                      class="form-text mb-0"
+                      name="academicYear"
+                      value="2021"
+                    ></h6>
                   </div>
                 </div>
                 <hr />
                 <div class="row">
                   <div class="col-sm-2">
+                    <h6 class="form-text text-muted mb-0">No Of Students</h6>
+                  </div>
+                  <div class="col-sm-4">
+                    <h6>7</h6>
+                  </div>
+                  <div class="col-sm-2">
                     <h6 class="form-text text-muted mb-0">Teacher</h6>
                   </div>
                   <div class="col-sm-4">
-                    <a href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=201116523">Ada
-                      Yuen</a>
+                    <a
+                      href="http://127.0.0.1/itp4506/Attendance-Online-Web/admin/user-detail.html?userId=201116523"
+                      >Ada Yuen</a
+                    >
                   </div>
                 </div>
                 <hr />
@@ -43,13 +58,24 @@
                     <h6 class="form-text text-muted mb-0">Note</h6>
                   </div>
                   <div class="col-sm-6">
-                    <textarea type="text" class="form-control" name="description" id="description" rows="2"
-                      placeholder="Description of Class.." required>Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this class.,</textarea>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      rows="2"
+                      placeholder="Description of Class.."
+                      required
+                    >
+Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this class.,</textarea
+                    >
                   </div>
                 </div>
                 <hr />
-                
-                <button class="btn btn-info mr-1" id="edit" type="submit">Edit Class Info</button>
+
+                <button class="btn btn-info mr-1" id="edit" type="submit">
+                  Edit Class Info
+                </button>
                 <button class="btn btn-secondary" id="cancel" type="reset">
                   Cancel
                 </button>
@@ -62,7 +88,22 @@
     <h4>Student list</h4>
     <hr />
     <div class="row">
-
+      <div class="col-md-12">
+        <div class="card p-0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody id="table"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <hr />
 
@@ -70,7 +111,11 @@
       <div class="mb-2">
         <small>
           © 2021 made by -
-          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.ive.edu.hk/ivesite/html/tc/"
+          >
             Ive Jai
           </a>
         </small>
@@ -83,15 +128,17 @@
       <div class="col-lg-5 col-md-12 ml-auto">
         <div class="alert alert-primary fade show" role="alert">
           <button id="closeMsg" type="button" class="close" aria-label="Close">
-            <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+            <span style="color: rgb(77, 114, 182)" aria-hidden="True"
+              >&times;</span
+            >
           </button>
-          <p style="color: rgb(77, 114, 182);" id="msg">Class information successfully changed</p>
+          <p style="color: rgb(77, 114, 182)" id="msg">
+            Class information successfully changed
+          </p>
         </div>
       </div>
     </div>
   </div>
-
-
 </main>
 
 <script>
@@ -100,7 +147,7 @@
     $("#successMsg").hide();
     $("#closeMsg").click(function () {
       $("#successMsg").hide();
-    })
+    });
 
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("classId")) {
@@ -109,7 +156,7 @@
       $("#className").val(classId);
       year = searchParams.get("year");
       if (archived == "true") {
-        $('#edit').hide();
+        $("#edit").hide();
       }
     } else {
       year = new Date().getFullYear();
@@ -120,13 +167,15 @@
     $("#academicYear").text(year);
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        if($("#className").val().trim() != "" && $("#description").val().trim() != ""){
+        if (
+          $("#className").val().trim() != "" &&
+          $("#description").val().trim() != ""
+        ) {
           $(this).text("Edit Class Info");
           $("#cancel").hide();
           form_control();
           $("#successMsg").show();
         }
-
       } else {
         $(this).text("Save");
         $("#cancel").show();
@@ -146,4 +195,56 @@
       $(this).prop("disabled", !$(this).prop("disabled"));
     });
   }
+  loadData("http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php", "student");
+  function loadData(url, role) {
+      $("#table").empty();
+      $.ajax(url, {
+        method: "post",
+        dataType: "json",
+        timeout: 500,
+        data: {
+          role: role,
+        },
+        success: function (data, status, xhr) {
+          var result = "";
+          $(data).each(function (index) {
+            if (this.suspended == 1) {
+              $availability = "Enabled";
+            } else {
+              $availability = "Disabled";
+            }
+            result += `
+            <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${this.id}</td>
+          <td>${this.firstName}</td>
+          <td>${this.lastName}</td>
+          <td>
+            <a class="btn btn-info" href="./user-detail.html?userId=${this.id}">
+              <i class="far fa-address-card"></i>
+            </a>
+          </td>
+          </tr>
+            `;
+          });
+          $("#table").append(result);
+
+          var name = "";
+
+          $("a").click(function () {
+            name = $(this).prop('name');
+            if($("#dropdownMenuButton-"+$(this).prop('name').trim()).text().trim() == "Disabled"){
+              $("#dropdownMenuButton-"+$(this).prop('name').trim()).text("Enabled");
+            }
+          });
+
+          $("#confirm").click(function () {
+            $("#dropdownMenuButton-"+name).text("Disabled");
+          });
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          $("body").replace("Error: " + errorMessage);
+        },
+      });
+    }
 </script>
