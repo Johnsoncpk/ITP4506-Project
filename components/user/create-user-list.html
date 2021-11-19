@@ -21,12 +21,13 @@
                                         <input type="file" id="csvfile" required />
                                     </div>
                                 </div>
+                            <hr />
 
-                                <button class="btn btn-info mr-1 mt-3" data-toggle="modal" data-target="#exampleModal"
+                                <button class="btn btn-info mr-1" data-toggle="modal" data-target="#exampleModal"
                                     type="submit" id="create">
                                     Create
                                 </button>
-                                <button class="btn btn-secondary mt-3" id="cancel" type="reset">
+                                <button class="btn btn-secondary" id="cancel" type="reset">
                                     Reset
                                 </button>
                             </div>
@@ -144,6 +145,8 @@
         $("#msg").hide();
         $("#result").hide();
         var fileName = "";
+
+
         $("#editProfileForm").submit(function (e) {
             fileName = $("#csvfile").val().split('\\').pop();
 

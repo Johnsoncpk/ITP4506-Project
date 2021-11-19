@@ -69,7 +69,7 @@
                   <h6 class="form-text text-muted mb-0">Mobile</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input class="form-control" id="mobile" name="mobile" value="+852 65867246" disabled required />
+                  <input class="form-control" id="mobile" pattern="[0-9]{8}" name="mobile" maxlength="8" value="65867246" disabled required />
                 </div>
               </div>
               <hr />
@@ -219,7 +219,7 @@ IVE</textarea>
     $("#updatePwdForm").hide();
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        if ($("#mobile").val().trim() != "" && $("#mobile").val().trim() != "0" && $("#address").val().trim() != "") {
+        if ($("#mobile").val().trim().length == 8 && $("#mobile").val().trim() != "" && $("#mobile").val().trim() != "0" && $("#address").val().trim() != "") {
           $.post(url + "/editPersonal.php", { address: $("#address").val(), mobile: $("#mobile").val(), id: userId }, function (data) {
             console.log(data);
           }, "json");

@@ -122,12 +122,11 @@
                                         <input type="text" id="ill" required class="form-control" />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-11"></div>
-                            <div class="col-md-1">
-                                <button class="btn btn-info" id="confirmLeave" type="submit">Confirm</button>
+                                <hr />
+                                <button class="btn btn-info mr-1" id="confirmLeave" type="submit">Confirm</button>
+                                <button class="btn btn-secondary" id="reset" type="reset">
+                                    Reset
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -195,6 +194,10 @@
             "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
         );
 
+        $("#reset").click(function () {
+            $("#student").text("");
+        })
+
         $("#sickLeaveForm").submit(function (e) {
             if ($("#student").text() != " ") {
                 $("#msg").text("New personal leave record is created");
@@ -236,14 +239,19 @@
                             $("#studentlist").hide();
                         }
                     });
-
-
                     $("#query").on("keyup", function () {
                         var value = $(this).val().toLowerCase();
-                        //alert(value);
-                        $(".stulist").hide();
-                        $(".stulist").filter(":contains(" + value + ")").show();
+                        $(".stulist").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                        });
                     });
+
+                    /* $("#query").on("keyup", function () {
+                         var value = $(this).val().toLowerCase();
+                         //alert(value);
+                         $(".stulist").hide();
+                         $(".stulist").filter(":contains(" + value + ")").show();
+                     });*/
 
                 },
                 error: function (jqXhr, textStatus, errorMessage) {

@@ -20,7 +20,7 @@
           <div class="col">
             <button class="btn btn-info ml-1 mr-1" id="edit" type="submit">Edit Profile</button>
     
-            <a class="pl-1 btn btn-info mx-1" href="#" id="updatePwd">Update Password</a>
+            <button class="pl-1 btn btn-info mx-1" id="updatePwd" type="submit">Update Password</button>
             <button class="btn btn-secondary" id="cancel" type="reset">
               Cancel
             </button>
@@ -57,7 +57,7 @@
                   <h6 class="form-text text-muted mb-0">Mobile</h6>
                 </div>
                 <div class="col-sm-6" id="mobile-div">
-                  <input class="form-control" id="mobile" name="mobile" value="+852 65867246" disabled
+                  <input class="form-control" id="mobile" name="mobile" pattern="[0-9]{8}" maxlength=8 value="65867246" disabled
                     placeholder="e.g. 98695229" required/>
                 </div>
               </div>
@@ -74,7 +74,7 @@ IVE</textarea>
             </div>
           </div>
         </form>
-        <form id="updatePwdForm">
+        <form id="updatePwdForm" onsubmit="return false;">
           <div class="form-group mb-3 card">
             <div class="card-body">
               <div class="row">
@@ -91,7 +91,7 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">New Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input type="password" class="form-control" id="newPwd" name="newPwd" />
+                  <input type="password" class="form-control" id="newPwd" minlength="8" name="newPwd" />
                 </div>
               </div>
               <hr />
@@ -100,7 +100,7 @@ IVE</textarea>
                   <h6 class="form-text text-muted mb-0">Comfirm Password</h6>
                 </div>
                 <div class="col-sm-6">
-                  <input type="password" class="form-control" id="confirmPwd" name="confirmPwd" />
+                  <input type="password" class="form-control" id="confirmPwd" minlength="8" name="confirmPwd" />
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ IVE</textarea>
           <button id="closeMsg" type="button" class="close" aria-label="Close">
             <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
           </button>
-          <p style="color: rgb(77, 114, 182);" id="msg">New sick leave record is created</p>
+          <p style="color: rgb(77, 114, 182);" id="msg">Profile information is changed</p>
         </div>
       </div>
     </div>
@@ -222,7 +222,7 @@ IVE</textarea>
     $("#updatePwdForm").hide();
     $("#edit").click(function () {
       if ($(this).text() == "Save") {
-        if ($("#mobile").val().trim() != "" && $("#mobile").val().trim() != "0" && $("#address").val().trim() != "") {
+        if ($("#mobile").val().trim().length == 8 && $("#mobile").val().trim() != "" && $("#mobile").val().trim() != "0" && $("#address").val().trim() != "") {
           $.post(
             url + "/editPersonal.php",
             {
@@ -237,11 +237,10 @@ IVE</textarea>
           );
           form_control();
           $(this).text("Edit Profile");          
+          $("#msg").text("Profile information is changed");      
           $("#successMsg").show();
           $("#cancel").hide();
           $("#updatePwd").show();
-          $("#msgContent").text("Profile Information successfully changed");
-          $("#msg").text("User created successfully with user ID: " + data);
           mobile = $("#mobile").val();
           address = $("#address").val();
         }
@@ -283,7 +282,9 @@ IVE</textarea>
           },
           function (data) {
             console.log(data[0].message);
-            if (data[0].message == "success") {
+            if (data[0].message == "success") {   
+              $("#msg").text("Password is changed");      
+              $("#successMsg").show();
               $("#originalPwd").val("");
               $("#newPwd").val("");
               $("#confirmPwd").val("");
@@ -297,12 +298,13 @@ IVE</textarea>
               $("#editProfile").modal('show');
               $("#errorMsg").text("");
             } else {
-              $("#errorMsg").text("*Wrong password or Password not match");
+              $("#errorMsg").text("*Wrong password or Password not match or Wrong password format(Length > 8)");
             }
           },
           "json"
         );
       } else {
+        $(this).attr("form", "updatePwdForm");
         $(this).text("Save");
         $("#cancel").show();
         $("#edit").hide();
