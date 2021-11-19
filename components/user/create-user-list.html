@@ -6,22 +6,16 @@
             <div class="form col-md-12">
                 <div class="col-md-10 my-2 py-2">
                     <form id="editProfileForm" onsubmit="return false;">
+                        <div class="form-group col-md-12">
+                            <p class="text-lg">
+                              Please upload a CSV file to create multiple students account.
+                            </p>
+                          </div>
                         <div class="form-group mb-3 card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="form-text text-muted mb-0">User ID</h6>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p id="userId" class="form-text">
-                                            *Will Be Genrated By System
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="form-text text-muted mb-0">Csv File</h6>
+                                        <h6 class="form-text text-muted mb-0">Student List</h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="file" id="csvfile" required />
@@ -74,14 +68,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Record Confirm</h5>
+                    <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Record Review</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-
                         <table class="table table-striped">
                             <thead>
                                 <tr class="head">
@@ -95,16 +88,16 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <h4 id="msg" class="form-text text-muted mb-0 ml-4">8 new records are created. 1 error is
+                            <h4 id="msg" class="form-text text-primary mb-0 ml-4">8 new records are created. 1 error is
                                 found
                                 </h6>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary sick" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-primary sick" data-dismiss="modal" id="confirm">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Cancel</button>
+                    
                 </div>
             </div>
         </div>
@@ -131,20 +124,28 @@
             fileName = $("#csvfile").val().split('\\').pop();
 
             if (fileName == "accountRecord_error.csv") {
-                $("#wrong").show();
-                $("#msg").text("8 new records are created. 1 error is found");
-            } else {
-                $("#wrong").hide();
-                $("#msg").text("8 new records are created.");
+                
+                $("#msg").text("Row at index # 9 is not valid. Please check the integrity of the data and create again.");
+                result = `
+            <tr class="head">
+  <td scope="row">${9}</td>
+          <td><h6 style="color:red;">!!Missing data!!</h6></td>
+          <td>
+            Student
+          </td>
+          </tr>
+            `;
+            $("#newAccount").empty().append(result);
+            } else if(fileName == "accountRecord.csv"){
+                $("#msg").text("Total 8 record. please double confirm the correctness of the data.");
+                loadData1("http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json");
             }
             $("#msg").show();
             $("#result").show();
         })
         $("#academicYear").val(new Date().getFullYear());
 
-        loadData1(
-            "http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json"
-        );
+        
 
         function loadData1(url) {
             $.ajax(url, {
@@ -177,15 +178,6 @@
           </tr>
             `;
         });
-        result += `
-            <tr id="wrong" class="head">
-  <td scope="row">${count + 2}</td>
-          <td><h4 style="color:red;">!</h4></td>
-          <td>
-            Student
-          </td>
-          </tr>
-            `;
         $(tableName).append(result);
     }
 </script>
