@@ -45,11 +45,11 @@
     <div classs="container p-5" id="successMsg">
       <div class="row no-gutters fixed-top mt-3 mr-3">
         <div class="col-lg-5 col-md-12 ml-auto">
-          <div class="alert alert-primary fade show" role="alert">
+          <div class="alert alert-danger fade show" role="alert">
             <button id="closeMsg" type="button" class="close" aria-label="Close">
-              <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+              <span style="color: rgb(184, 45, 45);" aria-hidden="True">&times;</span>
             </button>
-            <p style="color: rgb(77, 114, 182);" id="msg">The account is banned. Please contact us for detail.</p>
+            <p style="color: rgb(184, 45, 45);" id="msg">The account is banned. Please contact us for detail.</p>
           </div>
         </div>
       </div>
@@ -79,6 +79,7 @@
       });
       $("#login").click(function () {
         if ($("#userId").val().trim() == "200000001") {
+          $("#msg").text("The account is banned. Please contact us for detail.");
           $("#successMsg").show();
         } else {
           //var url = "http://127.0.0.1/itp4506/Attendance-Online-Server/login.php";

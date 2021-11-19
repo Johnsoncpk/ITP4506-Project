@@ -8,9 +8,9 @@
                     <form id="editProfileForm" onsubmit="return false;">
                         <div class="form-group col-md-12">
                             <p class="text-lg">
-                              Please upload a CSV file to create multiple students account.
+                                Please upload a CSV file to create multiple students account.
                             </p>
-                          </div>
+                        </div>
                         <div class="form-group mb-3 card">
                             <div class="card-body">
                                 <div class="row">
@@ -21,7 +21,7 @@
                                         <input type="file" id="csvfile" required />
                                     </div>
                                 </div>
-                            <hr />
+                                <hr />
 
                                 <button class="btn btn-info mr-1" data-toggle="modal" data-target="#exampleModal"
                                     type="submit" id="create">
@@ -96,9 +96,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary sick" data-dismiss="modal" id="confirm">Confirm</button>
+                    <button type="button" class="btn btn-primary sick" data-dismiss="modal"
+                        id="confirm">Confirm</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="can">Cancel</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -106,28 +107,28 @@
 
     <div classs="container p-5" id="successMsg">
         <div class="row no-gutters fixed-top mt-3 mr-3">
-          <div class="col-lg-5 col-md-12 ml-auto">
-            <div class="alert alert-primary fade show" role="alert">
-              <button id="closeMsg" type="button" class="close" aria-label="Close">
-                <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
-              </button>
-              <p style="color: rgb(77, 114, 182);" id="msg">The account is banned. Please contact us for detail.</p>
+            <div class="col-lg-5 col-md-12 ml-auto">
+                <div class="alert alert-primary fade show" role="alert">
+                    <button type="button" class="close closeMsg" aria-label="Close">
+                        <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+                    </button>
+                    <p style="color: rgb(77, 114, 182);" id="msg">Successfully create users</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div classs="container p-5" id="failMsg">
+    </div>
+    <div classs="container p-5" id="failMsg">
         <div class="row no-gutters fixed-top mt-3 mr-3">
-          <div class="col-lg-5 col-md-12 ml-auto">
-            <div class="alert alert-primary fade show" role="alert">
-              <button id="closeMsg" type="button" class="close" aria-label="Close">
-                <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
-              </button>
-              <p style="color: rgb(77, 114, 182);" id="msg">The account is banned. Please contact us for detail.</p>
+            <div class="col-lg-5 col-md-12 ml-auto">
+                <div class="alert alert-danger fade show" role="alert">
+                    <button type="button" class="close closeMsg" aria-label="Close">
+                        <span style="color: rgb(184, 45, 45);" aria-hidden="True">&times;</span>
+                    </button>
+                    <p style="color: rgb(184, 45, 45);" id="msg">Failed to create users</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </main>
 
 <style>
@@ -142,16 +143,32 @@
 
 <script>
     $(document).ready(function () {
+
+        $("#successMsg").hide();
+        $("#failMsg").hide();
         $("#msg").hide();
         $("#result").hide();
         var fileName = "";
+
+        $(".closeMsg").click(function () {
+            $("#successMsg").hide();
+            $("#failMsg").hide();
+        })
+        $("#confirm").click(function () {
+
+            if (fileName == "accountRecord_error.csv") {
+                $("#failMsg").show();
+            } else if (fileName == "accountRecord.csv") {
+                $("#successMsg").show();
+            }
+        });
 
 
         $("#editProfileForm").submit(function (e) {
             fileName = $("#csvfile").val().split('\\').pop();
 
             if (fileName == "accountRecord_error.csv") {
-                
+
                 $("#msg").text("Row at index # 9 is not valid. Please check the integrity of the data and create again.");
                 result = `
             <tr class="head">
@@ -162,11 +179,12 @@
           </td>
           </tr>
             `;
-            $("#newAccount").empty().append(result);
-            } else if(fileName == "accountRecord.csv"){
+                $("#newAccount").empty().append(result);
+            } else if (fileName == "accountRecord.csv") {
                 $("#newAccount").empty()
                 $("#msg").text("Total 8 record. please double confirm the correctness of the data.");
                 loadData1("http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json");
+
             }
             $("#msg").show();
             $("#result").show();
