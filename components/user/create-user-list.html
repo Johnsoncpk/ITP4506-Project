@@ -96,13 +96,37 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary sick" data-dismiss="modal" id="confirm">Confirm</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="can">Cancel</button>
                     
                 </div>
             </div>
         </div>
     </div>
 
+    <div classs="container p-5" id="successMsg">
+        <div class="row no-gutters fixed-top mt-3 mr-3">
+          <div class="col-lg-5 col-md-12 ml-auto">
+            <div class="alert alert-primary fade show" role="alert">
+              <button id="closeMsg" type="button" class="close" aria-label="Close">
+                <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+              </button>
+              <p style="color: rgb(77, 114, 182);" id="msg">The account is banned. Please contact us for detail.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div classs="container p-5" id="failMsg">
+        <div class="row no-gutters fixed-top mt-3 mr-3">
+          <div class="col-lg-5 col-md-12 ml-auto">
+            <div class="alert alert-primary fade show" role="alert">
+              <button id="closeMsg" type="button" class="close" aria-label="Close">
+                <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+              </button>
+              <p style="color: rgb(77, 114, 182);" id="msg">The account is banned. Please contact us for detail.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 </main>
 
 <style>
@@ -137,6 +161,7 @@
             `;
             $("#newAccount").empty().append(result);
             } else if(fileName == "accountRecord.csv"){
+                $("#newAccount").empty()
                 $("#msg").text("Total 8 record. please double confirm the correctness of the data.");
                 loadData1("http://127.0.0.1/itp4506/Attendance-Online-Web/components/class/student-all.json");
             }
@@ -145,7 +170,6 @@
         })
         $("#academicYear").val(new Date().getFullYear());
 
-        
 
         function loadData1(url) {
             $.ajax(url, {
