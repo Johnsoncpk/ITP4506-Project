@@ -1,7 +1,6 @@
 <div class="page-content">
   <div class="container-fluid">
-    <h2 id="header"></h2>
-    <h3 id="quote" class="font-weight-bold"><h6 class="text-right" id="author"></h6></h3> 
+    <h2 id="header" class="font-weight-bold"><h6 class="text-right" id="date"></h6></h2> 
     <hr />
     <div class="row gutters-sm">
       <div class="col-md-12 py-3">
@@ -127,7 +126,8 @@
       (today.getMonth() + 1) +
       "-" +
       today.getDate();
-    $("#header").text("Take Attendance - Class 2B Date: " + date);
+    $("#header").text("Take Attendance " );
+    $('#date').text("Class 2B - Date: " + date);
     var role = "*";
     var url =
       "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
