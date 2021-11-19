@@ -7,13 +7,11 @@
         <div class="row">
           <h5 class="col-md-4 py-3" id="aYear">Please select the academic year:</h5>
           <div class="col-md-4 py-3">
-            <div class="dropdown">
-            <select id="dropdownMenuButton" class="col-2 form-control mb-4 mr-3">
+            <select id="dropdownMenuButton" class="col-3 form-control mb-4 mr-3">
               <option class="dropdown-item" value="2021">2021</option>
               <option class="dropdown-item" value="2020">2020</option>
               <option class="dropdown-item" value="2019">2019</option>
             </select>
-          </div>
             <!--<div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle px-3"
@@ -37,8 +35,6 @@
           </div>
         </div>
         <div class="card p-0">
-
-          
           <div class="form-group col-md-12" id="schoolReport">
             <div class="col-md-12">
               <div class="form-group mb-2 card">
@@ -120,7 +116,7 @@
   $(document).ready(function () {
     function drawChart() {
       anychart.onDocumentReady(function () {
-        if ($("#dropdownMenuButton").text() == "2019") {
+        if ($("#dropdownMenuButton").val() == "2019") {
           $("#y").text("2019");
           $("#totalStudent").text("341");
           $("#noOfClass").text("20");
@@ -132,7 +128,7 @@
             ["Friday", 89.5],
           ];
           title = "Chart for student present rate in weekday for 2019";
-        } else if ($("#dropdownMenuButton").text() == "2020") {
+        } else if ($("#dropdownMenuButton").val() == "2020") {
           $("#y").text("2020");
           $("#totalStudent").text("420");
           $("#noOfClass").text("25");
