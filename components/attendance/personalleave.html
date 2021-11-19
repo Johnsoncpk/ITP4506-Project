@@ -113,15 +113,14 @@
                                         <input type="text" id="ill" class="form-control" required />
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-11"></div>
-                            <div class="col-md-1">
+                                <hr />
 
                                 <button class="btn btn-info" id="confirmLeave" type="submit">Confirm</button>
+                                <button class="btn btn-secondary" id="reset" type="reset">
                             </div>
                         </div>
+
+
                     </form>
                 </div>
             </div>
@@ -180,6 +179,11 @@
 
 <script>
     $(document).ready(function () {
+
+
+        $("#reset").click(function () {
+            $("#student").text("");
+        })
         $("#successMsg").hide();
         $("#closeMsg").click(function () {
             $("#successMsg").hide();
@@ -202,7 +206,7 @@
         $("#studentlist").hide();
 
         $("#select").click(function () {
-            
+
             if ($("#studentlist").is(":visible")) {
                 $("#studentlist").hide();
             } else {
@@ -242,10 +246,16 @@
 
                     $("#query").on("keyup", function () {
                         var value = $(this).val().toLowerCase();
-                        //alert(value);
-                        $(".stulist").hide();
-                        $(".stulist").filter(":contains(" + value + ")").show();
+                        $(".stulist").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                        });
                     });
+                    /* $("#query").on("keyup", function () {
+                         var value = $(this).val().toLowerCase();
+                         //alert(value);
+                         $(".stulist").hide();
+                         $(".stulist").filter(":contains(" + value + ")").show();
+                     });*/
 
                 },
                 error: function (jqXhr, textStatus, errorMessage) {
