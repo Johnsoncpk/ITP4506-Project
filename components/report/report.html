@@ -271,6 +271,7 @@
           error: function (jqXhr, textStatus, errorMessage) {},
         });
       } else if (type == "class") {
+        $("#title").text("Class Report - "+ className);
         $.ajax({
           type: "post",
           url: url,

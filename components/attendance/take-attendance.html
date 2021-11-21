@@ -1,181 +1,163 @@
 <div class="page-content">
-  <div class="container-fluid">
-    <h2 id="header" class="font-weight-bold"><h6 class="text-right" id="date"></h6></h2> 
-    <hr />
-    <div class="row gutters-sm">
-      <div class="col-md-12 py-3">
-        <div class="row justify-content-end">
-          <input
-            class="col-3 form-control mb-4 mr-3"
-            id="query"
-            type="text"
-            placeholder="Search here"
-          />
+    <div class="container-fluid">
+        <h2 id="header" class="font-weight-bold">
+            <h6 class="text-right" id="date"></h6>
+        </h2>
+        <hr />
+        <div class="row gutters-sm">
+            <div class="col-md-12 py-3">
+                <div class="row justify-content-end">
+                    <input class="col-3 form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
+                </div>
+                <div class="card p-0">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attend"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 py-3">
+                    <div class="row justify-content-end">
+                        <a class="btn btn-info mr-1" href="#" id="update">Update & Save</a>
+                        <a class="btn btn-secondary mr-1" href="#" id="cancel">Edit</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card p-0">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Student ID</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Time</th>
-              </tr>
-            </thead>
-            <tbody id="attend"></tbody>
-          </table>
-        </div>
-        <div class="col-md-12 py-3">
-          <div class="row justify-content-end">
-            <a class="btn btn-info mr-1" href="#" id="update">Update & Save</a>
-            <a class="btn btn-secondary mr-1" href="#" id="cancel">Edit</a>
-          </div>
-        </div>
-      </div>
+        <hr />
+        <footer class="text-center">
+            <div class="mb-2">
+                <small>
+                    © 2021 made by -
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+                        Ive Jai
+                    </a>
+                </small>
+            </div>
+        </footer>
     </div>
-    <hr />
-    <footer class="text-center">
-      <div class="mb-2">
-        <small>
-          © 2021 made by -
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://www.ive.edu.hk/ivesite/html/tc/"
-          >
-            Ive Jai
-          </a>
-        </small>
-      </div>
-    </footer>
-  </div>
 </div>
 
 <!-- modal -->
-<div
-  class="modal fade"
-  id="reasonModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5
-          class="modal-title"
-          style="color: lightskyblue"
-          id="exampleModalLabel"
-        >
-          Recorded Time
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="setTime">
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label text-dark"
-              >Time:</label
-            >
-            <input
-              type="time"
-              class="form-control"
-              id="recipient-time"
-              required
-            />
-            <h6 id="recipient-errorMsg" style="color: red">
-              *Please enter the time
-            </h6>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          form="setTime"
-          type="submit"
-          class="btn btn-primary"
-          id="confirm"
-        >
-          Confirm
-        </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
-      </div>
+<div class="modal fade" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: lightskyblue" id="exampleModalLabel">
+                    Recorded Time
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="setTime">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label text-dark">Time:</label>
+                        <input type="time" class="form-control" id="recipient-time" required />
+                        <h6 id="recipient-errorMsg" style="color: red">
+                            *Please enter the time
+                        </h6>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" form="setTime" type="submit" class="btn btn-primary" id="confirm">
+                    Confirm
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+<div classs="container p-5" id="successMsg">
+    <div class="row no-gutters fixed-top mt-3 mr-3">
+        <div class="col-lg-5 col-md-12 ml-auto">
+            <div class="alert alert-primary fade show" role="alert">
+                <button id="closeMsg" type="button" class="close" aria-label="Close">
+                    <span style="color: rgb(77, 114, 182);" aria-hidden="True">&times;</span>
+                </button>
+                <p style="color: rgb(77, 114, 182);" id="msg">The attendance record is updated</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-  $(document).ready(function () {
-    var today = new Date();
-    var date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
-    $("#header").text("Take Attendance " );
-    $('#date').text("Class 2B - Date: " + date);
-    var role = "*";
-    var url =
-      "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
-    loadData(url, "*");
-    $("#role").change(function () {
-      role = $("#role option:selected").val();
-      if (role == "*") {
-        url =
-          "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
+    $(document).ready(function () {
+
+        $("#successMsg").hide();
+        $("#closeMsg").click(function () {
+            $("#successMsg").hide();
+        })
+        var today = new Date();
+        var date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
+        $("#header").text("Take Attendance ");
+        $('#date').text("Class 2B - Date: " + date);
+        var role = "*";
+        var url =
+            "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
         loadData(url, "*");
-      } else {
-        url =
-          "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
-        loadData(url, role);
-      }
-    });
+        $("#role").change(function () {
+            role = $("#role option:selected").val();
+            if (role == "*") {
+                url =
+                    "http://127.0.0.1/itp4506/Attendance-Online-Server/admin/viewInformation.php";
+                loadData(url, "*");
+            } else {
+                url =
+                    "http://127.0.0.1/itp4506/Attendance-Online-Server/getUserByRole.php";
+                loadData(url, role);
+            }
+        });
 
-    $("#query").on("keyup", function () {
-      var value = $(this).val().toLowerCase();
-      $(".attendList").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-      });
-    });
+        $("#query").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".attendList").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
 
-    $("#update").click(function () {
-      $(".dropdown-toggle").css("background-color", "#555555");
-      $(".dropdown-toggle").css("color", "#333333");
-      $(".dropdown-toggle").attr("disabled", "disabled");
-    });
-    $("#reasonModal").on("show.bs.modal", function (event) {
-      var button = $(event.relatedTarget); // Button that triggered the modal
-      var recipient = button.data("whatever"); // Extract info from data-* attributes
-      var modal = $(this);
-    });
+        $("#update").click(function () {
+            $(".dropdown-toggle").css("background-color", "#555555");
+            $(".dropdown-toggle").css("color", "#333333");
+            $(".dropdown-toggle").attr("disabled", "disabled");
+        });
+        $("#reasonModal").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var recipient = button.data("whatever"); // Extract info from data-* attributes
+            var modal = $(this);
+        });
 
-    function loadData(url, role) {
-      $("#attend").empty();
-      $.ajax(url, {
-        method: "post",
-        dataType: "json",
-        timeout: 500,
-        data: {
-          role: "student",
-        },
-        success: function (data, status, xhr) {
-          var result = "";
-          $(data).each(function (index) {
-            result += `
+        function loadData(url, role) {
+            $("#attend").empty();
+            $.ajax(url, {
+                method: "post",
+                dataType: "json",
+                timeout: 500,
+                data: {
+                    role: "student",
+                },
+                success: function (data, status, xhr) {
+                    var result = "";
+                    $(data).each(function (index) {
+                        result += `
               <tr class="attendList">
             <td scope="row">${index + 1}</td>
             <td>${this.id}</td>
@@ -183,35 +165,29 @@
             <td>${this.lastName}</td>
             <td>
                 <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton-${
-                    this.id
-                  }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton-${this.id
+                            }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Absent
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" class="present" name='${
-                      this.id
-                    }'">Present</a>
-                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="late" name='${
-                      this.id
-                    }'>Late</a>
-                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="earlyleave" name='${
-                      this.id
-                    }'">Early Leave</a>
-                    <a class="dropdown-item" href="#" class="personalleave" name='${
-                      this.id
-                    }'">Personal Leave</a>
-                    <a class="dropdown-item" href="#" class="absent" name='${
-                      this.id
-                    }'>Absent</a>
+                    <a class="dropdown-item" href="#" class="present" name='${this.id
+                            }'">Present</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="late" name='${this.id
+                            }'>Late</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#reasonModal" href="#" class="earlyleave" name='${this.id
+                            }'">Early Leave</a>
+                    <a class="dropdown-item" href="#" class="personalleave" name='${this.id
+                            }'">Personal Leave</a>
+                    <a class="dropdown-item" href="#" class="absent" name='${this.id
+                            }'>Absent</a>
                   </div>
                 </div>
             </td>
             <td id="time-${this.id}"></td>
             </tr>
               `;
-          });
-          result += `
+                    });
+                    result += `
               <tr class="attendList">
             <td scope="row">8</td>
             <td>206514852</td>
@@ -230,7 +206,7 @@
             <td id="time-206514852">/</td>
             </tr>
               `;
-          result += `
+                    result += `
               <tr class="attendList">
             <td scope="row">8</td>
             <td>201254658</td>
@@ -249,48 +225,49 @@
             <td id="time-201254658">/</td>
             </tr>
               `;
-          $("#attend").append(result);
+                    $("#attend").append(result);
 
-          var name = "";
-          var choice = "";
+                    var name = "";
+                    var choice = "";
 
-          $("a").click(function () {
-            name = $(this).prop("name");
-            choice = $(this).text();
-            $("#dropdownMenuButton-" + name).text(choice);
-            if ($("#dropdownMenuButton-" + name).text() == "Present") {
-              $("#time-" + name).text("08:00");
-            }
-          });
+                    $("a").click(function () {
+                        name = $(this).prop("name");
+                        choice = $(this).text();
+                        $("#dropdownMenuButton-" + name).text(choice);
+                        if ($("#dropdownMenuButton-" + name).text() == "Present") {
+                            $("#time-" + name).text("08:00");
+                        }
+                    });
 
-          $("#recipient-errorMsg").hide();
-          $("#confirm").click(function () {
-            if ($("#recipient-time").val() != "") {
-              $("#recipient-errorMsg").hide();
-              $("#time-" + name).text($("#recipient-time").val());
-              $("#dropdownMenuButton-" + name).text(choice);
-              $("#reasonModal").modal("hide");
-            } else {
-              $("#recipient-errorMsg").show();
-            }
-          });
+                    $("#recipient-errorMsg").hide();
+                    $("#confirm").click(function () {
+                        if ($("#recipient-time").val() != "") {
+                            $("#recipient-errorMsg").hide();
+                            $("#time-" + name).text($("#recipient-time").val());
+                            $("#dropdownMenuButton-" + name).text(choice);
+                            $("#reasonModal").modal("hide");
+                        } else {
+                            $("#recipient-errorMsg").show();
+                        }
+                    });
 
-          $("#update").click(function () {
-            $(".dropdown-toggle").css("background-color", "#555555");
-            $(".dropdown-toggle").css("color", "#333333");
-            $(".dropdown-toggle").attr("disabled", "disabled");
-          });
+                    $("#update").click(function () {
+                        $(".dropdown-toggle").css("background-color", "#555555");
+                        $(".dropdown-toggle").css("color", "#333333");
+                        $(".dropdown-toggle").attr("disabled", "disabled");
+                        $("#successMsg").show();
+                    });
 
-          $("#cancel").click(function () {
-            $(".dropdown-toggle").css("background-color", "#6C757D");
-            $(".dropdown-toggle").css("color", "white");
-            $(".dropdown-toggle").prop("disabled", false);
-          });
-        },
-        error: function (jqXhr, textStatus, errorMessage) {
-          $("body").replace("Error: " + errorMessage);
-        },
-      });
-    }
-  });
+                    $("#cancel").click(function () {
+                        $(".dropdown-toggle").css("background-color", "#6C757D");
+                        $(".dropdown-toggle").css("color", "white");
+                        $(".dropdown-toggle").prop("disabled", false);
+                    });
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    $("body").replace("Error: " + errorMessage);
+                },
+            });
+        }
+    });
 </script>

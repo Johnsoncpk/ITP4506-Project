@@ -24,7 +24,6 @@
                       title="text"
                       id="className"
                       class="form-control"
-                      value="2A"
                       required
                     />
                   </div>
@@ -37,8 +36,7 @@
                       id="academicYear"
                       class="form-text mb-0"
                       name="academicYear"
-                      value="2021"
-                    ></h6>
+                    >2021</h6>
                   </div>
                 </div>
                 <hr />
@@ -83,7 +81,7 @@ Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this 
                 <button class="btn btn-info mr-1" id="edit" type="submit">
                   Edit Class Info
                 </button>
-                <button class="btn btn-secondary" id="cancel" type="reset">
+                <button class="btn btn-secondary" id="cancel" type="button">
                   Cancel
                 </button>
               </div>
@@ -151,6 +149,7 @@ Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this 
 <script>
   $(document).ready(function () {
     var year;
+    var classId;
     $("#successMsg").hide();
     $("#closeMsg").click(function () {
       $("#successMsg").hide();
@@ -158,7 +157,7 @@ Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this 
 
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has("classId")) {
-      let classId = searchParams.get("classId");
+      classId = searchParams.get("classId");
       let archived = searchParams.get("archived");
       $("#className").val(classId);
       year = searchParams.get("year");
@@ -166,6 +165,10 @@ Teaching language is Chinese, 3 SEN (Special Educational Needs) student in this 
         $("#edit").hide();
       }
     } else {
+      year = new Date().getFullYear();
+    }
+    if(localStorage.getItem("role") == "teacher"){
+      $("#className").val("2B");
       year = new Date().getFullYear();
     }
 

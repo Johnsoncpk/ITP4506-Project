@@ -110,7 +110,7 @@
                                         <h6 class="form-text text-muted mb-0">Date</h6>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input id="datepicker" class="form-control" type="date" value="" />
+                                        <input id="datepicker" class="form-control" type="date" value="" required/>
                                     </div>
                                 </div>
                                 <hr />
@@ -200,7 +200,6 @@
 
         $("#sickLeaveForm").submit(function (e) {
             if ($("#student").text() != " ") {
-                $("#msg").text("New personal leave record is created");
                 $("#successMsg").show();
                 $("#ill").val("");
                 $("#student").text(" ");
@@ -224,6 +223,8 @@
 
         var today = new Date($.now());
         $("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+
+        $("#datepicker").attr("min", today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
 
         function loadData1(url) {
             $.ajax(url, {
@@ -266,7 +267,7 @@
                 $(tableName).empty();
                 result += `
               <tr class="stulist">
-            <th scope="row">21000000${index + 1}</th>
+            <th scope="row">20000000${index + 1}</th>
             <td id="fName-`+ (index + 1) + `">${this.firstname}</td>
             <td id="lName-`+ (index + 1) + `">${this.lastname}</td>
             <td>

@@ -24,32 +24,14 @@
                                         <h6 class="form-text text-muted mb-0">Class</h6>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control select" title="availability" id="stuClass">
-                                            <option value="1A">1A</option>
-                                            <option value="1B">1B</option>
-                                            <option value="1C">1C</option>
-                                            <option value="2A">2A</option>
-                                            <option value="2B">2B</option>
-                                            <option value="2C">2C</option>
-                                            <option value="3A">3A</option>
-                                            <option value="3B">3B</option>
-                                            <option value="3C">3C</option>
-                                            <option value="4A">4A</option>
-                                            <option value="4B">4B</option>
-                                            <option value="4C">4C</option>
-                                            <option value="5A">5A</option>
-                                            <option value="5B">5B</option>
-                                            <option value="5C">5C</option>
-                                            <option value="6A">6A</option>
-                                            <option value="6B">6B</option>
-                                            <option value="6C">6C</option>
-                                        </select>
+                                        
+                                        <h6 class="form-text mb-0">2B</h6>
                                     </div>
                                     <div class="col-sm-3">
                                         <h6 class="form-text text-muted mb-0">Academic Year</h6>
                                     </div>
                                     <div class="col-sm-3">
-                                        <h6 class="form-text mb-0">2022</h6>
+                                        <h6 class="form-text mb-0">2021</h6>
                                     </div>
                                 </div>
                                 <hr />
@@ -98,7 +80,7 @@
                                         <h6 class="form-text text-muted mb-0">Date</h6>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input id="datepicker" class="form-control" type="date" value="" />
+                                        <input id="datepicker" class="form-control" type="date" value="" required/>
                                     </div>
                                 </div>
                                 <hr />
@@ -214,6 +196,8 @@
         var today = new Date($.now());
         $("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
 
+        $("#datepicker").attr("min", today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+
         function loadData1(url) {
             $.ajax(url, {
                 dataType: "json",
@@ -230,7 +214,7 @@
                     });
 
                     $("#personalLeaveForm").submit(function (e) {
-                        if ($("#student").text() != " ") {
+                        if ($("#student").text() != " " && $("#student").text() != "") {
                             $("#successMsg").show();
                             $("#ill").val("");
                             $("#student").text(" ");
@@ -267,7 +251,7 @@
                 $(tableName).empty();
                 result += `
               <tr class="stulist">
-            <th scope="row">${index + 1}</th>
+            <th scope="row">20000000${index + 1}</th>
             <td id="fName-`+ (index + 1) + `">${this.firstname}</td>
             <td id="lName-`+ (index + 1) + `">${this.lastname}</td>
             <td>

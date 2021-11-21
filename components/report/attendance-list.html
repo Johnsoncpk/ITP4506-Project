@@ -47,12 +47,15 @@
               <a class="dropdown-item item2" href="#">B</a>
             </div>-->
           </div>
+
+          <a class="btn btn-info mb-4 mr-1" id="getClass">Get Class Report</a>
           <input class="col-3 form-control mb-4 mr-3" id="query" type="text" placeholder="Search here" />
         </div>
         <div class="card p-0">
           <table class="table table-striped">
             <thead>
               <tr id="data">
+                <th scope="col">Student ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Class</th>
                 <th scope="col">Present</th>
@@ -92,8 +95,9 @@
     if (type == "class") {
       $("#dropdownMenuButton1").remove();
       getData();
+    } else {
+      getData();
     }
-    getData();
 
     function getData() {
       var rows = [];
@@ -102,6 +106,8 @@
       $(".rowData").empty();
 
       if (type == "class") {
+
+        $("#getClass").attr("href", "./report.html?type=class&className=2B");
         $("#classReport").prop("disabled", false);
         $("#classReport").click(function () {
           window.location.href = "report.html?type=class&className=2B";
@@ -115,17 +121,19 @@
           success: function (data, status, xhr) {
             var $result = "";
             var $studentID = data[0]["studentID"];
+            console.log($studentID);
             $studentID.forEach(function (element) {
               $.post(
                 "http://127.0.0.1/ITP4506/Attendance-Online-Server/genReport/genReport-student.php",
                 { userID: element },
                 function (inData) {
-                  //console.log(inData);
                   inData.forEach(function (reportData) {
                     var $result = "";
                     console.log(reportData);
                     $result +=
-                      `<tr class="rowData">
+                      `<tr class="rowData">  <td>` +
+                      reportData.studentId +
+                      `</td>
                                             <td>` +
                       reportData.student +
                       `</td>
@@ -153,7 +161,7 @@
                                             <td><a class="btn btn-info mr-1 edit" href="./report.html?type=student&studentId=` +
                       reportData.studentId +
                       `"
-                                                >Detail</a>
+                                                >Get Full Record</a>
                                             </td>
                                      </tr>`;
 
@@ -182,6 +190,7 @@
                 name = ["Johnson Chong", "Alvin Cheung"];
                 className = "2B";*/
       } else if (type == "school") {
+        $("#getClass").hide();
         className =
           $("#dropdownMenuButton1").val();
         $("#classReport").click(function () {
@@ -210,6 +219,9 @@
                       console.log(reportData);
                       $result +=
                         `<tr class="rowData">
+                          <td>` +
+                        reportData.studentId +
+                        `</td>
                                             <td>` +
                         reportData.student +
                         `</td>
@@ -235,7 +247,7 @@
                         reportData.absentWithoutReason.toFixed(2) +
                         `%</td>
                       <td>
-                        <a class="btn btn-info mr-1" href="./attendance.html?studentId=` + reportData.studentId + `" id="edit">Detail</a>
+                        <a class="btn btn-info mr-1" href="./attendance.html?studentId=` + reportData.studentId + `" id="edit">Get Full Record</a>
                                             </td>
                                      </tr>`;
 
@@ -306,6 +318,12 @@
     }
 
     $("#dropdownMenuButton1").change(function () {
+      if ($(this).val().trim() != "*") {
+        $("#getClass").show();
+        $("#getClass").attr("href", "./report.html?type=class&className=" + $(this).val());
+      } else {
+        $("#getClass").hide();
+      }
       var value = $(this).val().toLowerCase();
       if (value == "*") {
         value = "";

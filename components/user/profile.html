@@ -282,7 +282,8 @@ IVE</textarea>
           },
           function (data) {
             console.log(data[0].message);
-            if (data[0].message == "success") {   
+            if (data[0].message == "success") {  
+              $("#errorMsg").text(""); 
               $("#msg").text("Password is changed");      
               $("#successMsg").show();
               $("#originalPwd").val("");
@@ -294,9 +295,6 @@ IVE</textarea>
               $("#updatePwdForm").fadeOut(function () {
                 $("#editProfileForm").show();
               });
-              $("#msgContent").text("Password successfully changed");
-              $("#editProfile").modal('show');
-              $("#errorMsg").text("");
             } else {
               $("#errorMsg").text("*Wrong password or Password not match or Wrong password format(Length > 8)");
             }
