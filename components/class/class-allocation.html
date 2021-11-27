@@ -196,8 +196,10 @@
       updateIndex(".form-check-input-1:checked");
       for (var i in indexes[0]) {
         students2.push(students1[indexes[0][i]]);
-        students1.splice(indexes[0][i], 1);
+      }for (var i in indexes[0]) {
+        students1.splice(indexes[0][i]-i, 1);
       }
+      console.log(students1);
       loadData("#table1", "form-check-input-1", students1);
       loadData("#table2", "form-check-input-2", students2);
     });
@@ -206,7 +208,10 @@
       updateIndex(".form-check-input-2:checked");
       for (var i in indexes[0]) {
         students1.push(students2[indexes[0][i]]);
-        students2.splice(indexes[0][i], 1);
+        
+      }
+      for (var i in indexes[0]) {
+        students2.splice(indexes[0][i]-i, 1);
       }
       loadData("#table1", "form-check-input-1", students1);
       loadData("#table2", "form-check-input-2", students2);
@@ -290,8 +295,8 @@
     });
     function loadData(tableName, formName, students) {
       var result = "";
+      $(tableName).empty();
       $(students).each(function (index) {
-        $(tableName).empty();
         result += `
             <tr class="attendList">
           <td><div class="form-group form-check">
