@@ -1,0 +1,118 @@
+<style>
+  .scrollit {
+    overflow: scroll;
+    height: 300px;
+  }
+</style>
+
+<main class="page-content">
+  <div class="container-fluid">
+    <h2>Create Announcemenet</h2>
+    <hr />
+    <div class="row">
+      <div class="form col-md-9">
+        <div class="col-md-10 my-2 py-2">
+          <form id="editClassForm" onsubmit="return false;">
+            <div class="form-group mb-3 card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="form-text text-muted mb-0">Target Group</h6>
+                  </div>
+                  <div class="col-sm-5" id="admin-target">
+                    <select name="target" class="form-control">
+                      <option value="teacher">Teacher</option>
+                      <option value="student">Student</option>
+                      <option value="all">Teacher & Student</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-5" id="teacher-target">
+                    <h6 class="form-text mb-0">2B (Class)</h6>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="form-text text-muted mb-0">Title</h6>
+                  </div>
+                  <div class="col-sm-5">
+                    <input class="form-control" id="title" type="text" placeholder="Title..." required />
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="form-text text-muted mb-0">Note</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <textarea type="text" class="form-control" name="description" id="description" rows="8"
+                      placeholder="Content here..." required></textarea>
+                  </div>
+                </div>
+                <hr />
+
+                <button class="btn btn-info mr-1" id="edit" type="submit">
+                  Create Accouncement
+                </button>
+                <button class="btn btn-secondary" id="cancel" type="reset">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <footer class="text-center">
+      <div class="mb-2">
+        <small>
+          © 2021 made by -
+          <a target="_blank" rel="noopener noreferrer" href="https://www.ive.edu.hk/ivesite/html/tc/">
+            Ive Jai
+          </a>
+        </small>
+      </div>
+    </footer>
+  </div>
+
+  <div classs="container p-5" id="successMsg">
+    <div class="row no-gutters fixed-top mt-3 mr-3">
+      <div class="col-lg-5 col-md-12 ml-auto">
+        <div class="alert alert-primary fade show" role="alert">
+          <button id="closeMsg" type="button" class="close" aria-label="Close">
+            <span style="color: rgb(77, 114, 182)" aria-hidden="True">&times;</span>
+          </button>
+          <p style="color: rgb(77, 114, 182)" id="msg">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  $(document).ready(function () {
+    var year;
+    var classId;
+    $("#successMsg").hide();
+    $("#closeMsg").click(function () {
+      $("#successMsg").hide();
+    });
+    $('#edit').click(function () {
+
+    })
+    $("#editClassForm").submit(function (e) {
+      $('#msg').text(`Announcement of ${$('#title').val()} created successfully.`);
+      $("#successMsg").show();
+      $("#cancel").click();
+    })
+    if (localStorage.getItem("role") == "admin") {
+      $('#teacher-target').hide();
+    } else {
+      $('#admin-target').hide();
+    }
+  });
+
+</script>
