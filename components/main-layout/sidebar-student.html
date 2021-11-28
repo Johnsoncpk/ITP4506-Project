@@ -20,8 +20,8 @@
         <!--<button class="btn justify-content-end"><i class='fas fa-exclamation' style='font-size:24px;color:red'></i></button> -->
       </div>
       <div>
-        <button id="notice" data-toggle="modal" data-target="#exampleModal" class="btn justify-content-end"><i
-            style='font-size:20px;color:rgb(231, 97, 97)' class="fas fa-envelope"></i></button>
+        <button id="notice" data-toggle="modal" data-target="#listModal" class="btn justify-content-end"><i
+            style='font-size:20px;color:rgb(255, 255, 255)' class="fas fa-envelope"></i></button>
       </div>
     </div>
     <!-- sidebar-header  -->
@@ -60,12 +60,59 @@
 <!-- sidebar-wrapper  -->
 
 <!-- modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Sick Leave Certification Upload</h5>
+        <h5 class="modal-title" style="color:lightskyblue" id="exampleModalLabel">Notification</h5>
+        <button type="button" id="x" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="color:rgb(17, 22, 39);" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tbody id="table">
+            <tr class="table head">
+              <th scope="col">Type</th>
+              <th scope="col">Description</th>
+              <th scope="col"></th>
+            </tr>
+            <tr id="tr-1" class="head">
+              <td scope="col">Announcement</td>
+              <td scope="col">IVE Epidemic prevention measures</td>
+              <td scope="col"><button type="button" data-toggle="modal" data-target="#announcementModal"
+                  class="btn btn-primary sicklist" data-dismiss="modal" name="1">Detail</button></td>
+            </tr>
+            <tr id="tr-2" class="head">
+              <td scope="col" style="color: red;">Upload Certification</td>
+              <td scope="col">Please Provide Evidence for Sick leave</td>
+              <td scope="col"><button type="button" data-toggle="modal" data-target="#sickleaveModal"
+                  class="btn btn-primary sicklist" data-dismiss="modal" name="2">Detail</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .head th {
+    color: rgb(17, 22, 39);
+  }
+
+  .head td {
+    color: rgb(17, 22, 39);
+  }
+</style>
+
+<div class="modal fade" id="sickleaveModal" tabindex="-1" role="dialog" aria-labelledby="sickleaveModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:rgb(58, 152, 211)" id="sickleaveModalLabel">Sick Leave Certification Upload</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -77,23 +124,75 @@
               sick leave, please provide the certification by 2021-12-2</p>
           </div>
           <div class="form-group">
-            <label for="recipient-name" style="color:rgb(73, 119, 204)" class="col-form-label">Illness:</label>
+            <label for="recipient-name" style="color:rgb(48, 85, 155)" class="col-form-label">Illness:</label>
             <input type="text" placeholder="e.g. stomache" class="form-control" id="recipient-name" required>
           </div>
           <div class="form-group">
-            <label for="message-text" style="color:rgb(73, 119, 204)" class="col-form-label">Medical
+            <label for="message-text" style="color:rgb(48, 85, 155)" class="col-form-label">Medical
               Certification:</label>
             <input type="file" class="form-control" id="recipient-name" required>
           </div>
         </div>
         <div class="modal-footer">
-          <input class="btn btn-primary" type="submit" id="upload" value="Upload"></input>
+          <button type="submit" data-toggle="modal" id="upload" data-target="#sickleaveModal"
+                  class="btn btn-primary sick" data-dismiss="modal" name="2">Upload</button>
           <button type="button" id="closebtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="announcementModal" tabindex="-1" role="dialog" aria-labelledby="announcementModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="color:lightskyblue" id="announcementModalLabel">IVE Epidemic prevention measures</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <textarea type="text" class="form-control" rows="12" disabled >
+The Centers for Disease Control and Prevention is working to help keep you and your community safe from COVID-19. 
+
+Take the following everyday steps to protect yourself and others: 
+Get a COVID-19 vaccine as soon as you can.
+
+If you are not fully vaccinated, wear a mask in indoor public places. (Children under the age of 2 should not 
+wear a mask.)
+
+If you are fully vaccinated, wear a mask in indoor public places if you are in an area of substantial or high 
+transmission or if you have a weakened immune system.
+
+Stay 6 feet from others who are not part of your household.
+
+Avoid crowds and poorly ventilated spaces.
+
+Wash your hands often. 
+
+Cover coughs and sneezes. 
+
+Clean high touch surfaces daily. 
+
+
+IVE admin
+10-11-2021 09:30
+            </textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success sick" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -102,11 +201,22 @@
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
   jQuery(function ($) {
+    $(".sick").click(function(){
+      $("#tr-" + name).hide();
+    })
 
+    var name="";
+
+    $(".sicklist").click(function(){
+      name = $(this).prop('name');
+      $("#recipient-class").val($("#class-"+name).text());
+      $("#recipient-name").val($("#name-"+name).text());
+    })
     $("#sickForm").submit(function () {
       $("#closebtn").click();
-      //$("#exampleModal").modal("hide");
-      $("#notice").hide();
+      $('#x').click();
+      //$("#listModal").modal("hide");
+      //$("#notice").hide();
     })
 
     $("#user-name").text(
