@@ -114,6 +114,9 @@
 
 <script>
   $(document).ready(function () {
+    if(localStorage.getItem('role')=="teacher"){
+        $('#dropdownMenuButton').hide();
+      }
     function drawChart() {
       anychart.onDocumentReady(function () {
         if ($("#dropdownMenuButton").val() == "2019") {
@@ -225,6 +228,7 @@
     }
 
     async function loadData() {
+      
       var result = "";
       var rows = [];
       var name = "";
